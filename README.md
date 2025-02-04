@@ -1,1 +1,1 @@
-my solutions of cs61b
+cs61b
