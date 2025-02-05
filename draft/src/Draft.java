@@ -1,4 +1,4 @@
-import org.junit.Test;
+import java.util.stream.StreamSupport;
 
 /** cs61b draft */
 
@@ -51,7 +51,7 @@ public class Draft {
 
 
     /** find the max num in an array */
-    public static int max(int[] m) {
+    /*public static int max(int[] m) {
         int max_val = 0;
         for (int i = 0; i < m.length; i++) {
             if (m[i] > max_val) {
@@ -65,5 +65,76 @@ public class Draft {
         int[] nums = new int[]{9, 2, 5, 12, 22, 10, 6};
         int maxValue = max(nums);
         System.out.println(maxValue);
+    }*/
+
+
+    /**
+     * sum the nums in an array
+     */
+    /*public static int sum(int[] m) {
+        int sum = 0;
+        for (int i = 0; i < m.length; i++) {
+            sum += m[i];
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{1, 2, 3};
+        int result = sum(nums);
+        System.out.println(result);
+    }*/
+
+
+    /**
+     sum the nums from itself to i+n in an array
+     */
+    /*public static void windowPosSum(int[] a, int n) {
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] < 0) {
+                continue;
+            }
+            for (int j = i + 1; j <= i + n && j < a.length; j++) {
+                a[i] += a[j];
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] a = {1, 2, -3, 4, 5, 4};
+        int n = 3;
+        windowPosSum(a, n);
+
+        // Should print 4, 8, -3, 13, 9, 4
+        System.out.println(java.util.Arrays.toString(a));
+    }*/
+
+
+    /** creating dog class */
+    public static class Dog {
+        int weight;
+
+        Dog (int w) {
+            weight = w;
+        }
+
+        public void makeNoise() {
+            if (weight < 10) {
+                System.out.println("yipyipyip!");
+            } else if (weight < 30) {
+                System.out.println("bark.");
+            } else {
+                System.out.println("woof!");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Dog d1 = new Dog(5);
+        Dog d2 = new Dog(10);
+        Dog d3 = new Dog(30);
+        d1.makeNoise();
+        d2.makeNoise();
+        d3.makeNoise();
     }
 }
