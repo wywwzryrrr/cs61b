@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="draft">
-      <change afterPath="$PROJECT_DIR$/src/Dogs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DogsLauncher.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Draft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Draft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj0/game2048/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/../skeleton-sp21/proj0/game2048/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj0/game2048/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/../skeleton-sp21/proj0/game2048/Model.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +111,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1738590304544</updated>
-      <workItem from="1738590305461" duration="24357000" />
+      <workItem from="1738590305461" duration="31312000" />
     </task>
     <task id="LOCAL-00001" summary="draft">
       <option name="closed" value="true" />

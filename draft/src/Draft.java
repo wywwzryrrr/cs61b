@@ -111,7 +111,7 @@ public class Draft {
 
 
     /** creating dog class */
-    public static class Dog {
+    /*public static class Dog {
         int weight;
 
         Dog (int w) {
@@ -136,5 +136,5 @@ public class Draft {
         d1.makeNoise();
         d2.makeNoise();
         d3.makeNoise();
-    }
+    }*/
 }
