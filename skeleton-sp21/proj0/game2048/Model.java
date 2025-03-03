@@ -5,7 +5,7 @@ import java.util.Observable;
 
 
 /** The state of a game of 2048.
- *  @author TODO: YOUR NAME HERE
+ *  @author TODO: zng.xee
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -94,7 +94,7 @@ public class Model extends Observable {
         setChanged();
     }
 
-    /** Tilt the board toward SIDE. Return true iff this changes the board.
+    /** Tilt the board toward SIDE. Return true if this changes the board.
      *
      * 1. If two Tile objects are adjacent in the direction of motion and have
      *    the same value, they are merged into one Tile of twice the original
@@ -113,11 +113,58 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        board.setViewingPerspective(side);
+        changed = false;
+        for (int col = 0; col < board.size(); col++) {
+            if (processColumn(col)) {
+                changed = true;
+            }
+        }
+        board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
         if (changed) {
             setChanged();
         }
+        return changed;
+    }
+
+    private boolean processColumn(int col) {
+        boolean changed = false;
+        Tile[] column = new Tile[board.size()]; // Temporary array to hold tiles
+        boolean[] merged = new boolean[board.size()]; // Track merges
+
+        // Extract tiles from the column (bottom to top)
+        for (int row = 0; row < board.size(); row++) {
+            column[row] = board.tile(col, row);
+        }
+
+        // Slide and merge tiles toward the top
+        int targetRow = board.size() - 1; // Start from the top
+        for (int row = board.size() - 1; row >= 0; row--) {
+            if (column[row] != null) {
+                if (targetRow < board.size() - 1) {
+                    Tile aboveTile = board.tile(col, targetRow + 1);
+                    if (aboveTile != null && aboveTile.value() == column[row].value() && !merged[targetRow + 1]) {
+                        // Merge with the tile above
+                        boolean didMerge = board.move(col, targetRow + 1, column[row]);
+                        if (didMerge) {
+                            score += board.tile(col, targetRow + 1).value();
+                            merged[targetRow + 1] = true;
+                            changed = true;
+                        }
+                        continue; // Skip adjusting targetRow since we merged
+                    }
+                }
+                // Move tile to targetRow if it’s different from its current position
+                if (row != targetRow) {
+                    board.move(col, targetRow, column[row]);
+                    changed = true;
+                }
+                targetRow--;
+            }
+        }
+
         return changed;
     }
 
@@ -138,6 +185,13 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        for (int row = 0; row < b.size(); row++) {
+            for (int col = 0; col < b.size(); col++) {
+                if (b.tile(row, col) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +202,13 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for (int row = 0; row < b.size(); row++) {
+            for (int col = 0; col < b.size(); col++) {
+                if (b.tile(row, col) != null && b.tile(row, col).value() == MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +220,28 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        for (int row = 0; row < b.size(); row++) {
+            for (int col = 0; col < b.size(); col++) {
+                if (b.tile(row, col) == null) {
+                    return true;
+                }
+                Tile currentTile = b.tile(row, col);
+                int currentValue = currentTile.value();
+                if (row > 0 && b.tile(row - 1, col) != null && b.tile(row - 1, col).value() == currentValue) {
+                    return true;
+                }
+                if (row < size - 1 && b.tile(row + 1, col) != null && b.tile(row + 1, col).value() == currentValue ) {
+                    return true;
+                }
+                if (col > 0 && b.tile(row, col - 1) != null && b.tile(row, col - 1).value() == currentValue) {
+                    return true;
+                }
+                if (col < size - 1 && b.tile(row, col + 1) != null && b.tile(row, col + 1).value() == currentValue) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
