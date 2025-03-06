@@ -1,4 +1,6 @@
-import java.util.stream.StreamSupport;
+//import jh61b.junit.In;
+
+import java.sql.ClientInfoStatus;
 
 /** cs61b draft */
 
@@ -137,4 +139,102 @@ public class Draft {
         d2.makeNoise();
         d3.makeNoise();
     }*/
+
+
+    /*public static class Intlist{
+        public int first;
+        public Intlist rest;
+
+        public Intlist(int f, Intlist r){
+            first = f;
+            rest = r;
+        }
+
+        *//** return the size of a list *//*
+        public int size(){
+            if (rest == null){
+                return 1;
+            }
+            return 1 + rest.size();
+        }
+
+        *//** return the i'th item in a list *//*
+        public int get(int i){
+            if (i == 0) {
+                return first;
+            }
+            return rest.get(i - 1);
+        }
+
+        public static void main(String[] args) {
+            Intlist L = new Intlist(1, null);
+            L = new Intlist(3, L);
+            L = new Intlist(2, L);
+            System.out.println(L.get(0));
+            System.out.println(L.get(1));
+            System.out.println(L.get(2));
+            System.out.println(L.size());
+        }
+    }*/
+
+
+    public static class SLList {
+        public static class IntNode {
+            public int item;
+            public IntNode next;
+            public IntNode(int i, IntNode n) {
+                item = i;
+                next = n;
+            }
+        }
+
+        private IntNode first;
+        private int size;
+
+        public SLList(int x) {
+            first = new IntNode(x, null);
+            size = 1;
+        }
+
+        /** Adds an item to the front of the list. */
+        public void addFirst(int x) {
+            first = new IntNode(x, first);
+            size += 1;
+        }
+
+        /** Retrieves the front item from the list. */
+        public int getFirst() {
+            return first.item;
+        }
+
+        /** Adds an item to the end of the list. */
+        public void addLast(int x) {
+            /* Your Code Here! */
+            size += 1;
+            IntNode p = new IntNode(x, first);
+            while (p.next != null) {
+                p = p.next;
+            }
+            p.next = new IntNode(x, null);
+        }
+
+        /** Returns the number of items in the list using recursion. */
+        public int size() {
+            /* Your Code Here! */
+            return size;
+        }
+
+        public static void main(String[] args) {
+            SLList L = new SLList(20);
+            L.addFirst(15);
+            L.addLast(10);
+            int x = L.getFirst();
+            System.out.println(x);
+            int size = L.size();
+            System.out.println(size);
+        }
+    }
+
+
+    public
 }

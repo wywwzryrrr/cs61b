@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="draft">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DogsLauncher.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Draft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Draft.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj0/game2048/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/../skeleton-sp21/proj0/game2048/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj0/game2048/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/../skeleton-sp21/proj0/game2048/Model.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj0/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../proj0/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj0/out/production/proj0/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../proj0/out/production/proj0/.idea/vcs.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,22 +18,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "wywwzryrrr"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;wywwzryrrr&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/wywwzryrrr/cs61b.git",
-    "accountId": "99c5d20a-a6ac-489a-8e55-8d23ff886e8a"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/wywwzryrrr/cs61b.git&quot;,
+    &quot;accountId&quot;: &quot;99c5d20a-a6ac-489a-8e55-8d23ff886e8a&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 2
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2sX7wZLhvUGNsNpnSq5bvcCoRsI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -44,6 +43,8 @@
   "keyToString": {
     "Application.Dogs$DogsLauncher.executor": "Run",
     "Application.DogsLauncher.executor": "Run",
+    "Application.Draft$Intlist.executor": "Run",
+    "Application.Draft$SLList.executor": "Run",
     "Application.Draft.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.second.executor": "Run",
@@ -58,14 +59,14 @@
     "node.js.selected.package.stylelint": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "configurable.stylesheets.stylelint",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Draft">
+  <component name="RunManager" selected="Application.Draft$SLList">
     <configuration name="Dogs$DogsLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Dogs$DogsLauncher" />
       <module name="draft" />
@@ -80,6 +81,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Draft$Intlist" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Draft$Intlist" />
+      <module name="draft" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Draft$SLList" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Draft$SLList" />
+      <module name="draft" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Draft" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Draft" />
       <module name="draft" />
@@ -89,7 +104,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Draft$SLList" />
         <item itemvalue="Application.Draft" />
+        <item itemvalue="Application.Draft$Intlist" />
         <item itemvalue="Application.DogsLauncher" />
         <item itemvalue="Application.Dogs$DogsLauncher" />
       </list>
@@ -112,6 +129,7 @@
       <option name="presentableId" value="Default" />
       <updated>1738590304544</updated>
       <workItem from="1738590305461" duration="31312000" />
+      <workItem from="1741072048329" duration="12794000" />
     </task>
     <task id="LOCAL-00001" summary="draft">
       <option name="closed" value="true" />
