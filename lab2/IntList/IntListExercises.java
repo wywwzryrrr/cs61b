@@ -12,7 +12,10 @@ public class IntListExercises {
      */
     public static void addConstant(IntList lst, int c) {
         IntList head = lst;
-        for (int i = 0; i < lst.size(); i++) {
+        if (lst == null) {
+            return;
+        }
+        while (head != null) {
             head.first += c;
             head = head.rest;
         }
