@@ -178,7 +178,7 @@ public class Draft {
     }*/
 
 
-    public static class SLList {
+    /*public static class SLList {
         public static class IntNode {
             public int item;
             public IntNode next;
@@ -196,20 +196,20 @@ public class Draft {
             size = 1;
         }
 
-        /** Adds an item to the front of the list. */
+        *//** Adds an item to the front of the list. *//*
         public void addFirst(int x) {
             first = new IntNode(x, first);
             size += 1;
         }
 
-        /** Retrieves the front item from the list. */
+        *//** Retrieves the front item from the list. *//*
         public int getFirst() {
             return first.item;
         }
 
-        /** Adds an item to the end of the list. */
+        *//** Adds an item to the end of the list. *//*
         public void addLast(int x) {
-            /* Your Code Here! */
+            *//* Your Code Here! *//*
             size += 1;
             IntNode p = new IntNode(x, first);
             while (p.next != null) {
@@ -218,9 +218,9 @@ public class Draft {
             p.next = new IntNode(x, null);
         }
 
-        /** Returns the number of items in the list using recursion. */
+        *//** Returns the number of items in the list using recursion. *//*
         public int size() {
-            /* Your Code Here! */
+            *//* Your Code Here! *//*
             return size;
         }
 
@@ -233,8 +233,79 @@ public class Draft {
             int size = L.size();
             System.out.println(size);
         }
+    }*/
+
+
+    /*public static class Sort {
+        public static void sort(String[] x) {
+            sort(x, 0);
+        }
+
+        private static void sort(String[] x, int start) {
+            if (start == x.length) {
+                return;
+            }
+            int smallestIndex = findSmallest(x, start);
+            swap(x, start, smallestIndex);
+            sort(x, start + 1);
+        }
+
+        public static int findSmallest(String[] x, int start) {
+            int samllestIndex = start;
+            for (int i = start; i < x.length; i++) {
+                int cmp = x[i].compareTo(x[samllestIndex]);
+                if (cmp < 0) {
+                    samllestIndex = i;
+                }
+            }
+            return samllestIndex;
+        }
+
+        public static void swap(String[] x, int a, int b) {
+            String tmp = x[a];
+            x[a] = x[b];
+            x[b] = tmp;
+        }
+    }*/
+
+
+    public static class AList {
+        /** Creates an empty list. */
+        private int[] items;
+        private int size;
+
+        public AList() {
+            items = new int[100];
+            size = 0;
+        }
+
+        /** Inserts X into the back of the list. */
+        public void addLast(int x) {
+            items[size] = x;
+            size++;
+        }
+
+        /** Returns the item from the back of the list. */
+        public int getLast() {
+            return items[size - 1];
+        }
+
+        /** Gets the ith item in the list (0 is the front). */
+        public int get(int i) {
+            return items[i];
+        }
+
+        /** Returns the number of items in the list. */
+        public int size() {
+            return size;
+        }
+
+        /** Deletes item from back of the list and
+         * returns deleted item. */
+        public int removeLast() {
+            int last = getLast();
+            size--;
+            return last;
+        }
     }
-
-
-    public
 }
