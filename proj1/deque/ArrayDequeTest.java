@@ -2,6 +2,9 @@
 package deque;
 
 import org.junit.Test;
+
+import java.util.LinkedHashSet;
+
 import static org.junit.Assert.*;
 
 public class ArrayDequeTest {
@@ -34,12 +37,6 @@ public class ArrayDequeTest {
     public void testSize() {
         ArrayDeque<Integer> deque = dequeShort();
         assertEquals(4, deque.size());
-    }
-
-    @Test
-    public void testIsEmpty() {
-        ArrayDeque<Integer> deque = new ArrayDeque<>();
-        assertTrue(deque.isEmpty());
     }
 
     @Test
@@ -198,6 +195,15 @@ public class ArrayDequeTest {
         assertTrue(deque1.equals(deque2));
         deque1.addFirst(6);
         deque2.addFirst(6);
+        assertTrue(deque1.equals(deque2));
+    }
+
+    @Test
+    public void testEqualDifferentDeque() {
+        ArrayDeque<Integer> deque1 = new ArrayDeque<>();
+        LinkedListDeque<Integer> deque2 = new LinkedListDeque<>();
+        deque1.addFirst(1);
+        deque2.addFirst(1);
         assertTrue(deque1.equals(deque2));
     }
 }

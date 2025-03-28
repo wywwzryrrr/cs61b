@@ -191,7 +191,7 @@ public class LinkedListDequeTest {
     @Test
     public void testEqualDeque() {
         LinkedListDeque<String> lld1 = new LinkedListDeque<>();
-        LinkedListDeque<String> lld2 = new LinkedListDeque<>();
+        ArrayDeque<String> lld2 = new ArrayDeque<>();
 
         lld1.addLast("front");
         lld1.addLast("middle");
