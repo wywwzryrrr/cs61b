@@ -108,7 +108,6 @@ public class ArrayDequeTest {
         assertEquals(9, value1);
         int value2 = deque.get(deque.size() - 1);
         assertEquals(1, value2);
-        assertFalse(deque.isFull());
     }
 
     @Test

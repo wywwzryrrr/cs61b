@@ -58,7 +58,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         return size == 0;
     }
 
-    public boolean isFull() {
+    private boolean isFull() {
         return size == capacity;
     }
 
