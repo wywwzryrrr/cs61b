@@ -127,9 +127,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             return null;
         }
         int currentIndex = nextFirst;
-        for (int i = 0; i < index; i++) {
-            currentIndex = indexIncrement(currentIndex);
-        }
+        currentIndex = floorMod(currentIndex + index, capacity);
         return items[currentIndex];
     }
 
