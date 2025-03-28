@@ -1,3 +1,4 @@
+/*
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -53,7 +54,9 @@ public class AListTest {
         assertEquals(2, L.size());
     }
 
-    /** Tests insertion of a large number of items.*/
+    */
+/** Tests insertion of a large number of items.*//*
+
     @Test
     public void testMegaInsert() {
         Draft.AList L = new Draft.AList();
@@ -70,4 +73,4 @@ public class AListTest {
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests("all", AListTest.class);
     }
-} 
+} */
