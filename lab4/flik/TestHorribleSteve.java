@@ -8,6 +8,5 @@ import static org.junit.Assert.*;
 public class TestHorribleSteve {
     @Test
     public void testFormat() {
-        assertTrue()
+        assert
     }
-}
