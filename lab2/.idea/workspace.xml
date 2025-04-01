@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e1023eb0-d805-4909-b824-cd57031d53d5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../draft/src/Draft.java" beforeDir="false" afterPath="$PROJECT_DIR$/../draft/src/Draft.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;wywwzryrrr&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/wywwzryrrr/cs61b.git&quot;,
+    &quot;accountId&quot;: &quot;99c5d20a-a6ac-489a-8e55-8d23ff886e8a&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2ttGSbzcFlcpqVRhY9A7W0vxU5F" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.DebugExercise1.executor": "Debug",
+    "Application.DebugExercise2.executor": "Run",
+    "JUnit.AddConstantTest,testAddConstantOne and 2 more.executor": "Run",
+    "JUnit.AddConstantTest.executor": "Run",
+    "JUnit.ArithmeticTest.executor": "Run",
+    "JUnit.ArithmeticTest.testProduct.executor": "Run",
+    "JUnit.SetToZeroIfMaxFELTest.executor": "Run",
+    "JUnit.SetToZeroIfMaxFELTest.testZeroOutFELMaxes3.executor": "Run",
+    "JUnit.SquarePrimesTest.executor": "Run",
+    "JUnit.SquarePrimesTest.testSquarePrimes1.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/hibana/Desktop/cs61b/lab2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.language.and.region",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="JUnit.AddConstantTest">
+    <configuration name="AddConstantTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="IntList.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="IntList" />
+      <option name="MAIN_CLASS_NAME" value="IntList.AddConstantTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AddConstantTest,testAddConstantOne and 2 more" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab2" />
+      <option name="TEST_OBJECT" value="pattern" />
+      <patterns>
+        <pattern testClass="IntList.AddConstantTest,testAddConstantOne" />
+        <pattern testClass="IntList.AddConstantTest,testAddConstantTwo" />
+        <pattern testClass="IntList.AddConstantTest,testAddToLargeList" />
+      </patterns>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SetToZeroIfMaxFELTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="IntList.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="IntList" />
+      <option name="MAIN_CLASS_NAME" value="IntList.SetToZeroIfMaxFELTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SquarePrimesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="IntList.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="IntList" />
+      <option name="MAIN_CLASS_NAME" value="IntList.SquarePrimesTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SquarePrimesTest.testSquarePrimes1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="IntList.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="IntList" />
+      <option name="MAIN_CLASS_NAME" value="IntList.SquarePrimesTest" />
+      <option name="METHOD_NAME" value="testSquarePrimes1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.AddConstantTest" />
+        <item itemvalue="JUnit.AddConstantTest,testAddConstantOne and 2 more" />
+        <item itemvalue="JUnit.SquarePrimesTest.testSquarePrimes1" />
+        <item itemvalue="JUnit.SquarePrimesTest" />
+        <item itemvalue="JUnit.SetToZeroIfMaxFELTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e1023eb0-d805-4909-b824-cd57031d53d5" name="Changes" comment="" />
+      <created>1741163957247</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741163957247</updated>
+      <workItem from="1741163958398" duration="714000" />
+      <workItem from="1741227169712" duration="30000" />
+      <workItem from="1741228131516" duration="12368000" />
+      <workItem from="1741258394122" duration="802000" />
+      <workItem from="1741261058131" duration="89000" />
+      <workItem from="1741571407503" duration="2690000" />
+      <workItem from="1741767491462" duration="84000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/DebugExercise/DebugExercise1.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/DebugExercise/DebugExercise2.java</url>
+          <line>65</line>
+          <properties class="DebugExercise.DebugExercise2" method="main">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/IntList/AddConstantTest.java</url>
+          <line>8</line>
+          <properties class="IntList.AddConstantTest" method="testAddConstantOne">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/IntList/AddConstantTest.java</url>
+          <line>15</line>
+          <properties class="IntList.AddConstantTest" method="testAddConstantTwo">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/IntList/AddConstantTest.java</url>
+          <line>22</line>
+          <properties class="IntList.AddConstantTest" method="testAddToLargeList">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

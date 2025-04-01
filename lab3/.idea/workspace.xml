@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ea28c17f-533d-42aa-980c-8756bf49fea2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../skeleton-sp21/proj1/deque/ArrayDeque.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../skeleton-sp21/proj1/deque/ArrayDequeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../skeleton-sp21/proj1/deque/Deque.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../skeleton-sp21/proj1/deque/LinkedListDeque.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../skeleton-sp21/proj1/deque/MaxArrayDeque.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../skeleton-sp21/proj1/deque/MaxArrayDequeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../draft/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../draft/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../draft/src/AListTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../draft/src/AListTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../draft/src/Draft.java" beforeDir="false" afterPath="$PROJECT_DIR$/../draft/src/Draft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj1/deque/LinkedListDequeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../skeleton-sp21/proj1/deque/LinkedListDequeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj1/gh2/GuitarString.java" beforeDir="false" afterPath="$PROJECT_DIR$/../skeleton-sp21/proj1/gh2/GuitarString.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;wywwzryrrr&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/wywwzryrrr/cs61b.git&quot;,
+    &quot;accountId&quot;: &quot;99c5d20a-a6ac-489a-8e55-8d23ff886e8a&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2uFk6SYhdKiVGZfESRAXgOJzC8P" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.SLList.executor": "Run",
+    "Application.StopwatchDemo.executor": "Run",
+    "Application.TimeAList.executor": "Run",
+    "Application.TimeSLList.executor": "Run",
+    "JUnit.TestBuggyAList.randomizedTest.executor": "Run",
+    "JUnit.TestBuggyAList.testThreeAddThreeRemove.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/hibana/Desktop/cs61b/lab3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="JUnit.TestBuggyAList.randomizedTest">
+    <configuration name="StopwatchDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="timingtest.StopwatchDemo" />
+      <module name="lab3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="timingtest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TimeAList" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="timingtest.TimeAList" />
+      <module name="lab3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="timingtest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TimeSLList" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="timingtest.TimeSLList" />
+      <module name="lab3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="timingtest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestBuggyAList.randomizedTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="randomizedtest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="randomizedtest" />
+      <option name="MAIN_CLASS_NAME" value="randomizedtest.TestBuggyAList" />
+      <option name="METHOD_NAME" value="randomizedTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestBuggyAList.testThreeAddThreeRemove" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="randomizedtest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="randomizedtest" />
+      <option name="MAIN_CLASS_NAME" value="randomizedtest.TestBuggyAList" />
+      <option name="METHOD_NAME" value="testThreeAddThreeRemove" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TestBuggyAList.randomizedTest" />
+        <item itemvalue="JUnit.TestBuggyAList.testThreeAddThreeRemove" />
+        <item itemvalue="Application.TimeAList" />
+        <item itemvalue="Application.TimeSLList" />
+        <item itemvalue="Application.StopwatchDemo" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ea28c17f-533d-42aa-980c-8756bf49fea2" name="Changes" comment="" />
+      <created>1741851534168</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741851534168</updated>
+      <workItem from="1741851535308" duration="2261000" />
+      <workItem from="1742197334700" duration="215000" />
+      <workItem from="1742197553293" duration="11495000" />
+      <workItem from="1742548830441" duration="1945000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/../.." />
+    </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <condition expression="this instanceof java.lang.ArrayIndexOutOfBoundsException " language="JAVA" />
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
