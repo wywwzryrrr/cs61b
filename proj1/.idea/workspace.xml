@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="673796dc-f6ae-4821-ad6f-a634e3034584" name="Changes" comment="proj1" />
+    <list default="true" id="673796dc-f6ae-4821-ad6f-a634e3034584" name="Changes" comment="proj1">
+      <change beforePath="$PROJECT_DIR$/../draft/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../draft/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/flik/TestHorribleSteve.java" beforeDir="false" afterPath="$PROJECT_DIR$/../lab4/flik/TestHorribleSteve.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,71 +44,71 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.TTFAF.executor": "Run",
-    "JUnit.ArrayDequeTest.executor": "Run",
-    "JUnit.ArrayDequeTest.testAddFirstResize.executor": "Run",
-    "JUnit.ArrayDequeTest.testAddLastResize.executor": "Run",
-    "JUnit.ArrayDequeTest.testEqualDeque.executor": "Run",
-    "JUnit.ArrayDequeTest.testEqualDifferentDeque.executor": "Run",
-    "JUnit.ArrayDequeTest.testEqualEmptyDeque.executor": "Debug",
-    "JUnit.ArrayDequeTest.testEqualResizeDeque.executor": "Run",
-    "JUnit.ArrayDequeTest.testEqualResizeDeque1.executor": "Run",
-    "JUnit.ArrayDequeTest.testEqualResizeDeque2.executor": "Coverage",
-    "JUnit.ArrayDequeTest.testGet.executor": "Run",
-    "JUnit.ArrayDequeTest.testGetArbitraryElement.executor": "Run",
-    "JUnit.ArrayDequeTest.testIsEmpty.executor": "Run",
-    "JUnit.ArrayDequeTest.testIsFull.executor": "Run",
-    "JUnit.ArrayDequeTest.testPeekElementNoResize.executor": "Debug",
-    "JUnit.ArrayDequeTest.testPeekFirst.executor": "Debug",
-    "JUnit.ArrayDequeTest.testPeekFirstNoResize.executor": "Run",
-    "JUnit.ArrayDequeTest.testPeekLast.executor": "Run",
-    "JUnit.ArrayDequeTest.testPeekLastNoResize.executor": "Run",
-    "JUnit.ArrayDequeTest.testPrintDeque.executor": "Run",
-    "JUnit.ArrayDequeTest.testPrintEmptyDeque.executor": "Run",
-    "JUnit.ArrayDequeTest.testRemoveFirst.executor": "Run",
-    "JUnit.ArrayDequeTest.testRemoveFirstNoResize.executor": "Debug",
-    "JUnit.ArrayDequeTest.testRemoveFirstResize.executor": "Run",
-    "JUnit.ArrayDequeTest.testRemoveLast.executor": "Run",
-    "JUnit.ArrayDequeTest.testRemoveLastNoResize.executor": "Run",
-    "JUnit.ArrayDequeTest.testResizingDown.executor": "Debug",
-    "JUnit.ArrayDequeTest.testSize.executor": "Run",
-    "JUnit.LinkedListDequeTest.addIsEmptySizeTest.executor": "Debug",
-    "JUnit.LinkedListDequeTest.addRemoveTest.executor": "Run",
-    "JUnit.LinkedListDequeTest.executor": "Run",
-    "JUnit.LinkedListDequeTest.testEqualDeque.executor": "Run",
-    "JUnit.LinkedListDequeTest.testGet.executor": "Run",
-    "JUnit.LinkedListDequeTest.testGetRecursive.executor": "Run",
-    "JUnit.LinkedListDequeTest.testIsEmpty.executor": "Run",
-    "JUnit.LinkedListDequeTest.testPrintDeque.executor": "Run",
-    "JUnit.LinkedListDequeTest.testPrintEmptyDeque.executor": "Run",
-    "JUnit.LinkedListDequeTest.testRemove.executor": "Run",
-    "JUnit.MaxArrayDequeTest.executor": "Run",
-    "JUnit.MaxArrayDequeTest.testMaxArrayDeque.executor": "Run",
-    "JUnit.MaxArrayDequeTest.testMaxArrayDeque1.executor": "Run",
-    "JUnit.TestGuitarString.executor": "Run",
-    "JUnit.TestGuitarString.testSample.executor": "Run",
-    "JUnit.TestGuitarString.testTic.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hibana/Desktop/cs61b/proj1",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.language.and.region",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TTFAF.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testAddFirstResize.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testAddLastResize.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testEqualDeque.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testEqualDifferentDeque.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testEqualEmptyDeque.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ArrayDequeTest.testEqualResizeDeque.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testEqualResizeDeque1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testEqualResizeDeque2.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.ArrayDequeTest.testGet.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testGetArbitraryElement.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testIsEmpty.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testIsFull.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testPeekElementNoResize.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ArrayDequeTest.testPeekFirst.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ArrayDequeTest.testPeekFirstNoResize.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testPeekLast.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testPeekLastNoResize.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testPrintDeque.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testPrintEmptyDeque.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testRemoveFirst.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testRemoveFirstNoResize.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ArrayDequeTest.testRemoveFirstResize.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testRemoveLast.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testRemoveLastNoResize.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ArrayDequeTest.testResizingDown.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ArrayDequeTest.testSize.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LinkedListDequeTest.addIsEmptySizeTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.LinkedListDequeTest.addRemoveTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LinkedListDequeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LinkedListDequeTest.testEqualDeque.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LinkedListDequeTest.testGet.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LinkedListDequeTest.testGetRecursive.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LinkedListDequeTest.testIsEmpty.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LinkedListDequeTest.testPrintDeque.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LinkedListDequeTest.testPrintEmptyDeque.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LinkedListDequeTest.testRemove.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MaxArrayDequeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MaxArrayDequeTest.testMaxArrayDeque.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MaxArrayDequeTest.testMaxArrayDeque1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestGuitarString.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestGuitarString.testSample.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestGuitarString.testTic.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hibana/Desktop/cs61b/proj1&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.language.and.region&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Application.TTFAF">
+}</component>
+  <component name="RunManager" selected="JUnit.LinkedListDequeTest">
     <configuration name="TTFAF" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gh2.TTFAF" />
       <module name="proj1" />
@@ -149,6 +153,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="LinkedListDequeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proj1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="deque.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="deque" />
+      <option name="MAIN_CLASS_NAME" value="deque.LinkedListDequeTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LinkedListDequeTest.testEqualDeque" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proj1" />
       <extension name="coverage">
@@ -165,29 +184,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LinkedListDequeTest.testPrintEmptyDeque" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="proj1" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="deque.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="deque" />
-      <option name="MAIN_CLASS_NAME" value="deque.LinkedListDequeTest" />
-      <option name="METHOD_NAME" value="testPrintEmptyDeque" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LinkedListDequeTest" />
         <item itemvalue="Application.TTFAF" />
         <item itemvalue="JUnit.ArrayDequeTest" />
         <item itemvalue="JUnit.ArrayDequeTest.testRemoveFirstNoResize" />
         <item itemvalue="JUnit.LinkedListDequeTest.testEqualDeque" />
-        <item itemvalue="JUnit.LinkedListDequeTest.testPrintEmptyDeque" />
       </list>
     </recent_temporary>
   </component>
@@ -210,6 +213,7 @@
       <workItem from="1742273427788" duration="20007000" />
       <workItem from="1742461373624" duration="75449000" />
       <workItem from="1743132638933" duration="9471000" />
+      <workItem from="1743499878229" duration="73000" />
     </task>
     <task id="LOCAL-00001" summary="proj1">
       <option name="closed" value="true" />
