@@ -5,10 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4f16b8f-89d7-4ac8-9774-23d6bb2936cb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/javalib1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flik/Flik.java" beforeDir="false" afterPath="$PROJECT_DIR$/flik/Flik.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flik/TestHorribleSteve.java" beforeDir="false" afterPath="$PROJECT_DIR$/flik/TestHorribleSteve.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/gitlet/Commit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/gitlet/DumpObj.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/gitlet/Dumpable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/gitlet/GitletException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/gitlet/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/gitlet/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/gitlet/Repository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/gitlet/Utils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/testing/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/testing/src/notwug.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/proj2/testing/src/wug.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +165,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743151701799</updated>
-      <workItem from="1743151702963" duration="9560000" />
+      <workItem from="1743151702963" duration="10232000" />
     </task>
     <servers />
   </component>
