@@ -5,12 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4f16b8f-89d7-4ac8-9774-23d6bb2936cb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/javalib1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flik/Flik.java" beforeDir="false" afterPath="$PROJECT_DIR$/flik/Flik.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flik/TestHorribleSteve.java" beforeDir="false" afterPath="$PROJECT_DIR$/flik/TestHorribleSteve.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -35,29 +45,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.HorribleSteve.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hibana/Desktop/cs61b/lab4",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.language.and.region",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.HorribleSteve.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestHorribleSteve.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestHorribleSteve.test.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestHorribleSteve.test2.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hibana/Desktop/cs61b/lab4&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.language.and.region&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RunManager" selected="Application.HorribleSteve">
     <configuration name="HorribleSteve" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="flik.HorribleSteve" />
       <module name="lab4" />
@@ -71,9 +84,59 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestHorribleSteve" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="flik.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="flik" />
+      <option name="MAIN_CLASS_NAME" value="flik.TestHorribleSteve" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestHorribleSteve.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="flik.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="flik" />
+      <option name="MAIN_CLASS_NAME" value="flik.TestHorribleSteve" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestHorribleSteve.test2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="flik.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="flik" />
+      <option name="MAIN_CLASS_NAME" value="flik.TestHorribleSteve" />
+      <option name="METHOD_NAME" value="test2" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.HorribleSteve" />
+        <item itemvalue="JUnit.TestHorribleSteve" />
+        <item itemvalue="JUnit.TestHorribleSteve.test2" />
+        <item itemvalue="JUnit.TestHorribleSteve.test" />
       </list>
     </recent_temporary>
   </component>
@@ -93,7 +156,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743151701799</updated>
-      <workItem from="1743151702963" duration="6600000" />
+      <workItem from="1743151702963" duration="9560000" />
     </task>
     <servers />
   </component>
@@ -103,16 +166,18 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/flik/HorribleSteve.java</url>
-          <line>3</line>
-          <properties class="flik.HorribleSteve" method="main">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="3" />
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="a &gt;= 127" language="JAVA" />
+          <url>file://$PROJECT_DIR$/flik/Flik.java</url>
+          <line>10</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/lab4$HorribleSteve.ic" NAME="HorribleSteve Coverage Results" MODIFIED="1743499270342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>flik.*</FILTER>
+    </SUITE>
   </component>
 </project>
