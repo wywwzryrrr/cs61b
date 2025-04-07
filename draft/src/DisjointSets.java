@@ -9,21 +9,34 @@ public class DisjointSets {
             }
         }
 
-        private int root(int p) {
+        private int find(int p) {
             while (parent[p] >= 0) {
                 p = parent[p];
             }
             return p;
         }
 
+        private int findWithPathCompression(int p) {
+            int root = p;
+            while (root != parent[root]) {
+                root = parent[root];
+            }
+            while (p != root) {
+                int newp = parent[p];
+                parent[p] = root;
+                p = newp;
+            }
+            return root;
+        }
+
         public void connect(int p, int q) {
-            int i = root(p);
-            int j = root(q);
+            int i = find(p);
+            int j = find(q);
             parent[i] = j;
         }
 
         public boolean isConnected(int p, int q) {
-            return root(p) == root(q);
+            return find(p) == find(q);
         }
     }
 }
