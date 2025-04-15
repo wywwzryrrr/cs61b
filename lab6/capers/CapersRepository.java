@@ -23,6 +23,7 @@ public class CapersRepository {
     //      function in Utils
     static final File CAPERS_FOLDER = join(CWD, ".capers");
     static final File STORY = join(CAPERS_FOLDER, "story");
+
     /**
      * Does required filesystem operations to allow for persistence.
      * (creates any necessary folders or files)
@@ -34,7 +35,13 @@ public class CapersRepository {
      */
     public static void setupPersistence() {
         // TODO
-
+        CAPERS_FOLDER.mkdir();
+        Dog.DOG_FOLDER.mkdir();
+        try {
+            STORY.createNewFile();
+        } catch (Exception e) {
+            exitWithError(e.toString());
+        }
     }
 
     /**
@@ -44,6 +51,9 @@ public class CapersRepository {
      */
     public static void writeStory(String text) {
         // TODO
+        text = readContentsAsString(STORY) + text + "\n";
+        writeContents(STORY, text); //覆盖文件内容
+        System.out.println(text);
     }
 
     /**
