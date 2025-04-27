@@ -309,7 +309,7 @@ public class Draft {
         }
     }*/
 
-    public static void printParty(int N) {
+    /*public static void printParty(int N) {
         for (int i = 1; i <= N; i *= 2) {
             for (int j = 0; j < i; j++) {
                 System.out.println("hello");
@@ -348,5 +348,8 @@ public class Draft {
         System.out.println(f3(2));
         System.out.println(f3(3));
         System.out.println(f3(4));
-    }
+    }*/
+
+
+
 }
