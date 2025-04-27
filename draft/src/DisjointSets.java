@@ -39,4 +39,13 @@ public class DisjointSets {
             return find(p) == find(q);
         }
     }
+
+    public static void main(String[] args) {
+        QuickUnionDS a = new QuickUnionDS(5);
+        System.out.println(a.find(0));
+        System.out.println(a.find(1));
+        a.connect(1, 0);
+        System.out.println(a.parent[0]);
+        System.out.println(a.parent[1]);
+    }
 }

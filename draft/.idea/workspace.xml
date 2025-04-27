@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="draft">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/draft/Draft.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/draft/Draft.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Draft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Draft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DisjointSets.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DisjointSets.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +47,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.AListTest.executor": "Run",
+    "Application.DisjointSets.executor": "Run",
     "Application.Dogs$DogsLauncher.executor": "Run",
     "Application.DogsLauncher.executor": "Run",
     "Application.Draft$Intlist.executor": "Run",
@@ -86,9 +86,16 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Draft">
+  <component name="RunManager" selected="Application.DisjointSets">
     <configuration name="AListTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AListTest" />
+      <module name="draft" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DisjointSets" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DisjointSets" />
       <module name="draft" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -97,16 +104,6 @@
     <configuration name="Draft" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Draft" />
       <module name="draft" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AListTest.testGet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="draft" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="AListTest" />
-      <option name="METHOD_NAME" value="testGet" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -133,11 +130,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.DisjointSets" />
         <item itemvalue="Application.Draft" />
         <item itemvalue="JUnit.AListTest.testMegaInsert" />
         <item itemvalue="Application.AListTest" />
         <item itemvalue="JUnit.AListTest.testRemove" />
-        <item itemvalue="JUnit.AListTest.testGet" />
       </list>
     </recent_temporary>
   </component>
@@ -162,7 +159,7 @@
       <workItem from="1741684674773" duration="22379000" />
       <workItem from="1742460494635" duration="867000" />
       <workItem from="1742461370993" duration="10044000" />
-      <workItem from="1743584325260" duration="10611000" />
+      <workItem from="1743584325260" duration="33001000" />
     </task>
     <task id="LOCAL-00001" summary="draft">
       <option name="closed" value="true" />
@@ -185,6 +182,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="draft" />
