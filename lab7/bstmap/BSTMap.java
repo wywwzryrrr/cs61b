@@ -1,23 +1,25 @@
 package bstmap;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-public class BSTMap<K, V> implements Map61B<K, V> {
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
+
     @Override
     public void clear() {
 
     }
 
     @Override
-    public boolean containsKey(Object key) {
+    public boolean containsKey(K key) {
         return false;
     }
 
     @Override
-    public Object get(Object key) {
+    public V get(K key) {
         return null;
     }
 
@@ -27,37 +29,37 @@ public class BSTMap<K, V> implements Map61B<K, V> {
     }
 
     @Override
-    public void put(Object key, Object value) {
+    public void put(K key, V value) {
 
     }
 
     @Override
-    public Set keySet() {
+    public Set<K> keySet() {
         return Set.of();
     }
 
     @Override
-    public Object remove(Object key) {
+    public V remove(K key) {
         return null;
     }
 
     @Override
-    public Object remove(Object key, Object value) {
+    public V remove(K key, V value) {
         return null;
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<K> iterator() {
         return null;
     }
 
     @Override
-    public void forEach(Consumer action) {
+    public void forEach(Consumer<? super K> action) {
         Map61B.super.forEach(action);
     }
 
     @Override
-    public Spliterator spliterator() {
+    public Spliterator<K> spliterator() {
         return Map61B.super.spliterator();
     }
 }
