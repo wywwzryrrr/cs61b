@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="draft">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DisjointSets.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DisjointSets.java" afterDir="false" />
-    </list>
+    <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="draft" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -159,7 +156,7 @@
       <workItem from="1741684674773" duration="22379000" />
       <workItem from="1742460494635" duration="867000" />
       <workItem from="1742461370993" duration="10044000" />
-      <workItem from="1743584325260" duration="33001000" />
+      <workItem from="1743584325260" duration="35982000" />
     </task>
     <task id="LOCAL-00001" summary="draft">
       <option name="closed" value="true" />
