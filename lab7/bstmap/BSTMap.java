@@ -23,6 +23,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private BSTNode root;
 
     @Override
+    /** 由于java内存回收机制，使根节点不可达即可使整棵树不可达，从而触发回收机制，清空整棵树 */
     public void clear() {
         root = null;
     }
@@ -56,6 +57,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     @Override
+    /** 所有节点通过根节点访问，所以直接只需访问root.size即可获取树的总大小 */
     public int size() {
         if (root == null) {
             return 0;
