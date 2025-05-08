@@ -44,9 +44,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (node == null) {
             return null;
         }
-        if (key.compareTo(node.key) < 0) {
+        int cmp = key.compareTo(node.key);
+        if (cmp < 0) {
             return getNode(node.left, key);
-        } else if (key.compareTo(node.key) > 0) {
+        } else if (cmp > 0) {
             return getNode(node.right, key);
         } else {
             return node;
@@ -63,7 +64,22 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public void put(K key, V value) {
+        root = put(root, key, value);
+    }
 
+    private BSTNode put(BSTNode node, K key, V value) {
+        if (node == null) {
+            return new BSTNode(key, value, 1);
+        }
+        int cmp = key.compareTo(node.key);
+        if (cmp < 0) {
+            node.left = put(node.left, key, value);
+        } else if (cmp > 0) {
+            node.right = put(node.right, key, value);
+        } else {
+            node.value = value;
+        }
+        return node;
     }
 
     @Override
@@ -86,17 +102,16 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void forEach(Consumer<? super K> action) {
-        Map61B.super.forEach(action);
+    public void printInOrder() {
+        printInOrder(root);
     }
 
-    @Override
-    public Spliterator<K> spliterator() {
-        return Map61B.super.spliterator();
-    }
-
-    public BSTNode printInOrder() {
-        return null;
+    private void printInOrder(BSTNode node) {
+        if (node == null) {
+            return;
+        }
+        printInOrder(node.left);
+        System.out.println(node.key + ": " + node.value);
+        printInOrder(node.right);
     }
 }
