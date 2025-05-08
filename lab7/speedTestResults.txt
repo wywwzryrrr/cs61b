@@ -1,0 +1,13 @@
+#1 randomTest Enter # strings to insert into the maps: dasf asdf
+               Please enter a positive integer: Please enter a positive integer: 90000
+               --Stack Overflow -- couldn't add 90000 strings of length 4.
+               class bstmap.BSTMap: 0.04 sec
+               Java's Built-in TreeMap: 0.03 sec
+               Java's Built-in HashMap: 0.01 sec
+
+#2 randomTest Enter # strings to insert into the maps: adf af ad a s a s a fsadf s
+              Please enter a positive integer: Please enter a positive integer: Please enter a positive integer: Please enter a positive integer: Please enter a positive integer: Please enter a positive integer: Please enter a positive integer: Please enter a positive integer: Please enter a positive integer: Please enter a positive integer: 9080
+              class bstmap.ULLMap: 0.27 sec
+              class bstmap.BSTMap: 0.00 sec
+              Java's Built-in TreeMap: 0.00 sec
+              Java's Built-in HashMap: 0.00 sec
