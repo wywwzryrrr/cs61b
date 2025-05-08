@@ -8,13 +8,13 @@ import java.util.function.Consumer;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private class BSTNode {
-        private K item;
+        private K key;
         private V value;
         private int size;
         private BSTNode left, right;
 
-        public BSTNode(K item, V value, int size) {
-            this.item = item;
+        public BSTNode(K key, V value, int size) {
+            this.key = key;
             this.value = value;
             this.size = size;
         }
@@ -44,9 +44,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (node == null) {
             return null;
         }
-        if (key.compareTo(node.item) < 0) {
+        if (key.compareTo(node.key) < 0) {
             return getNode(node.left, key);
-        }else if (key.compareTo(node.item) > 0) {
+        } else if (key.compareTo(node.key) > 0) {
             return getNode(node.right, key);
         } else {
             return node;
@@ -63,7 +63,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public void put(K key, V value) {
-        
+
     }
 
     @Override
