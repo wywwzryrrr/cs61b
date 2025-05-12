@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="draft" />
+    <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="draft">
+      <change afterPath="$PROJECT_DIR$/src/SLList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/draft.iml" beforeDir="false" afterPath="$PROJECT_DIR$/draft.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Draft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Draft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj2/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/.idea/vcs.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +55,7 @@
     "Application.DogsLauncher.executor": "Run",
     "Application.Draft$Intlist.executor": "Run",
     "Application.Draft$SLList.executor": "Run",
-    "Application.Draft.executor": "Run",
+    "Application.Draft.executor": "Debug",
     "Application.Main.executor": "Run",
     "Application.second.executor": "Run",
     "JUnit.AListTest.testAddAndGetLast.executor": "Run",
@@ -83,7 +89,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.DisjointSets">
+  <component name="RunManager" selected="Application.Draft">
     <configuration name="AListTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AListTest" />
       <module name="draft" />
@@ -127,8 +133,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DisjointSets" />
         <item itemvalue="Application.Draft" />
+        <item itemvalue="Application.DisjointSets" />
         <item itemvalue="JUnit.AListTest.testMegaInsert" />
         <item itemvalue="Application.AListTest" />
         <item itemvalue="JUnit.AListTest.testRemove" />
@@ -157,6 +163,7 @@
       <workItem from="1742460494635" duration="867000" />
       <workItem from="1742461370993" duration="10044000" />
       <workItem from="1743584325260" duration="35982000" />
+      <workItem from="1746580655958" duration="2816000" />
     </task>
     <task id="LOCAL-00001" summary="draft">
       <option name="closed" value="true" />
@@ -194,6 +201,21 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="draft" />
     <option name="LAST_COMMIT_MESSAGE" value="draft" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Draft.java</url>
+          <line>366</line>
+          <properties class="Draft" method="main">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

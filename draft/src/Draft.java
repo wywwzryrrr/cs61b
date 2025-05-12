@@ -2,6 +2,9 @@ import jh61b.junit.In;
 
 import java.sql.ClientInfoStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** cs61b draft */
 
 public class Draft {
@@ -351,5 +354,17 @@ public class Draft {
     }*/
 
 
+    public static void mystery(int n) {
+        SLList list = new SLList(200);
+        for (int i = 1; list.size() < n; i += 1) {
+            for (int j = 0; j < i; j += 1) {
+                list.addFirst(j);
+            }
+            System.out.print(list.size() + " + ");
+        }
+    }
 
+    public static void main(String[] args) {
+        mystery(6);
+    }
 }
