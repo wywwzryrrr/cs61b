@@ -10,14 +10,14 @@ public class DisjointSets {
         }
 
         /* 不使用路径压缩 **/
-        private int find(int p) {
+        /*private int find(int p) {
             int root = p;
             if (parent[root] < 0) {
                 return root;
             } else {
                 return find(parent[root]);
             }
-        }
+        }*/
 
         private int findWithPathCompression(int p) {
             int root = p;
