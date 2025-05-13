@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="draft">
-      <change afterPath="$PROJECT_DIR$/src/SLList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/draft.iml" beforeDir="false" afterPath="$PROJECT_DIR$/draft.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Draft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Draft.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../proj2/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DisjointSets.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DisjointSets.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +86,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Draft">
+  <component name="RunManager" selected="Application.DisjointSets">
     <configuration name="AListTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AListTest" />
       <module name="draft" />
@@ -133,8 +130,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Draft" />
         <item itemvalue="Application.DisjointSets" />
+        <item itemvalue="Application.Draft" />
         <item itemvalue="JUnit.AListTest.testMegaInsert" />
         <item itemvalue="Application.AListTest" />
         <item itemvalue="JUnit.AListTest.testRemove" />
@@ -163,7 +160,7 @@
       <workItem from="1742460494635" duration="867000" />
       <workItem from="1742461370993" duration="10044000" />
       <workItem from="1743584325260" duration="35982000" />
-      <workItem from="1746580655958" duration="2816000" />
+      <workItem from="1746580655958" duration="13050000" />
     </task>
     <task id="LOCAL-00001" summary="draft">
       <option name="closed" value="true" />
