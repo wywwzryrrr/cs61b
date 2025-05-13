@@ -5,10 +5,11 @@ public class DisjointSets {
         public QuickUnionDS(int num) {
             parent = new int[num];
             for (int i = 0; i < num; i++) {
-                parent[i] = -1;
+                parent[i] = -1; // 初始化为根节点，子树大小为1
             }
         }
 
+        /* 不使用路径压缩 **/
         private int find(int p) {
             int root = p;
             if (parent[root] < 0) {
@@ -49,17 +50,12 @@ public class DisjointSets {
     }
 
     public static void main(String[] args) {
-       /* QuickUnionDS a = new QuickUnionDS(5);
-        System.out.println(a.find(0));
-        System.out.println(a.find(1));
-        a.connect(1, 0);
-        System.out.println(a.parent[0]);
-        System.out.println(a.parent[1]);*/
         QuickUnionDS b = new QuickUnionDS(5);
-        System.out.println(b.findWithPathCompression(4));
-        System.out.println(b.findWithPathCompression(1));
+        System.out.println("Root of 4: " + b.findWithPathCompression(4)); // 4
+        System.out.println("Root of 1: " + b.findWithPathCompression(1)); // 1
         b.connect(1, 4);
-        System.out.println(b.parent[1]);
-        System.out.println(b.parent[4]);
+        System.out.println("Parent array at 1: " + b.parent[1]); // 4
+        System.out.println("Parent array at 4: " + b.parent[4]); // -2
+        System.out.println("Are 1 and 4 connected? " + b.isConnected(1, 4)); // true
     }
 }
