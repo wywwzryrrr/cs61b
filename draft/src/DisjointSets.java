@@ -1,8 +1,8 @@
 public class DisjointSets {
-    public static class QuickUnionDS {
+    public static class WeightedQuickUnionDS {
         private int[] parent;
 
-        public QuickUnionDS(int num) {
+        public WeightedQuickUnionDS(int num) {
             parent = new int[num];
             for (int i = 0; i < num; i++) {
                 parent[i] = -1; // 初始化为根节点，子树大小为1
@@ -50,7 +50,7 @@ public class DisjointSets {
     }
 
     public static void main(String[] args) {
-        QuickUnionDS b = new QuickUnionDS(5);
+        WeightedQuickUnionDS b = new WeightedQuickUnionDS(5);
         System.out.println("Root of 4: " + b.findWithPathCompression(4)); // 4
         System.out.println("Root of 1: " + b.findWithPathCompression(1)); // 1
         b.connect(1, 4);
