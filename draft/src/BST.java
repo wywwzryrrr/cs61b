@@ -1,8 +1,4 @@
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Spliterator;
-import java.util.function.Consumer;
+import java.util.*;
 
 public class BST<K extends Comparable<K>, V> {
     private class BSTNode {
@@ -107,5 +103,60 @@ public class BST<K extends Comparable<K>, V> {
         printInOrder(node.left);
         System.out.println(node.key + ": " + node.value);
         printInOrder(node.right);
+    }
+
+
+    /**
+         D
+         |
+         |__F_    // right
+         |    |__G
+         |    |__E
+         |__B_     // left
+              |__C
+              |__A
+     */
+
+    // D B A C F E G
+    public void preOrder(BSTNode node) {
+        if (root == null) {
+            return;
+        }
+        System.out.println(node.key + ": " + node.value);
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+
+    // A B C D E F G
+    public void inOrder(BSTNode node) {
+        if (root == null) {
+            return;
+        }
+        inOrder(node.left);
+        System.out.println(node.key + ": " + node.value);
+        inOrder(node.right);
+    }
+
+    // A C B E G F D
+    public void postOrder(BSTNode node) {
+        if (root == null) {
+            return;
+        }
+        postOrder(node.left);
+        postOrder(node.right);
+        System.out.println(node.key + ": " + node.value);
+    }
+
+    // D B F A C E G
+    public void levelOrder(BSTNode node) {
+        if (root == null) {
+            return;
+        }
+        Queue<BSTNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            BSTNode current = queue.poll();
+            System.out.println(current.key + ": " + current.value);
+        }
     }
 }
