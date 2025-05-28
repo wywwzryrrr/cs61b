@@ -1,12 +1,12 @@
 public class SLList {
     public static class IntNode {
-            public int item;
-            public IntNode next;
-            public IntNode(int i, IntNode n) {
-                item = i;
-                next = n;
-            }
+        public int item;
+        public IntNode next;
+        public IntNode(int i, IntNode n) {
+            item = i;
+            next = n;
         }
+    }
 
         private IntNode first;
         private int size;
