@@ -354,7 +354,7 @@ public class Draft {
     }*/
 
 
-    public static void mystery(int n) {
+    /*public static void mystery(int n) {
         SLList list = new SLList(200);
         for (int i = 1; list.size() < n; i += 1) {
             for (int j = 0; j < i; j += 1) {
@@ -366,5 +366,5 @@ public class Draft {
 
     public static void main(String[] args) {
         mystery(6);
-    }
+    }*/
 }
