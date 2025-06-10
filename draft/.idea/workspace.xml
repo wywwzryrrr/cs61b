@@ -7,9 +7,6 @@
     <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="WQU">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../skeleton-sp21/lab8/hashmap/MyHashMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/../skeleton-sp21/lab8/hashmap/MyHashMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/lab8/speed/BucketsSpeedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../skeleton-sp21/lab8/speed/BucketsSpeedTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/lab8/speed/InsertInOrderSpeedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../skeleton-sp21/lab8/speed/InsertInOrderSpeedTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../skeleton-sp21/lab8/speed/InsertRandomSpeedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../skeleton-sp21/lab8/speed/InsertRandomSpeedTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
