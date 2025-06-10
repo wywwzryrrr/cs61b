@@ -148,7 +148,28 @@ public class MyHashMap<K, V> implements hashmap.Map61B<K, V> {
 
     @Override
     public void put(K key, V value) {
+        if (key == null || value == null) {
+            throw new IllegalArgumentException();
+        }
+        int index = Math.floorMod(key.hashCode(), buckets.length);
+        for (Node node : buckets[index]) {
+            if (node.key.equals(key)) {
+                node.value = value;
+                return;
+            } else {
+                Node newNode = createNode(key, value);
+                buckets[index].add(newNode);
+                size++;
+            }
+        }
+        if (size / buckets.length >= loadFactor) {
+            resize();
+        }
         return;
+    }
+
+    private void resize() {
+        
     }
 
     @Override
