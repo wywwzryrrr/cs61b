@@ -119,22 +119,36 @@ public class MyHashMap<K, V> implements hashmap.Map61B<K, V> {
 
     @Override
     public boolean containsKey(K key) {
-        return false;
+        return get(key) != null;
     }
 
     @Override
     public V get(K key) {
+        Node node = getNode(key);
+        return node == null ? null : node.value;
+    }
+
+    private Node getNode(K key) {
+        if (size == 0) {
+            return null;
+        }
+        int index = Math.floorMod(key.hashCode(), buckets.length);
+        for (Node node : buckets[index]) {
+            if (node.key.equals(key)) {
+                return node;
+            }
+        }
         return null;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public void put(K key, V value) {
-
+        return;
     }
 
     @Override
