@@ -132,7 +132,8 @@ public class MyHashMap<K, V> implements hashmap.Map61B<K, V> {
         if (size == 0) {
             return null;
         }
-        for (Node node : buckets[indexOf(key)]) {
+        int index = Math.floorMod(key.hashCode(), buckets.length);
+        for (Node node : buckets[index]) {
             if (node.key.equals(key)) {
                 return node;
             }
@@ -145,19 +146,15 @@ public class MyHashMap<K, V> implements hashmap.Map61B<K, V> {
         return size;
     }
 
-    private int indexOf(K key) {
-        int index = Math.floorMod(key.hashCode(), buckets.length);
-        return index;
-    }
-
     @Override
     public void put(K key, V value) {
         Node node = getNode(key);
         if (node != null) {
             node.value = value;
         } else {
+            int index = Math.floorMod(key.hashCode(), buckets.length);
             Node newNode = createNode(key, value);
-            buckets[indexOf(key)].add(newNode);
+            buckets[index].add(newNode);
             size++;
         }
         if (size / buckets.length > loadFactor) {
@@ -166,7 +163,14 @@ public class MyHashMap<K, V> implements hashmap.Map61B<K, V> {
     }
 
     private void resize(int newSize) {
-
+        Collection<Node>[] newBuckets = createTable(newSize);
+        for (int i = 0; i < buckets.length; i++) {
+            for (Node node : buckets[i]) {
+                int index = Math.floorMod(node.key.hashCode(), newBuckets.length);
+                newBuckets[index].add(node);
+            }
+        }
+        buckets = newBuckets;
     }
 
     @Override
