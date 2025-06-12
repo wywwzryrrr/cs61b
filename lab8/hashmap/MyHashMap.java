@@ -38,13 +38,11 @@ public class MyHashMap<K, V> implements hashmap.Map61B<K, V> {
     /** Constructors */
     public MyHashMap() {
         buckets = createTable(16);
-        size = 0;
         loadFactor = 0.75;
     }
 
     public MyHashMap(int initialSize) {
         buckets = createTable(initialSize);
-        size = 0;
         loadFactor = 0.75;
     }
 
