@@ -1,8 +1,7 @@
 package gitlet;
 
 // TODO: any imports you need here
-
-import java.util.Date; // TODO: You'll likely use this in this class
+import java.util.*;
 
 /** Represents a gitlet commit object.
  *  TODO: It's a good idea to give a description here of what else this Class
@@ -18,9 +17,34 @@ public class Commit {
      * comment above them describing what that variable represents and how that
      * variable is used. We've provided one example for `message`.
      */
+    private String message;
+    private String timestamp;
+    //Pointer that tracks the commit
+    private Commit parent;
+
+    public Commit(String message, Commit parent) {
+        this.message = message;
+        this.parent = parent;
+        if (parent == null) {
+            this.timestamp = "00:00:00 UTC, Thursday, 1 January 1970";
+        }
+        this.timestamp = getTimestamp();
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getTimestamp() {
+        Date timeStamp = new Date();
+        return timeStamp.toString();
+    }
+
+    public Commit getParent() {
+        return parent;
+    }
 
     /** The message of this Commit. */
-    private String message;
 
     /* TODO: fill in the rest of this class. */
 }
