@@ -14,32 +14,21 @@ public class Main {
         // TODO: what if args is empty?
         String firstArg = args[0];
         Commands commands = new Commands();
-        switch(firstArg) {
-            case "init":
-                // TODO: handle the `init` command
-                commands.init();
-                break;
-            case "add":
-                // TODO: handle the `add [filename]` command
-                commands.add();
-                break;
-            // TODO: FILL THE REST IN
-            case "commit":
-                commands.commit();
-                break;
-            case "merge":
-                commands.merge();
-                break;
-            case "rm":
-                commands.rm();
-                break;
-            case "log":
-                commands.log();
-                break;
-            case "globalLog":
-                commands.globalLog();
-                break;
-                case ""
+        switch (firstArg) {
+            case "init" -> commands.init();
+            case "add" -> commands.add();
+            case "commit" -> commands.commit();
+            case "merge" -> commands.merge();
+            case "rm" -> commands.rm();
+            case "log" -> commands.log();
+            case "globalLog" -> commands.globalLog();
+            case "find" -> commands.find();
+            case "branch" -> commands.branch();
+            case "rmBranch" -> commands.rmBranch();
+            case "status" -> commands.status();
+            case "checkout" -> commands.checkout();
+            case "reset" -> commands.reset();
+            default -> System.out.println("Unknown command: " + firstArg);
         }
     }
 }

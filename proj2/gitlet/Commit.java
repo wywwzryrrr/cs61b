@@ -1,6 +1,7 @@
 package gitlet;
 
 // TODO: any imports you need here
+import java.io.Serializable;
 import java.util.*;
 
 /** Represents a gitlet commit object.
@@ -9,7 +10,7 @@ import java.util.*;
  *
  *  @author TODO
  */
-public class Commit {
+public class Commit implements Serializable {
     /**
      * TODO: add instance variables here.
      *
