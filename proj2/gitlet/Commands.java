@@ -1,6 +1,9 @@
 package gitlet;
 
 import java.io.*;
+import java.util.List;
+
+import static gitlet.Repository.*;
 
 public class Commands implements CommandsInterface, Serializable {
 
@@ -21,27 +24,20 @@ public class Commands implements CommandsInterface, Serializable {
     // "A Gitlet version-control system already exists in the current directory."
     @Override
     public void init() {
-        File initDir = new File(System.getProperty("user.dir"));
-        File gitletDir = new File(initDir, ".gitlet");
-        if (gitletDir.exists()) {
+        if (GITLET_DIR.exists()) {
             System.out.println("A Gitlet version-control system already exists in the current directory.");
             return;
         }
-        gitletDir.mkdir();
+        List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR, STAGES_DIR, COMMITS_DIR);
+        for (File dir : dirs) {
+            dir.mkdirs();
+        }
         Commit initCommit = new Commit("initial commit", null);
         String UID = Utils.sha1(initCommit);
-        File blobsDir = Utils.join(gitletDir, "blobs");
-        blobsDir.mkdirs();
-        File headsDir = Utils.join(gitletDir, "refs", "heads");
-        headsDir.mkdirs();
-        File masterFile = Utils.join(headsDir, "master");
-        Utils.writeContents(masterFile, UID);
-        File headFile = Utils.join(gitletDir, "HEAD");
-        Utils.writeContents(headFile, "refs/heads/master");
-        File stagesDir = Utils.join(gitletDir, "stage");
-        stagesDir.mkdirs();
-        File commitsDir = Utils.join(gitletDir, "commits", UID);
-        Utils.writeObject(commitsDir, initCommit);
+        Utils.writeContents(MASTER_FILE, UID);
+        Utils.writeContents(HEAD_FILE, "refs/heads/master");
+        File commitsFile = Utils.join(COMMITS_DIR, UID);
+        Utils.writeObject(commitsFile, initCommit);
     }
 
     @Override

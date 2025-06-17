@@ -12,6 +12,10 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO: what if args is empty?
+        if (args.length == 0 || args == null) {
+            System.out.println("Please enter a command");
+            System.exit(0);
+        }
         String firstArg = args[0];
         Commands commands = new Commands();
         switch (firstArg) {
@@ -28,7 +32,7 @@ public class Main {
             case "status" -> commands.status();
             case "checkout" -> commands.checkout();
             case "reset" -> commands.reset();
-            default -> System.out.println("Unknown command: " + firstArg);
+            default -> System.out.println("No command with that name exists.");
         }
     }
 }
