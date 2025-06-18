@@ -24,7 +24,7 @@ public class Repository {
     /**
      * representation of a gitlet repo
      * CWD (dir)
-     * └── .gitlet/
+     * └── .gitlet/ (dir)
      *     ├── HEAD (file)
      *     ├── refs/ (dir)
      *     ├── blobs/ (dir)
