@@ -6,7 +6,7 @@ public interface CommandsInterface {
 
     public void commit();
 
-    public void add();
+    public void add(String[] args);
 
     public void rm();
 
