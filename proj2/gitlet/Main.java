@@ -20,7 +20,7 @@ public class Main {
         Commands commands = new Commands();
         switch (firstArg) {
             case "init" -> commands.init();
-            case "add" -> commands.add();
+            case "add" -> commands.add(args);
             case "commit" -> commands.commit();
             case "merge" -> commands.merge();
             case "rm" -> commands.rm();
