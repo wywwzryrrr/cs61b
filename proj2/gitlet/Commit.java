@@ -21,15 +21,25 @@ public class Commit implements Serializable {
     private String message;
     private String timestamp;
     // Pointer that tracks the commit
-    private Commit parent;
+    private String parent;
+    /**
+     * The snapshots of files of this commit.
+     * <p>
+     * The keys are files in CWD with absolute path.
+     * <p>
+     * The values are blobs in BLOB_DIR/shortCommitUid
+     */
+    private HashMap<String, String> blobs;
+    /**
+     * The SHA-1 id of this Commit.
+     */
+    private String UID;
 
-    public Commit(String message, Commit parent) {
+    public Commit(String message, String parent) {
         this.message = message;
         this.parent = parent;
-        if (parent == null) {
-            this.timestamp = "00:00:00 UTC, Thursday, 1 January 1970";
-        }
-        this.timestamp = getTimestamp();
+        this.timestamp = (parent == null) ? "00:00:00 UTC, Thursday, 1 January 1970" : new Date().toString();
+        this.blobs = new HashMap<>(blobs);
     }
 
     public String getMessage() {
@@ -37,12 +47,15 @@ public class Commit implements Serializable {
     }
 
     public String getTimestamp() {
-        Date date = new Date();
-        return date.toString();
+        return timestamp;
     }
 
-    public Commit getParent() {
+    public String getParent() {
         return parent;
+    }
+
+    public HashMap<String, String> getBlobs() {
+        return blobs;
     }
 
     /** The message of this Commit. */
