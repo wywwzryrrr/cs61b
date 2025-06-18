@@ -22,6 +22,21 @@ public class Repository {
      */
 
     /**
+     * representation of a gitlet repo
+     * CWD (dir)
+     * └── .gitlet/
+     *     ├── HEAD (file)
+     *     ├── refs/ (dir)
+     *     ├── blobs/ (dir)
+     *     ├── commits/ (dir)
+     *     ├── heads/ (dir)
+     *     │   └── master (file)
+     *     └── stage/ (dir)
+     *         ├── add (file)
+     *         └── remove (file)
+     */
+
+    /**
      * The current working directory.
      */
     public static final File CWD = new File(System.getProperty("user.dir"));
