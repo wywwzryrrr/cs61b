@@ -57,4 +57,13 @@ public class Repository {
      * The master file
      */
     public static final File MASTER_FILE = join(HEADS_DIR, "master");
+    /**
+     * The staging area
+     */
+    public static final File STAGE_DIR = join(GITLET_DIR, "stage");
+    /**
+     * The add file and remove file
+     */
+    public static final File ADD_FILE = join(STAGE_DIR, "add");
+    public static final File REMOVE_FILE = join(STAGE_DIR, "remove");
 }
