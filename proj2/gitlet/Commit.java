@@ -20,7 +20,7 @@ public class Commit implements Serializable {
      */
     private String message;
     private String timestamp;
-    //Pointer that tracks the commit
+    // Pointer that tracks the commit
     private Commit parent;
 
     public Commit(String message, Commit parent) {
@@ -37,8 +37,8 @@ public class Commit implements Serializable {
     }
 
     public String getTimestamp() {
-        Date timeStamp = new Date();
-        return timeStamp.toString();
+        Date date = new Date();
+        return date.toString();
     }
 
     public Commit getParent() {
