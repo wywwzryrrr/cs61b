@@ -41,7 +41,6 @@ public class Commit implements Serializable {
         this.timestamp = (parent == null) ? "00:00:00 UTC, Thursday, 1 January 1970" : new Date().toString();
         this.blobs = new HashMap<>();
         this.UID = Utils.sha1(this.message, this.timestamp, this.parent, this.blobs.toString());
-
     }
 
     public String getMessage() {

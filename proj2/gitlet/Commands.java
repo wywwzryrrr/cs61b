@@ -29,7 +29,7 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("A Gitlet version-control system already exists in the current directory.");
             return;
         }
-        List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR, STAGES_DIR, COMMITS_DIR, STAGE_DIR);
+        List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR, STAGE_DIR, COMMITS_DIR, STAGE_DIR);
         for (File dir : dirs) {
             dir.mkdirs();
         }
@@ -37,8 +37,8 @@ public class Commands implements CommandsInterface, Serializable {
         String UID = Utils.sha1(initCommit);
         Utils.writeContents(MASTER_FILE, UID);
         Utils.writeContents(HEAD_FILE, "refs/heads/master");
-        Utils.writeObject(ADD_File, new HashMap<String, String>());
-        Utils.writeObject(REMOVE_File, new HashMap<String, String>());
+        Utils.writeObject(ADD_FILE, new HashMap<String, String>());
+        Utils.writeObject(REMOVE_FILE, new HashMap<String, String>());
         File commitsFile = Utils.join(COMMITS_DIR, UID);
         Utils.writeObject(commitsFile, initCommit);
         File stageAddDir = Utils.join(STAGE_DIR, "add");
@@ -46,6 +46,7 @@ public class Commands implements CommandsInterface, Serializable {
         stageRemoveDir.mkdirs();
         stageAddDir.mkdirs();
     }
+
 
     @Override
     public void commit() {
@@ -64,12 +65,10 @@ public class Commands implements CommandsInterface, Serializable {
 //     If the file does not exist, print the error message File does not exist. and exit without changing anything.
     @Override
     public void add(String[] args) {
-        if (args.length == 0) {
-            return;
-        }
         File inFile = Utils.join(CWD, args[0]);
-        if (!inFile.exists()) {
-            System.out.println("File does not exist");
+        String filename = inFile.getName();
+        if (!checkFileExists(filename)) {
+            System.out.println("File does not exist:");
             return;
         }
         byte[] content = Utils.readContents(inFile);
@@ -77,21 +76,31 @@ public class Commands implements CommandsInterface, Serializable {
         Commit headCommit = readHeadCommit();
         HashMap<String, String> blobs = headCommit.getBlobs();
         File blobFile = Utils.join(BLOBS_DIR, UID);
-        String filename = inFile.getName();
         if (blobs.containsKey(filename) && blobs.get(filename).equals(UID)) {
-            File stagedFile = Utils.join(STAGES_DIR, "add", filename);
+            File stagedFile = Utils.join(STAGE_DIR, "add", filename);
             stagedFile.delete();
             return;
         }
         if (!blobFile.exists()) {
             Utils.writeContents(blobFile, content);
         }
-        File stagedFile = Utils.join(STAGES_DIR, "add", filename);
+        File stagedFile = Utils.join(STAGE_DIR, "add", filename);
         Utils.writeContents(stagedFile, content);
-        File removeStagedFile = Utils.join(STAGES_DIR, "remove", filename);
+        File removeStagedFile = Utils.join(STAGE_DIR, "remove", filename);
         if (removeStagedFile.exists()) {
             removeStagedFile.delete();
         }
+    }
+
+    private boolean checkFileExists(String filename) {
+        if (filename.equals("")) {
+            return false;
+        }
+        File file = Utils.join(CWD, filename);
+        if (!file.exists()) {
+            return false;
+        }
+        return true;
     }
 
     private Commit readHeadCommit() {
