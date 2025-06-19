@@ -1,9 +1,10 @@
 package gitlet;
 
 import java.io.*;
-import java.util.List;
+import java.util.*;
 
 import static gitlet.Repository.*;
+import static gitlet.Commit.*;
 
 public class Commands implements CommandsInterface, Serializable {
 
@@ -28,7 +29,7 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("A Gitlet version-control system already exists in the current directory.");
             return;
         }
-        List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR, STAGES_DIR, COMMITS_DIR);
+        List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR, STAGES_DIR, COMMITS_DIR, STAGE_DIR);
         for (File dir : dirs) {
             dir.mkdirs();
         }
@@ -36,8 +37,14 @@ public class Commands implements CommandsInterface, Serializable {
         String UID = Utils.sha1(initCommit);
         Utils.writeContents(MASTER_FILE, UID);
         Utils.writeContents(HEAD_FILE, "refs/heads/master");
+        Utils.writeObject(ADD_File, new HashMap<String, String>());
+        Utils.writeObject(REMOVE_File, new HashMap<String, String>());
         File commitsFile = Utils.join(COMMITS_DIR, UID);
         Utils.writeObject(commitsFile, initCommit);
+        File stageAddDir = Utils.join(STAGE_DIR, "add");
+        File stageRemoveDir = Utils.join(STAGE_DIR, "remove");
+        stageRemoveDir.mkdirs();
+        stageAddDir.mkdirs();
     }
 
     @Override
@@ -56,8 +63,46 @@ public class Commands implements CommandsInterface, Serializable {
 //     The file will no longer be staged for removal (see gitlet rm), if it was at the time of the command.
 //     If the file does not exist, print the error message File does not exist. and exit without changing anything.
     @Override
-    public void add() {
+    public void add(String[] args) {
+        if (args.length == 0) {
+            return;
+        }
+        File inFile = Utils.join(CWD, args[0]);
+        if (!inFile.exists()) {
+            System.out.println("File does not exist");
+            return;
+        }
+        byte[] content = Utils.readContents(inFile);
+        String UID = Utils.sha1(content);
+        Commit headCommit = readHeadCommit();
+        HashMap<String, String> blobs = headCommit.getBlobs();
+        File blobFile = Utils.join(BLOBS_DIR, UID);
+        String filename = inFile.getName();
+        if (blobs.containsKey(filename) && blobs.get(filename).equals(UID)) {
+            File stagedFile = Utils.join(STAGES_DIR, "add", filename);
+            stagedFile.delete();
+            return;
+        }
+        if (!blobFile.exists()) {
+            Utils.writeContents(blobFile, content);
+        }
+        File stagedFile = Utils.join(STAGES_DIR, "add", filename);
+        Utils.writeContents(stagedFile, content);
+        File removeStagedFile = Utils.join(STAGES_DIR, "remove", filename);
+        if (removeStagedFile.exists()) {
+            removeStagedFile.delete();
+        }
+    }
 
+    private Commit readHeadCommit() {
+        String headPath = Utils.readContentsAsString(HEAD_FILE); // "refs/heads/master"
+        File branchFile = Utils.join(GITLET_DIR, headPath); // .gitlet/refs/heads/master 拼接路径找到commitUID
+        String commitUID = Utils.readContentsAsString(branchFile); // 读取commitUID
+        File commitFIle = Utils.join(COMMITS_DIR, commitUID); // 找到commit对象
+        if (!commitFIle.exists()) {
+            return null;
+        }
+        return Utils.readObject(commitFIle, Commit.class); //反序列化为java对象
     }
 
     @Override

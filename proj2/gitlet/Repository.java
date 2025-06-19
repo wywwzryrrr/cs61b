@@ -67,7 +67,7 @@ public class Repository {
     /**
      * The heads directory
      * */
-    public static final File HEADS_DIR = join(GITLET_DIR, "heads");
+    public static final File HEADS_DIR = join(REFS_DIR, "heads");
     /**
      * The master file
      */
@@ -77,8 +77,8 @@ public class Repository {
      */
     public static final File STAGE_DIR = join(GITLET_DIR, "stage");
     /**
-     * The add file and remove file
+     * The add directory and remove directory
      */
-    public static final File ADD_FILE = join(STAGE_DIR, "add");
-    public static final File REMOVE_FILE = join(STAGE_DIR, "remove");
+    public static final File ADD_File = join(STAGE_DIR, "add");
+    public static final File REMOVE_File = join(STAGE_DIR, "remove");
 }
