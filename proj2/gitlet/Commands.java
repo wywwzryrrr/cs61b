@@ -34,7 +34,7 @@ public class Commands implements CommandsInterface, Serializable {
             dir.mkdirs();
         }
         Commit initCommit = new Commit("initial commit", null);
-        String UID = Utils.sha1(initCommit);
+        String UID = initCommit.getUID();
         Utils.writeContents(MASTER_FILE, UID);
         Utils.writeContents(HEAD_FILE, "refs/heads/master");
         Utils.writeObject(ADD_FILE, new HashMap<String, String>());
