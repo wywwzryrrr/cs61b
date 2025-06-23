@@ -20,7 +20,9 @@ public class Commit implements Serializable {
      */
     private String message;
     private String timestamp;
-    // Pointer that tracks the commit
+    /**
+     * Pointer that tracks the commit
+     */
     private String parent;
     /**
      * The snapshots of files of this commit.
@@ -29,7 +31,7 @@ public class Commit implements Serializable {
      * <p>
      * The values are blobs in BLOB_DIR/shortCommitUid
      */
-    private HashMap<String, String> blobs;
+    private HashMap<String, String> blob;
     /**
      * The SHA-1 id of this Commit.
      */
@@ -39,8 +41,8 @@ public class Commit implements Serializable {
         this.message = message;
         this.parent = parent;
         this.timestamp = (parent == null) ? "00:00:00 UTC, Thursday, 1 January 1970" : new Date().toString();
-        this.blobs = new HashMap<>();
-        this.UID = Utils.sha1(this.message, this.timestamp, this.parent, this.blobs.toString());
+        this.blob = new HashMap<>();
+        this.UID = Utils.sha1(this.message, this.timestamp, this.parent, this.blob.toString());
     }
 
     public String getMessage() {
@@ -55,8 +57,8 @@ public class Commit implements Serializable {
         return parent;
     }
 
-    public HashMap<String, String> getBlobs() {
-        return blobs;
+    public HashMap<String, String> getBlob() {
+        return blob;
     }
 
     /** The message of this Commit. */

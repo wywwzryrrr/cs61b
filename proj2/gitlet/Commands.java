@@ -71,15 +71,20 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("File does not exist:");
             return;
         }
-        byte[] content = Utils.readContents(inFile);
+        String content = Utils.readContentsAsString(inFile);
         String UID = Utils.sha1(content);
         Commit headCommit = readHeadCommit();
-        HashMap<String, String> blobs = headCommit.getBlobs();
-        File blobFile = Utils.join(BLOBS_DIR, UID);
-        if (blobs.containsKey(filename) && blobs.get(filename).equals(UID)) {
-            File stagedFile = Utils.join(STAGE_DIR, "add", filename);
-            stagedFile.delete();
+        if (headCommit == null) {
             return;
+        }
+        HashMap<String, String> blob = headCommit.getBlob();
+        File blobFile = Utils.join(BLOBS_DIR, UID);
+        // Check if the file is in the latest commit
+        if (blob.containsKey(filename) && blob.get(filename).equals(UID)) {
+            File stagedFile = Utils.join(STAGE_DIR, "add", filename);
+            if (Utils.restrictedDelete(stagedFile)) {
+                return;
+            }
         }
         if (!blobFile.exists()) {
             Utils.writeContents(blobFile, content);
@@ -103,6 +108,9 @@ public class Commands implements CommandsInterface, Serializable {
         return true;
     }
 
+    /**
+     * Return the latest commit as a Commit object
+     */
     private Commit readHeadCommit() {
         String headPath = Utils.readContentsAsString(HEAD_FILE); // "refs/heads/master"
         File branchFile = Utils.join(GITLET_DIR, headPath); // .gitlet/refs/heads/master 拼接路径找到commitUID
