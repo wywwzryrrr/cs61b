@@ -20,7 +20,12 @@ public class Main {
         Commands commands = new Commands();
         switch (firstArg) {
             case "init" -> commands.init();
-            case "add" -> commands.add(args);
+            case "add" -> {
+                if (args.length < 2) {
+                    System.exit(2);
+                }
+                commands.add(new String[]{args[1]});
+            }
             case "commit" -> commands.commit();
             case "merge" -> commands.merge();
             case "rm" -> commands.rm();

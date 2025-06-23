@@ -65,12 +65,19 @@ public class Commands implements CommandsInterface, Serializable {
 //     If the file does not exist, print the error message File does not exist. and exit without changing anything.
     @Override
     public void add(String[] args) {
-        File inFile = Utils.join(CWD, args[0]);
-        String filename = inFile.getName();
-        if (!checkFileExists(filename)) {
-            System.out.println("File does not exist:");
+        if (args == null || args.length == 0 || args[0] == null || args[0].isEmpty()) {
+            System.out.println("File does not exist.");
             return;
         }
+        File inFile = Utils.join(CWD, args[0]);
+        System.out.println("CWD: " + CWD.getAbsolutePath());
+        System.out.println("Checking file: " + inFile.getAbsolutePath());
+        System.out.println("File exists: " + inFile.exists());
+        if (!inFile.exists() || inFile.isDirectory()) {
+            System.out.println("File does not exist.");
+            return;
+        }
+        String filename = inFile.getName();
         String content = Utils.readContentsAsString(inFile);
         String UID = Utils.sha1(content);
         Commit headCommit = readHeadCommit();
@@ -95,17 +102,6 @@ public class Commands implements CommandsInterface, Serializable {
         if (removeStagedFile.exists()) {
             removeStagedFile.delete();
         }
-    }
-
-    private boolean checkFileExists(String filename) {
-        if (filename.equals("")) {
-            return false;
-        }
-        File file = Utils.join(CWD, filename);
-        if (!file.exists()) {
-            return false;
-        }
-        return true;
     }
 
     /**
