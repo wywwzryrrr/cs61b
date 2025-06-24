@@ -96,21 +96,23 @@ public class Commands implements CommandsInterface, Serializable {
         HashMap<String, String> blob = headCommit.getBlob();
         File blobFile = Utils.join(BLOBS_DIR, UID);
         // Check if the file is in the latest commit
-        if (blob.containsKey(filename) && blob.get(filename).equals(UID)) {
-            File stagedFile = Utils.join(STAGE_DIR, "add", filename);
-            if (Utils.restrictedDelete(stagedFile)) {
-                return;
+        String blobKey = inFile.getAbsolutePath();
+        if (blob.containsKey(blobKey) && blob.get(blobKey).equals(UID)) {
+            File stagedFile = Utils.join(STAGE_DIR, filename);
+            File removeStagedFile = Utils.join(REMOVE_DIR, filename);
+            if (stagedFile.exists()) {
+                stagedFile.delete();
             }
+            if (removeStagedFile.exists()) {
+                removeStagedFile.delete();
+            }
+            return;
         }
         if (!blobFile.exists()) {
             Utils.writeContents(blobFile, content);
         }
         File stagedFile = Utils.join(STAGE_DIR, filename);
         Utils.writeContents(stagedFile, content);
-        File removeStagedFile = Utils.join(STAGE_DIR, filename);
-        if (removeStagedFile.exists()) {
-            removeStagedFile.delete();
-        }
     }
 
     /**
