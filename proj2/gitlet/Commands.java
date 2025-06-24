@@ -29,22 +29,30 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("A Gitlet version-control system already exists in the current directory.");
             return;
         }
-        List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR, STAGE_DIR, COMMITS_DIR, STAGE_DIR);
+        // Create all dirs
+        List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR, STAGE_DIR,
+                                  COMMITS_DIR, STAGE_DIR, ADD_DIR, REMOVE_DIR);
         for (File dir : dirs) {
             dir.mkdirs();
         }
+        // Initiate commit
         Commit initCommit = new Commit("initial commit", null);
         String UID = initCommit.getUID();
         Utils.writeContents(MASTER_FILE, UID);
         Utils.writeContents(HEAD_FILE, "refs/heads/master");
-        Utils.writeObject(ADD_FILE, new HashMap<String, String>());
-        Utils.writeObject(REMOVE_FILE, new HashMap<String, String>());
+        // Store the init commit
         File commitsFile = Utils.join(COMMITS_DIR, UID);
         Utils.writeObject(commitsFile, initCommit);
-        File stageAddDir = Utils.join(STAGE_DIR, "add");
-        File stageRemoveDir = Utils.join(STAGE_DIR, "remove");
-        stageRemoveDir.mkdirs();
-        stageAddDir.mkdirs();
+        // Create metadata of add and remove dirs
+        File addMapFile = Utils.join(ADD_DIR, "addMap");
+        File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
+        Utils.writeObject(addMapFile, new HashMap<String, String>());
+        Utils.writeObject(removeMapFile, new HashMap<String, String>());
+        // Debug
+//        System.out.println("Add dir exists: " + ADD_DIR.exists());
+//        System.out.println("Add dir is directory: " + ADD_DIR.isDirectory());
+//        System.out.println("Remove dir exists: " + REMOVE_DIR.exists());
+//        System.out.println("Remove dir is directory: " + REMOVE_DIR.isDirectory());
     }
 
 
@@ -70,9 +78,10 @@ public class Commands implements CommandsInterface, Serializable {
             return;
         }
         File inFile = Utils.join(CWD, args[0]);
-        System.out.println("CWD: " + CWD.getAbsolutePath());
-        System.out.println("Checking file: " + inFile.getAbsolutePath());
-        System.out.println("File exists: " + inFile.exists());
+        // debug
+//        System.out.println("CWD: " + CWD.getAbsolutePath());
+//        System.out.println("Checking file: " + inFile.getAbsolutePath());
+//        System.out.println("File exists: " + inFile.exists());
         if (!inFile.exists() || inFile.isDirectory()) {
             System.out.println("File does not exist.");
             return;
@@ -96,9 +105,9 @@ public class Commands implements CommandsInterface, Serializable {
         if (!blobFile.exists()) {
             Utils.writeContents(blobFile, content);
         }
-        File stagedFile = Utils.join(STAGE_DIR, "add", filename);
+        File stagedFile = Utils.join(STAGE_DIR, filename);
         Utils.writeContents(stagedFile, content);
-        File removeStagedFile = Utils.join(STAGE_DIR, "remove", filename);
+        File removeStagedFile = Utils.join(STAGE_DIR, filename);
         if (removeStagedFile.exists()) {
             removeStagedFile.delete();
         }

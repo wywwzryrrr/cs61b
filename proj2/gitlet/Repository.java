@@ -32,8 +32,8 @@ public class Repository {
      *     ├── heads/ (dir)
      *     │   └── master (file)
      *     └── stage/ (dir)
-     *         ├── add (file)
-     *         └── remove (file)
+     *         ├── add (dir)
+     *         └── remove (dir)
      */
 
     /**
@@ -73,8 +73,8 @@ public class Repository {
      */
     public static final File MASTER_FILE = join(HEADS_DIR, "master");
     /**
-     * The add directory and remove directory
+     * The add directory and remove file
      */
-    public static final File ADD_FILE = join(STAGE_DIR, "add");
-    public static final File REMOVE_FILE = join(STAGE_DIR, "remove");
+    public static final File ADD_DIR = join(STAGE_DIR, "add");
+    public static final File REMOVE_DIR = join(STAGE_DIR, "remove");
 }

@@ -14,7 +14,7 @@ public class Main {
         // TODO: what if args is empty?
         if (args.length == 0 || args == null) {
             System.out.println("Please enter a command");
-            System.exit(0);
+            System.exit(1);
         }
         String firstArg = args[0];
         Commands commands = new Commands();
@@ -22,7 +22,7 @@ public class Main {
             case "init" -> commands.init();
             case "add" -> {
                 if (args.length < 2) {
-                    System.exit(2);
+                    System.exit(1);
                 }
                 commands.add(new String[]{args[1]});
             }
