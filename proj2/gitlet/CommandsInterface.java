@@ -4,9 +4,9 @@ public interface CommandsInterface {
 
     public void init();
 
-    public void commit();
+    public void commit(String message);
 
-    public void add(String[] args);
+    public void add(String filename);
 
     public void rm();
 

@@ -24,9 +24,14 @@ public class Main {
                 if (args.length < 2) {
                     System.exit(1);
                 }
-                commands.add(new String[]{args[1]});
+                commands.add(args[1]);
             }
-            case "commit" -> commands.commit();
+            case "commit" -> {
+                if (args.length < 2) {
+                    System.exit(1);
+                }
+                commands.commit(args[1]);
+            }
             case "merge" -> commands.merge();
             case "rm" -> commands.rm();
             case "log" -> commands.log();

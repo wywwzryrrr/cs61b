@@ -73,7 +73,7 @@ public class Repository {
      */
     public static final File MASTER_FILE = join(HEADS_DIR, "master");
     /**
-     * The add directory and remove file
+     * The add directory and remove dir
      */
     public static final File ADD_DIR = join(STAGE_DIR, "add");
     public static final File REMOVE_DIR = join(STAGE_DIR, "remove");

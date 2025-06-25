@@ -48,16 +48,11 @@ public class Commands implements CommandsInterface, Serializable {
         File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
         Utils.writeObject(addMapFile, new HashMap<String, String>());
         Utils.writeObject(removeMapFile, new HashMap<String, String>());
-        // Debug
-//        System.out.println("Add dir exists: " + ADD_DIR.exists());
-//        System.out.println("Add dir is directory: " + ADD_DIR.isDirectory());
-//        System.out.println("Remove dir exists: " + REMOVE_DIR.exists());
-//        System.out.println("Remove dir is directory: " + REMOVE_DIR.isDirectory());
     }
 
 
     @Override
-    public void commit() {
+    public void commit(String message) {
 
     }
 
@@ -72,47 +67,25 @@ public class Commands implements CommandsInterface, Serializable {
 //     The file will no longer be staged for removal (see gitlet rm), if it was at the time of the command.
 //     If the file does not exist, print the error message File does not exist. and exit without changing anything.
     @Override
-    public void add(String[] args) {
-        if (args == null || args.length == 0 || args[0] == null || args[0].isEmpty()) {
+    public void add(String filename) {
+        if (filename == null || filename.isEmpty()) {
             System.out.println("File does not exist.");
             return;
         }
-        File inFile = Utils.join(CWD, args[0]);
-        // debug
-//        System.out.println("CWD: " + CWD.getAbsolutePath());
-//        System.out.println("Checking file: " + inFile.getAbsolutePath());
-//        System.out.println("File exists: " + inFile.exists());
+        File inFile = Utils.join(CWD, filename);
         if (!inFile.exists() || inFile.isDirectory()) {
             System.out.println("File does not exist.");
             return;
         }
-        String filename = inFile.getName();
-        String content = Utils.readContentsAsString(inFile);
-        String UID = Utils.sha1(content);
-        Commit headCommit = readHeadCommit();
-        if (headCommit == null) {
-            return;
-        }
-        HashMap<String, String> blob = headCommit.getBlob();
-        File blobFile = Utils.join(BLOBS_DIR, UID);
-        // Check if the file is in the latest commit
-        String blobKey = inFile.getAbsolutePath();
-        if (blob.containsKey(blobKey) && blob.get(blobKey).equals(UID)) {
-            File stagedFile = Utils.join(STAGE_DIR, filename);
-            File removeStagedFile = Utils.join(REMOVE_DIR, filename);
-            if (stagedFile.exists()) {
-                stagedFile.delete();
-            }
-            if (removeStagedFile.exists()) {
-                removeStagedFile.delete();
-            }
-            return;
-        }
-        if (!blobFile.exists()) {
-            Utils.writeContents(blobFile, content);
-        }
-        File stagedFile = Utils.join(STAGE_DIR, filename);
-        Utils.writeContents(stagedFile, content);
+        // Create Blob object
+        Blob blob = new Blob(inFile);
+        String blobUID = blob.getUID();
+        // Store the blob to BLOB_DIR
+        File blobFile = Utils.join(BLOBS_DIR, blobUID);
+        Utils.writeObject(blobFile, blob);
+        // Add the blobFile to the staging area
+        File stagedFile = Utils.join(ADD_DIR, inFile.getName());
+        Utils.writeContents(stagedFile, blob.getContent());
     }
 
     /**

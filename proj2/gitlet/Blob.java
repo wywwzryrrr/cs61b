@@ -18,17 +18,14 @@ public class Blob implements Serializable {
 
     public Blob(File file) {
         this.content = Utils.readContentsAsString(file);
-        this.UID = getBlobName(file);
-    }
-
-    /**
-     * create blob id using its file content and file name
-     */
-    public static String getBlobName(File file) {
-        return Utils.sha1(Utils.readContentsAsString(file) + file.getName());
+        this.UID = Utils.sha1(content);
     }
 
     public String getContent() {
         return content;
+    }
+
+    public String getUID() {
+        return UID;
     }
 }
