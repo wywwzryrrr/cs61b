@@ -68,5 +68,9 @@ public class Commit implements Serializable {
         return new HashMap<>(blob);
     }
 
+    public void setBlob(HashMap<String, String> blob) {
+        this.blob = blob;
+    }
+
     /** The message of this Commit. */
 }

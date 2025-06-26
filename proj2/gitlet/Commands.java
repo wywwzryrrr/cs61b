@@ -55,7 +55,48 @@ public class Commands implements CommandsInterface, Serializable {
             return;
         }
         Commit newCommit = new Commit(message, parentCommit.getUID());
+        HashMap<String, String> addMap = readAddMap();
+        HashMap<String, String> removeMap = readRemoveMap();
+        if (addMap == null && removeMap == null) {
+            System.out.println("No changes added to the commit.");
+            return;
+        }
+        File addMapFile = Utils.join(ADD_DIR, "addMap");
+        File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
+        if (addMap != null) {
+            addMap.put(addMapFile.getAbsolutePath(), Utils.sha1(Utils.readContentsAsString(addMapFile)));
+        }
+        if (removeMap != null) {
+            removeMap.put(removeMapFile.getAbsolutePath(), Utils.sha1(Utils.readContentsAsString(removeMapFile)));
+        }
+        newCommit.setBlob(addMap);
+        newCommit.setBlob(removeMap);
+        addMap.clear();
+        removeMap.clear();
+    }
 
+    /**
+     * Return the HashMap in the add staging area
+     * @return
+     */
+    private HashMap<String, String> readAddMap() {
+        File addMapFile = Utils.join(ADD_DIR, "addMap");
+        if (!addMapFile.exists()) {
+            return null;
+        }
+        return Utils.readObject(addMapFile, HashMap.class);
+    }
+
+    /**
+     * Return the HashMap in the remove staging area
+     * @return
+     */
+    private HashMap<String, String> readRemoveMap() {
+        File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
+        if (!removeMapFile.exists()) {
+            return null;
+        }
+        return Utils.readObject(removeMapFile, HashMap.class);
     }
 
     /**
@@ -83,7 +124,7 @@ public class Commands implements CommandsInterface, Serializable {
         // Add the blobFile to the staging area
         File addMapFile = Utils.join(ADD_DIR, "addMap");
         File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
-        if (!addMapFile.exists() || !removeMapFile.exists()) {
+        if (!addMapFile.exists() && !removeMapFile.exists()) {
             return;
         }
         // 反序列化为hashmap然后进行更新
