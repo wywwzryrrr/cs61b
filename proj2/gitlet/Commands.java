@@ -8,21 +8,10 @@ import static gitlet.Commit.*;
 
 public class Commands implements CommandsInterface, Serializable {
 
-//     Creates a new Gitlet version-control system in the current directory.
-//     This system will automatically start with one commit:
-//     a commit that contains no files and has the commit message initial commit
-//     (just like that, with no punctuation). It will have a single branch: master,
-//     which initially points to this initial commit, and master will be the current branch.
-//     The timestamp for this initial commit will be
-//     00:00:00 UTC, Thursday, 1 January 1970 in whatever format you choose for dates
-//     (this is called “The (Unix) Epoch”, represented internally by the time 0.)
-//     Since the initial commit in all repositories created by Gitlet will have exactly the same content,
-//     it follows that all repositories will automatically share this commit (they will all have the same UID)
-//     and all commits in all repositories will trace back to it.
-//     If there is already a Gitlet version-control system in the current directory, it should abort.
-//     It should NOT overwrite the existing system with a new one.
-//     Should print the error message
-//     "A Gitlet version-control system already exists in the current directory."
+    /**
+     * Command 'init' initialize `.gitlet`
+     * to initialize gitlet repository
+     */
     @Override
     public void init() {
         if (GITLET_DIR.exists()) {
@@ -50,22 +39,30 @@ public class Commands implements CommandsInterface, Serializable {
         Utils.writeObject(removeMapFile, new HashMap<String, String>());
     }
 
-
+    /**
+     * Command 'commit + message
+     * to make a commit
+     * @param message
+     */
     @Override
     public void commit(String message) {
+        if (message == null || message.isEmpty()) {
+            System.out.println("Please enter a commit message.");
+            return;
+        }
+        Commit parentCommit = readHeadCommit();
+        if (parentCommit == null) {
+            return;
+        }
+        Commit newCommit = new Commit(message, parentCommit.getUID());
 
     }
 
-//     Adds a copy of the file as it currently exists to the staging area
-//     (see the description of the commit command).
-//     For this reason, adding a file is also called staging the file for addition.
-//     Staging an already-staged file overwrites the previous entry in the staging area with the new contents.
-//     The staging area should be somewhere in .gitlet.
-//     If the current working version of the file is identical to the version in the current commit,
-//     do not stage it to be added, and remove it from the staging area if it is already there
-//     (as can happen when a file is changed, added, and then changed back to its original version).
-//     The file will no longer be staged for removal (see gitlet rm), if it was at the time of the command.
-//     If the file does not exist, print the error message File does not exist. and exit without changing anything.
+    /**
+     * Command 'add + fileName'.
+     * to add file to staging for addition
+     * @param filename
+     */
     @Override
     public void add(String filename) {
         if (filename == null || filename.isEmpty()) {
@@ -84,12 +81,46 @@ public class Commands implements CommandsInterface, Serializable {
         File blobFile = Utils.join(BLOBS_DIR, blobUID);
         Utils.writeObject(blobFile, blob);
         // Add the blobFile to the staging area
-        File stagedFile = Utils.join(ADD_DIR, inFile.getName());
-        Utils.writeContents(stagedFile, blob.getContent());
+        File addMapFile = Utils.join(ADD_DIR, "addMap");
+        File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
+        if (!addMapFile.exists() || !removeMapFile.exists()) {
+            return;
+        }
+        // 反序列化为hashmap然后进行更新
+        HashMap<String, String> updatedAddMap = Utils.readObject(addMapFile, HashMap.class);
+        HashMap<String, String> updatedRemoveMap = Utils.readObject(removeMapFile, HashMap.class);
+        // 用绝对路径作为key
+        String absolutePath = inFile.getAbsolutePath();
+        // 获取headCommit及其blob
+        Commit headCommit = readHeadCommit();
+        if (headCommit == null) {
+            return;
+        }
+        HashMap<String, String> headBlobMap = Utils.readObject(addMapFile, HashMap.class);
+        // 检查文件是否在 HEAD Commit 中，且版本是否一致
+        if (headBlobMap.containsKey(absolutePath) && headBlobMap.get(absolutePath).equals(blobUID)) {
+            // 若一致则移除
+            if (updatedAddMap.containsKey(absolutePath)) {
+                updatedAddMap.remove(absolutePath);
+            }
+            if (updatedRemoveMap.containsKey(absolutePath)) {
+                updatedRemoveMap.remove(absolutePath);
+            }
+        } else {
+            updatedAddMap.put(absolutePath, blobUID);
+            // 若文件在stagedRemove中则将其删除
+            if (updatedRemoveMap.containsKey(absolutePath)) {
+                updatedRemoveMap.remove(absolutePath);
+            }
+        }
+        // 将更新过后的hashmap写入
+        Utils.writeObject(addMapFile, updatedAddMap);
+        Utils.writeObject(addMapFile, updatedAddMap);
     }
 
     /**
      * Return the latest commit as a Commit object
+     * @return
      */
     private Commit readHeadCommit() {
         String headPath = Utils.readContentsAsString(HEAD_FILE); // "refs/heads/master"

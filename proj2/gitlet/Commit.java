@@ -4,6 +4,8 @@ package gitlet;
 import java.io.Serializable;
 import java.util.*;
 
+import static gitlet.Repository.*;
+
 /** Represents a gitlet commit object.
  *  TODO: It's a good idea to give a description here of what else this Class
  *  does at a high level.
@@ -67,6 +69,4 @@ public class Commit implements Serializable {
     }
 
     /** The message of this Commit. */
-
-    /* TODO: fill in the rest of this class. */
 }
