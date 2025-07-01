@@ -1,5 +1,7 @@
 package gitlet;
 
+import com.sun.source.tree.Tree;
+
 import java.io.*;
 import java.util.*;
 
@@ -40,7 +42,7 @@ public class Commands implements CommandsInterface, Serializable {
     }
 
     /**
-     * Command 'commit + message
+     * Command commit + message
      * to make a commit
      * @param message
      */
@@ -50,29 +52,37 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("Please enter a commit message.");
             return;
         }
-        Commit parentCommit = readHeadCommit();
-        if (parentCommit == null) {
-            return;
-        }
-        Commit newCommit = new Commit(message, parentCommit.getUID());
-        HashMap<String, String> addMap = readAddMap();
-        HashMap<String, String> removeMap = readRemoveMap();
-        if (addMap == null && removeMap == null) {
+        if (readAddMap() == null && readRemoveMap() == null) {
             System.out.println("No changes added to the commit.");
             return;
         }
-        File addMapFile = Utils.join(ADD_DIR, "addMap");
-        File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
-        if (addMap != null) {
-            addMap.put(addMapFile.getAbsolutePath(), Utils.sha1(Utils.readContentsAsString(addMapFile)));
+        // Read the staging area
+        HashMap<String, String> addMap = readAddMap();
+        HashMap<String, String> removeMap = readRemoveMap();
+        // Get parent commit and copy its blob
+        Commit parentCommit = readHeadCommit();
+        HashMap<String, String> newCommitFilesMap = parentCommit.getBlob();
+        // Update the blob in the staging area
+        for (Map.Entry<String, String> entry : addMap.entrySet()) {
+            newCommitFilesMap.put(entry.getKey(), entry.getValue());
         }
-        if (removeMap != null) {
-            removeMap.put(removeMapFile.getAbsolutePath(), Utils.sha1(Utils.readContentsAsString(removeMapFile)));
+        for (Map.Entry<String, String> entry : removeMap.entrySet()) {
+            newCommitFilesMap.remove(entry.getKey());
         }
-        newCommit.setBlob(addMap);
-        newCommit.setBlob(removeMap);
-        addMap.clear();
-        removeMap.clear();
+        // Create new commit object and set its blob
+        Commit newCommit = new Commit(message, parentCommit.getUID());
+        newCommit.setBlob(newCommitFilesMap);
+        // Recalculate the UID and put it in the COMMITS_DIR
+        String newCommitUID = newCommit.getUID();
+        File newCommitFile = Utils.join(COMMITS_DIR, newCommitUID);
+        Utils.writeObject(newCommitFile, newCommit);
+        // Update the HEAD pointer, get it point to the new commit
+        String headPath = Utils.readContentsAsString(HEAD_FILE);
+        File branchFile = Utils.join(GITLET_DIR, headPath);
+        Utils.writeContents(branchFile, newCommitUID);
+        // Clear the staging area by adding new empty HashMap
+        Utils.writeObject(Utils.join(ADD_DIR, "addMap"), new HashMap<String, String>());
+        Utils.writeObject(Utils.join(REMOVE_DIR, "removeMap"), new HashMap<String, String>());
     }
 
     /**
@@ -137,19 +147,18 @@ public class Commands implements CommandsInterface, Serializable {
         if (headCommit == null) {
             return;
         }
-        HashMap<String, String> headBlobMap = Utils.readObject(addMapFile, HashMap.class);
+        HashMap<String, String> headBlobMap = headCommit.getBlob();
         // 检查文件是否在 HEAD Commit 中，且版本是否一致
-        if (headBlobMap.containsKey(absolutePath) && headBlobMap.get(absolutePath).equals(blobUID)) {
-            // 若一致则移除
+        if (blobUID.equals(headBlobMap.get(absolutePath))) { // 直接比较blobUID更简洁
+            // 文件内容和当前提交的版本完全一样，没必要暂存
+            // 如果它在暂存区，应该被移除
             if (updatedAddMap.containsKey(absolutePath)) {
                 updatedAddMap.remove(absolutePath);
             }
-            if (updatedRemoveMap.containsKey(absolutePath)) {
-                updatedRemoveMap.remove(absolutePath);
-            }
+            // (这里也应该处理 removeMap，如果一个被标记为删除的文件被重新add，要从removeMap中移除)
         } else {
+            // 文件内容有变化，或者是一个新文件，加入暂存区
             updatedAddMap.put(absolutePath, blobUID);
-            // 若文件在stagedRemove中则将其删除
             if (updatedRemoveMap.containsKey(absolutePath)) {
                 updatedRemoveMap.remove(absolutePath);
             }
@@ -167,11 +176,11 @@ public class Commands implements CommandsInterface, Serializable {
         String headPath = Utils.readContentsAsString(HEAD_FILE); // "refs/heads/master"
         File branchFile = Utils.join(GITLET_DIR, headPath); // .gitlet/refs/heads/master 拼接路径找到commitUID
         String commitUID = Utils.readContentsAsString(branchFile); // 读取commitUID
-        File commitFIle = Utils.join(COMMITS_DIR, commitUID); // 找到commit对象
-        if (!commitFIle.exists()) {
+        File commitFile = Utils.join(COMMITS_DIR, commitUID); // 找到commit对象
+        if (!commitFile.exists()) {
             return null;
         }
-        return Utils.readObject(commitFIle, Commit.class); //反序列化为java对象
+        return Utils.readObject(commitFile, Commit.class); //反序列化为java对象
     }
 
     @Override

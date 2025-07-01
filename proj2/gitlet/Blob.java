@@ -28,4 +28,8 @@ public class Blob implements Serializable {
     public String getUID() {
         return UID;
     }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
