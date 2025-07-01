@@ -44,8 +44,6 @@ public class Commit implements Serializable {
         this.parent = parent;
         this.timestamp = (parent == null) ? "00:00:00 UTC, Thursday, 1 January 1970" : new Date().toString();
         this.blob = new HashMap<>();
-        String blobString = blob.toString();
-        this.UID = Utils.sha1(message, timestamp, parent != null ? parent : "", blobString);
     }
 
     public String getMessage() {
@@ -70,6 +68,13 @@ public class Commit implements Serializable {
 
     public void setBlob(HashMap<String, String> blob) {
         this.blob = blob;
+    }
+
+    public String generateUID() {
+        TreeMap<String, String> sortedBlob = new TreeMap<>(blob);
+        String blobString = sortedBlob.toString();
+        this.UID = Utils.sha1(message, timestamp, parent != null ? parent : "", blobString);
+        return this.UID;
     }
 
     /** The message of this Commit. */

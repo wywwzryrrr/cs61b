@@ -28,7 +28,7 @@ public class Commands implements CommandsInterface, Serializable {
         }
         // Initiate commit
         Commit initCommit = new Commit("initial commit", null);
-        String UID = initCommit.getUID();
+        String UID = initCommit.generateUID();
         Utils.writeContents(MASTER_FILE, UID);
         Utils.writeContents(HEAD_FILE, "refs/heads/master");
         // Store the init commit
@@ -73,7 +73,7 @@ public class Commands implements CommandsInterface, Serializable {
         Commit newCommit = new Commit(message, parentCommit.getUID());
         newCommit.setBlob(newCommitFilesMap);
         // Recalculate the UID and put it in the COMMITS_DIR
-        String newCommitUID = newCommit.getUID();
+        String newCommitUID = newCommit.generateUID();
         File newCommitFile = Utils.join(COMMITS_DIR, newCommitUID);
         Utils.writeObject(newCommitFile, newCommit);
         // Update the HEAD pointer, get it point to the new commit
