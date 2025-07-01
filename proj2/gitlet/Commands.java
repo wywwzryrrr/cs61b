@@ -42,7 +42,7 @@ public class Commands implements CommandsInterface, Serializable {
     }
 
     /**
-     * Command commit + message
+     * Command 'commit + message'
      * to make a commit
      * @param message
      */
@@ -165,7 +165,7 @@ public class Commands implements CommandsInterface, Serializable {
         }
         // 将更新过后的hashmap写入
         Utils.writeObject(addMapFile, updatedAddMap);
-        Utils.writeObject(addMapFile, updatedAddMap);
+        Utils.writeObject(removeMapFile, updatedRemoveMap);
     }
 
     /**
