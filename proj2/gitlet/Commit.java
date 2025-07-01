@@ -71,7 +71,7 @@ public class Commit implements Serializable {
     }
 
     public String generateUID() {
-        TreeMap<String, String> sortedBlob = new TreeMap<>(blob);
+        HashMap<String, String> sortedBlob = new HashMap<>(blob);
         String blobString = sortedBlob.toString();
         this.UID = Utils.sha1(message, timestamp, parent != null ? parent : "", blobString);
         return this.UID;
