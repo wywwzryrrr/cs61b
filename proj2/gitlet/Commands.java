@@ -219,8 +219,42 @@ public class Commands implements CommandsInterface, Serializable {
 
     }
 
+    /**
+     * Takes the version of the file as it exists in the head commit
+     * and puts it in the working directory,
+     * overwriting the version of the file that’s already there if there is one.
+     * The new version of the file is not staged.
+     *
+     * java gitlet.Main checkout -- [file name]
+     * @param args
+     */
     @Override
-    public void checkout() {
+    public void checkout1(String[] args) {
+
+    }
+
+    /**
+     * Takes the version of the file as it exists in the commit with the given id,
+     * and puts it in the working directory,
+     * overwriting the version of the file that’s already there if there is one.
+     * The new version of the file is not staged.
+     *
+     * java gitlet.Main checkout [commit id] -- [file name]
+     * @param args
+     */
+    @Override
+    public void checkout2(String[] args) {
+
+    }
+
+    /**
+     * 
+     *
+     * java gitlet.Main checkout [branch name]
+     * @param args
+     */
+    @Override
+    public void checkout3(String[] args) {
 
     }
 
