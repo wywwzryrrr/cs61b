@@ -52,13 +52,14 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("Please enter a commit message.");
             return;
         }
-        if (readAddMap() == null && readRemoveMap() == null) {
-            System.out.println("No changes added to the commit.");
-            return;
-        }
         // Read the staging area
         HashMap<String, String> addMap = readAddMap();
         HashMap<String, String> removeMap = readRemoveMap();
+        // Check if the staging area is empty
+        if (addMap.isEmpty() && removeMap.isEmpty()) {
+            System.out.println("No changes added to the commit.");
+            return;
+        }
         // Get parent commit and copy its blob
         Commit parentCommit = readHeadCommit();
         HashMap<String, String> newCommitFilesMap = parentCommit.getBlob();
