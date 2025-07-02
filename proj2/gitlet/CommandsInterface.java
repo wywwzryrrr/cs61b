@@ -22,11 +22,7 @@ public interface CommandsInterface {
 
     public void status();
 
-    public void checkout1(String[] args);
-
-    public void checkout2(String[] args);
-
-    public void checkout3(String[] args);
+    public void checkout(String[] args);
 
     public void reset();
 

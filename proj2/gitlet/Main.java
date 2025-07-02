@@ -11,7 +11,7 @@ public class Main {
      *  <COMMAND> <OPERAND1> <OPERAND2> ... 
      */
     public static void main(String[] args) {
-        if (args.length == 0 || args == null) {
+        if (args.length == 0) {
             System.out.println("Please enter a command");
             System.exit(1);
         }
@@ -39,19 +39,7 @@ public class Main {
             case "branch" -> commands.branch();
             case "rmBranch" -> commands.rmBranch();
             case "status" -> commands.status();
-            case "checkout" -> {
-                // Case checkout [branch name]
-                if (args.length == 2) {
-                    // TODO: sth happens here
-                } else {
-                    // Case checkout -- [file name]
-                    if (args[1] == "--") {
-                        // TODO: sth happens here
-                    }
-                    // Case checkout [commit id] -- [file name]
-                    // TODO: sth happens here
-                }
-            };
+            case "checkout" -> commands.checkout(args);
             case "reset" -> commands.reset();
             default -> System.out.println("No command with that name exists.");
         }

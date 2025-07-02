@@ -219,18 +219,45 @@ public class Commands implements CommandsInterface, Serializable {
 
     }
 
+    @Override
+    public void checkout(String[] args) {
+        // 形式 2: checkout [commit id] -- [file name]
+        // 这是最具体的，有4个参数，且第3个是 "--"
+        if (args.length == 4 && args[2].equals("--")) {
+            checkout2(args);
+            // 形式 1: checkout -- [file name]
+            // 有3个参数，且第2个是 "--"
+        } else if (args.length == 3 && args[1].equals("--")) {
+            checkout1(args);
+            // 形式 3: checkout [branch name]
+            // 只有2个参数
+        } else if (args.length == 2) {
+            checkout3(args);
+            // 其他所有情况都是格式错误
+        } else {
+            System.out.println("Incorrect operands.");
+        }
+    }
+
     /**
      * Takes the version of the file as it exists in the head commit
      * and puts it in the working directory,
      * overwriting the version of the file that’s already there if there is one.
      * The new version of the file is not staged.
+     *If the file does not exist in the previous commit, abort,
+     * printing the error message
+     * File does not exist in that commit.
+     * Do not change the CWD.
      *
      * java gitlet.Main checkout -- [file name]
      * @param args
      */
-    @Override
-    public void checkout1(String[] args) {
-
+    private void checkout1(String[] args) {
+        String fileName = args[2];
+        File inFile = Utils.join(COMMITS_DIR, fileName);
+        if (!inFile.exists()) {
+            System.out.println("File does not exist in that commit.");
+        }
     }
 
     /**
@@ -242,8 +269,7 @@ public class Commands implements CommandsInterface, Serializable {
      * java gitlet.Main checkout [commit id] -- [file name]
      * @param args
      */
-    @Override
-    public void checkout2(String[] args) {
+    private void checkout2(String[] args) {
 
     }
 
@@ -253,8 +279,7 @@ public class Commands implements CommandsInterface, Serializable {
      * java gitlet.Main checkout [branch name]
      * @param args
      */
-    @Override
-    public void checkout3(String[] args) {
+    private void checkout3(String[] args) {
 
     }
 
