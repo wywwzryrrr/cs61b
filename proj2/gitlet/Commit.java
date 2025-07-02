@@ -72,6 +72,5 @@ public class Commit implements Serializable {
         this.UID = Utils.sha1(message, timestamp, parent != null ? parent : "", blobString);
         return this.UID;
     }
-
     /** The message of this Commit. */
 }

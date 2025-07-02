@@ -244,7 +244,7 @@ public class Commands implements CommandsInterface, Serializable {
      * and puts it in the working directory,
      * overwriting the version of the file that’s already there if there is one.
      * The new version of the file is not staged.
-     *If the file does not exist in the previous commit, abort,
+     * If the file does not exist in the previous commit, abort,
      * printing the error message
      * File does not exist in that commit.
      * Do not change the CWD.
@@ -254,10 +254,19 @@ public class Commands implements CommandsInterface, Serializable {
      */
     private void checkout1(String[] args) {
         String fileName = args[2];
-        File inFile = Utils.join(COMMITS_DIR, fileName);
-        if (!inFile.exists()) {
-            System.out.println("File does not exist in that commit.");
+        File inFile = Utils.join(GITLET_DIR, fileName);
+        String filePath = inFile.getAbsolutePath();
+        Commit headCommit = readHeadCommit();
+        if (headCommit == null) {
+            return;
         }
+        HashMap<String, String> headBlobMap = headCommit.getBlob();
+        if (!headBlobMap.containsKey(filePath)) {
+            System.out.println("File does not exist in that commit.");
+            return;
+        }
+        String blobUID = headBlobMap.get(filePath);
+
     }
 
     /**
