@@ -27,7 +27,7 @@ public class Commit implements Serializable {
      * <p>
      * The values are blobs in BLOB_DIR/shortCommitUid
      */
-    private HashMap<String, String> blob;
+    private TreeMap<String, String> blob;
     /**
      * The SHA-1 id of this Commit.
      */
@@ -37,7 +37,7 @@ public class Commit implements Serializable {
         this.message = message;
         this.parent = parent;
         this.timestamp = (parent == null) ? "00:00:00 UTC, Thursday, 1 January 1970" : new Date().toString();
-        this.blob = new HashMap<>();
+        this.blob = new TreeMap<>();
         this.UID = generateUID();
     }
 
@@ -57,16 +57,16 @@ public class Commit implements Serializable {
         return parent;
     }
 
-    public HashMap<String, String> getBlob() {
-        return new HashMap<>(blob);
+    public TreeMap<String, String> getBlob() {
+        return new TreeMap<>(blob);
     }
 
-    public void setBlob(HashMap<String, String> blob) {
+    public void setBlob(TreeMap<String, String> blob) {
         this.blob = blob;
     }
 
     public String generateUID() {
-        HashMap<String, String> sortedBlob = new HashMap<>(blob);
+        TreeMap<String, String> sortedBlob = new TreeMap<>(blob);
         String blobString = sortedBlob.toString();
         this.UID = Utils.sha1(message, timestamp, parent != null ? parent : "", blobString);
         return this.UID;

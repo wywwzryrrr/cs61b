@@ -34,8 +34,8 @@ public class Commands implements CommandsInterface, Serializable {
         // Create metadata of add and remove dirs
         File addMapFile = Utils.join(ADD_DIR, "addMap");
         File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
-        Utils.writeObject(addMapFile, new HashMap<String, String>());
-        Utils.writeObject(removeMapFile, new HashMap<String, String>());
+        Utils.writeObject(addMapFile, new TreeMap<String, String>());
+        Utils.writeObject(removeMapFile, new TreeMap<String, String>());
     }
 
     /**
@@ -50,8 +50,8 @@ public class Commands implements CommandsInterface, Serializable {
             return;
         }
         // Read the staging area
-        HashMap<String, String> addMap = readAddMap();
-        HashMap<String, String> removeMap = readRemoveMap();
+        TreeMap<String, String> addMap = readAddMap();
+        TreeMap<String, String> removeMap = readRemoveMap();
         // Check if the staging area is empty
         if (addMap.isEmpty() && removeMap.isEmpty()) {
             System.out.println("No changes added to the commit.");
@@ -59,7 +59,7 @@ public class Commands implements CommandsInterface, Serializable {
         }
         // Get parent commit and copy its blob
         Commit parentCommit = readHeadCommit();
-        HashMap<String, String> newCommitFilesMap = parentCommit.getBlob();
+        TreeMap<String, String> newCommitFilesMap = parentCommit.getBlob();
         // Update the blob in the staging area
         for (Map.Entry<String, String> entry : addMap.entrySet()) {
             newCommitFilesMap.put(entry.getKey(), entry.getValue());
@@ -78,35 +78,35 @@ public class Commands implements CommandsInterface, Serializable {
         String headPath = Utils.readContentsAsString(HEAD_FILE);
         File branchFile = Utils.join(GITLET_DIR, headPath);
         Utils.writeContents(branchFile, newCommitUID);
-        // Clear the staging area by adding new empty HashMap
-        Utils.writeObject(Utils.join(ADD_DIR, "addMap"), new HashMap<String, String>());
-        Utils.writeObject(Utils.join(REMOVE_DIR, "removeMap"), new HashMap<String, String>());
+        // Clear the staging area by adding new empty TreeMap
+        Utils.writeObject(Utils.join(ADD_DIR, "addMap"), new TreeMap<String, String>());
+        Utils.writeObject(Utils.join(REMOVE_DIR, "removeMap"), new TreeMap<String, String>());
     }
 
     /**
-     * Return the HashMap in the add staging area
+     * Return the TreeMap in the add staging area
      * @return
      */
     @SuppressWarnings("unchecked")
-    private HashMap<String, String> readAddMap() {
+    private TreeMap<String, String> readAddMap() {
         File addMapFile = Utils.join(ADD_DIR, "addMap");
         if (!addMapFile.exists()) {
-            return new HashMap<>();
+            return new TreeMap<>();
         }
-        return (HashMap<String, String>) Utils.readObject(addMapFile, HashMap.class);
+        return (TreeMap<String, String>) Utils.readObject(addMapFile, TreeMap.class);
     }
 
     /**
-     * Return the HashMap in the remove staging area
+     * Return the TreeMap in the remove staging area
      * @return
      */
     @SuppressWarnings("unchecked")
-    private HashMap<String, String> readRemoveMap() {
+    private TreeMap<String, String> readRemoveMap() {
         File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
         if (!removeMapFile.exists()) {
-            return new HashMap<>();
+            return new TreeMap<>();
         }
-        return (HashMap<String, String>) Utils.readObject(removeMapFile, HashMap.class);
+        return (TreeMap<String, String>) Utils.readObject(removeMapFile, TreeMap.class);
     }
 
     /**
@@ -138,9 +138,9 @@ public class Commands implements CommandsInterface, Serializable {
         if (!addMapFile.exists() && !removeMapFile.exists()) {
             return;
         }
-        // 反序列化为hashmap然后进行更新
-        HashMap<String, String> updatedAddMap = readAddMap();
-        HashMap<String, String> updatedRemoveMap = readRemoveMap();
+        // 反序列化为TreeMap然后进行更新
+        TreeMap<String, String> updatedAddMap = readAddMap();
+        TreeMap<String, String> updatedRemoveMap = readRemoveMap();
         // 用绝对路径作为key
         String absolutePath = inFile.getAbsolutePath();
         // 获取headCommit及其blob
@@ -148,7 +148,7 @@ public class Commands implements CommandsInterface, Serializable {
         if (headCommit == null) {
             return;
         }
-        HashMap<String, String> headBlobMap = headCommit.getBlob();
+        TreeMap<String, String> headBlobMap = headCommit.getBlob();
         // 检查文件是否在 HEAD Commit 中，且版本是否一致
         if (blobUID.equals(headBlobMap.get(absolutePath))) {
             // 文件内容和当前提交的版本完全一样，没必要暂存
@@ -164,7 +164,7 @@ public class Commands implements CommandsInterface, Serializable {
                 updatedRemoveMap.remove(absolutePath);
             }
         }
-        // 将更新过后的hashmap写入
+        // 将更新过后的TreeMap写入
         Utils.writeObject(addMapFile, updatedAddMap);
         Utils.writeObject(removeMapFile, updatedRemoveMap);
     }
@@ -240,7 +240,7 @@ public class Commands implements CommandsInterface, Serializable {
         if (headCommit == null) {
             return;
         }
-        HashMap<String, String> headBlobMap = headCommit.getBlob();
+        TreeMap<String, String> headBlobMap = headCommit.getBlob();
         // Check if the file is in the Commit dir
         if (!headBlobMap.containsKey(filePath)) {
             System.out.println("File does not exist in that commit.");
