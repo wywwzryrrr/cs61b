@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 import static gitlet.Repository.*;
-import static gitlet.Commit.*;
 
 public class Commands implements CommandsInterface, Serializable {
 
