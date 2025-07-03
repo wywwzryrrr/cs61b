@@ -254,19 +254,25 @@ public class Commands implements CommandsInterface, Serializable {
      */
     private void checkout1(String[] args) {
         String fileName = args[2];
-        File inFile = Utils.join(GITLET_DIR, fileName);
+        File inFile = Utils.join(CWD, fileName);
         String filePath = inFile.getAbsolutePath();
         Commit headCommit = readHeadCommit();
         if (headCommit == null) {
             return;
         }
         HashMap<String, String> headBlobMap = headCommit.getBlob();
+        // Check if the file is in the Commit dir
         if (!headBlobMap.containsKey(filePath)) {
             System.out.println("File does not exist in that commit.");
             return;
         }
+        // The pointer points to the content of the file in the Commit dir
         String blobUID = headBlobMap.get(filePath);
-
+        // Get the content of the file
+        File blobFile = Utils.join(BLOBS_DIR, blobUID);
+        Blob blob = new Blob(blobFile);
+        // Overwrite the file's content if the file exist, create it if there isn't
+        Utils.writeContents(inFile, blob.getContent());
     }
 
     /**
