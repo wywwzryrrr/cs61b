@@ -18,7 +18,7 @@ public class Commands implements CommandsInterface, Serializable {
             return;
         }
         // Create all dirs
-        List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR, STAGE_DIR,
+        List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR,
                                   COMMITS_DIR, STAGE_DIR, ADD_DIR, REMOVE_DIR);
         for (File dir : dirs) {
             dir.mkdirs();
