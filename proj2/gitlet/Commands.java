@@ -270,7 +270,8 @@ public class Commands implements CommandsInterface, Serializable {
         String blobUID = headBlobMap.get(filePath);
         // Get the content of the file
         File blobFile = Utils.join(BLOBS_DIR, blobUID);
-        Blob blob = new Blob(blobFile);
+        // Deserialize the blobFile
+        Blob blob = Utils.readObject(blobFile, Blob.class);
         // Overwrite the file's content if the file exist, create it if there isn't
         Utils.writeContents(inFile, blob.getContent());
     }
@@ -280,12 +281,17 @@ public class Commands implements CommandsInterface, Serializable {
      * and puts it in the working directory,
      * overwriting the version of the file that’s already there if there is one.
      * The new version of the file is not staged.
+     *If no commit with the given id exists,
+     * print No commit with that id exists.
+     * Otherwise, if the file does not exist in the given commit,
+     * print the same message as for failure case 1.
+     * Do not change the CWD.
      *
      * java gitlet.Main checkout [commit id] -- [file name]
      * @param args
      */
     private void checkout2(String[] args) {
-
+        
     }
 
     /**
