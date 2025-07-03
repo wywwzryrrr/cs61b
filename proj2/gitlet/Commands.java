@@ -93,7 +93,7 @@ public class Commands implements CommandsInterface, Serializable {
         if (!addMapFile.exists()) {
             return new HashMap<>();
         }
-        return Utils.readObject(addMapFile, HashMap.class);
+        return (HashMap<String, String>) Utils.readObject(addMapFile, HashMap.class);
     }
 
     /**
@@ -106,7 +106,7 @@ public class Commands implements CommandsInterface, Serializable {
         if (!removeMapFile.exists()) {
             return new HashMap<>();
         }
-        return Utils.readObject(removeMapFile, HashMap.class);
+        return (HashMap<String, String>) Utils.readObject(removeMapFile, HashMap.class);
     }
 
     /**
@@ -139,8 +139,8 @@ public class Commands implements CommandsInterface, Serializable {
             return;
         }
         // 反序列化为hashmap然后进行更新
-        HashMap<String, String> updatedAddMap = Utils.readObject(addMapFile, HashMap.class);
-        HashMap<String, String> updatedRemoveMap = Utils.readObject(removeMapFile, HashMap.class);
+        HashMap<String, String> updatedAddMap = readAddMap();
+        HashMap<String, String> updatedRemoveMap = readRemoveMap();
         // 用绝对路径作为key
         String absolutePath = inFile.getAbsolutePath();
         // 获取headCommit及其blob
@@ -150,7 +150,7 @@ public class Commands implements CommandsInterface, Serializable {
         }
         HashMap<String, String> headBlobMap = headCommit.getBlob();
         // 检查文件是否在 HEAD Commit 中，且版本是否一致
-        if (blobUID.equals(headBlobMap.get(absolutePath))) { // 直接比较blobUID更简洁
+        if (blobUID.equals(headBlobMap.get(absolutePath))) {
             // 文件内容和当前提交的版本完全一样，没必要暂存
             // 如果它在暂存区，应该被移除
             if (updatedAddMap.containsKey(absolutePath)) {
