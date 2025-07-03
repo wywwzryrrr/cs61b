@@ -90,10 +90,11 @@ public class Commands implements CommandsInterface, Serializable {
      * Return the HashMap in the add staging area
      * @return
      */
+    @SuppressWarnings("unchecked")
     private HashMap<String, String> readAddMap() {
         File addMapFile = Utils.join(ADD_DIR, "addMap");
         if (!addMapFile.exists()) {
-            return null;
+            return new HashMap<>();
         }
         return Utils.readObject(addMapFile, HashMap.class);
     }
@@ -102,10 +103,11 @@ public class Commands implements CommandsInterface, Serializable {
      * Return the HashMap in the remove staging area
      * @return
      */
+    @SuppressWarnings("unchecked")
     private HashMap<String, String> readRemoveMap() {
         File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
         if (!removeMapFile.exists()) {
-            return null;
+            return new HashMap<>();
         }
         return Utils.readObject(removeMapFile, HashMap.class);
     }
@@ -116,6 +118,7 @@ public class Commands implements CommandsInterface, Serializable {
      * @param filename
      */
     @Override
+    @SuppressWarnings("unchecked")
     public void add(String filename) {
         if (filename == null || filename.isEmpty()) {
             System.out.println("File does not exist.");
@@ -291,7 +294,7 @@ public class Commands implements CommandsInterface, Serializable {
      * @param args
      */
     private void checkout2(String[] args) {
-        
+
     }
 
     /**
