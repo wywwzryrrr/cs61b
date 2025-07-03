@@ -22,7 +22,11 @@ public interface CommandsInterface {
 
     public void status();
 
-    public void checkout(String[] args);
+    public void checkoutFile(String filename);
+
+    public void checkoutCommitFile(String commitID, String filename);
+
+    public void checkoutBranch(String branchName);
 
     public void reset();
 
