@@ -273,7 +273,7 @@ public class Commands implements CommandsInterface, Serializable {
      */
     @Override
     public void checkoutCommitFile(String commitID, String filename) {
-
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /**
@@ -284,7 +284,7 @@ public class Commands implements CommandsInterface, Serializable {
      */
     @Override
     public void checkoutBranch(String branchName) {
-
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
