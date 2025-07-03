@@ -232,6 +232,7 @@ public class Commands implements CommandsInterface, Serializable {
      * java gitlet.Main checkout -- [file name]
      * @param filename
      */
+    @Override
     public void checkoutFile(String filename) {
         File inFile = Utils.join(CWD, filename);
         String filePath = inFile.getAbsolutePath();
@@ -270,6 +271,7 @@ public class Commands implements CommandsInterface, Serializable {
      * @param commitID
      * @param filename
      */
+    @Override
     public void checkoutCommitFile(String commitID, String filename) {
 
     }
@@ -280,6 +282,7 @@ public class Commands implements CommandsInterface, Serializable {
      * java gitlet.Main checkout [branch name]
      * @param branchName
      */
+    @Override
     public void checkoutBranch(String branchName) {
 
     }
