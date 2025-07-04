@@ -14,7 +14,8 @@ public class Commands implements CommandsInterface, Serializable {
     @Override
     public void init() {
         if (GITLET_DIR.exists()) {
-            System.out.println("A Gitlet version-control system already exists in the current directory.");
+            System.out.println("A Gitlet version-control system " +
+                               "already exists in the current directory.");
             return;
         }
         // Create all dirs
@@ -261,7 +262,7 @@ public class Commands implements CommandsInterface, Serializable {
      * and puts it in the working directory,
      * overwriting the version of the file that’s already there if there is one.
      * The new version of the file is not staged.
-     *If no commit with the given id exists,
+     * If no commit with the given id exists,
      * print No commit with that id exists.
      * Otherwise, if the file does not exist in the given commit,
      * print the same message as for failure case 1.
@@ -273,7 +274,12 @@ public class Commands implements CommandsInterface, Serializable {
      */
     @Override
     public void checkoutCommitFile(String commitID, String filename) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        File commitFile = Utils.join(COMMITS_DIR, commitID);
+        if (!commitFile.exists()) {
+            System.out.println("No commit with that id exists.");
+            return;
+        }
+        checkoutFile(filename);
     }
 
     /**
