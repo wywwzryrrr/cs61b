@@ -1,6 +1,7 @@
 package gitlet;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /** Represents a gitlet commit object.
@@ -36,7 +37,7 @@ public class Commit implements Serializable {
     public Commit(String message, String parent) {
         this.message = message;
         this.parent = parent;
-        this.timestamp = (parent == null) ? "00:00:00 UTC, Thursday, 1 January 1970" : new Date().toString();
+        this.timestamp = generateTimestamp();
         this.blob = new TreeMap<>();
         this.UID = generateUID();
     }
@@ -47,6 +48,15 @@ public class Commit implements Serializable {
 
     public String getUID() {
         return UID;
+    }
+
+    private String generateTimestamp() {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy Z", Locale.ENGLISH);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        if (parent == null) {
+            return "THU JAN 1 8:00:00 1970 +0800";
+        }
+        return sdf.format(new Date());
     }
 
     public String getTimestamp() {

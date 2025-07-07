@@ -190,9 +190,42 @@ public class Commands implements CommandsInterface, Serializable {
 
     }
 
+    /**
+     * ===
+     * commit a0da1ea5a15ab613bf9961fd86f010cf74c7ee48
+     * Date: Thu Nov 9 20:00:05 2017 -0800
+     * A commit message.
+     *
+     * ===
+     * commit 3e8bf1d794ca2e9ef8a4007275acf3751c7170ff
+     * Date: Thu Nov 9 17:01:33 2017 -0800
+     * Another commit message.
+     *
+     * ===
+     * commit e881c9575d180a215d1a636545b8fd9abfb1d2bb
+     * Date: Wed Dec 31 16:00:00 1969 -0800
+     * initial commit
+     */
     @Override
     public void log() {
-
+        Commit headCommit = readHeadCommit();
+        while (headCommit != null) {
+            // Print the messages
+            System.out.println("===");
+            System.out.println("commit " + headCommit.getUID());
+            System.out.println("Date: " + headCommit.getTimestamp());
+            System.out.println(headCommit.getMessage());
+            System.out.println();
+            // Get parentUID
+            String parentUID = headCommit.getParent();
+            // Trace back the parent of the parent commit
+            if (parentUID != null) {
+                File parentFile = Utils.join(COMMITS_DIR, parentUID);
+                headCommit = Utils.readObject(parentFile, Commit.class);
+            } else {
+                headCommit = null;
+            }
+        }
     }
 
     @Override
@@ -253,7 +286,7 @@ public class Commands implements CommandsInterface, Serializable {
         File blobFile = Utils.join(BLOBS_DIR, blobUID);
         // Deserialize the blobFile
         Blob blob = Utils.readObject(blobFile, Blob.class);
-        // Overwrite the file's content if the file exist, create it if there isn't
+        // Overwrite the file's content if the file exists, create it if it isn't
         Utils.writeContents(inFile, blob.getContent());
     }
 
@@ -283,14 +316,30 @@ public class Commands implements CommandsInterface, Serializable {
     }
 
     /**
-     * 
+     * Takes all files in the commit at the head of the given branch,
+     * and puts them in the working directory,
+     * overwriting the versions of the files that are already there if they exist.
+     * Also, at the end of this command,
+     * the given branch will now be considered the current branch (HEAD).
+     * Any files that are tracked in the current branch
+     * but are not present in the checked-out branch are deleted.
+     * The staging area is cleared,
+     * unless the checked-out branch is the current branch.
+     * If no branch with that name exists, print No such branch exists.
+     * If that branch is the current branch,
+     * print No need to checkout the current branch.
+     * If a working file is untracked in the current branch
+     * and would be overwritten by the checkout,
+     * print There is an untracked file in the way;
+     * delete it, or add and commit it first. and exit;
+     * perform this check before doing anything else. Do not change the CWD.
      *
      * java gitlet.Main checkout [branch name]
      * @param branchName
      */
     @Override
     public void checkoutBranch(String branchName) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     @Override
