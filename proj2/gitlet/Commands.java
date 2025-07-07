@@ -1,6 +1,7 @@
 package gitlet;
 
 import java.io.*;
+import java.security.KeyStore;
 import java.util.*;
 
 import static gitlet.Repository.*;
@@ -238,9 +239,37 @@ public class Commands implements CommandsInterface, Serializable {
 
     }
 
+    /**
+     * Creates a new branch with the given name,
+     * and points it at the current head commit.
+     * A branch is nothing more than a name for a reference
+     * (a SHA-1 identifier) to a commit node.
+     * This command does NOT immediately switch to
+     * the newly created branch (just as in real Git).
+     * Before you ever call branch,
+     * your code should be running with a default branch called “master”.
+     * Failure cases: If a branch with the given name already exists,
+     * print the error message
+     * A branch with that name already exists.
+     *
+     * java gitlet.Main branch [branch name]
+     */
     @Override
-    public void branch() {
+    public void branch(String branchName) {
+        File branchFile = Utils.join(HEADS_DIR, branchName);
+        if (checkBranchExist(branchName)) {
+            System.out.println("A branch with that name already exists.");
+            return;
+        }
+        Commit headCommit = readHeadCommit();
+        String commitUID = headCommit.getUID();
+        File newBranchFile = Utils.join(HEADS_DIR, commitUID);
+        Utils.writeContents(newBranchFile, commitUID);
+    }
 
+    private boolean checkBranchExist(String branchName) {
+        File branchFile = Utils.join(HEADS_DIR, branchName);
+        return branchFile.exists();
     }
 
     @Override
@@ -339,7 +368,6 @@ public class Commands implements CommandsInterface, Serializable {
      */
     @Override
     public void checkoutBranch(String branchName) {
-
     }
 
     @Override

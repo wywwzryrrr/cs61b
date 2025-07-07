@@ -16,7 +16,7 @@ public interface CommandsInterface {
 
     public void find();
 
-    public void branch();
+    public void branch(String branchName);
 
     public void rmBranch();
 
