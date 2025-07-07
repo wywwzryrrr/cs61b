@@ -52,9 +52,10 @@ public class Commit implements Serializable {
 
     private String generateTimestamp() {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy Z", Locale.ENGLISH);
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         if (parent == null) {
-            return "THU JAN 1 8:00:00 1970 +0800";
+            Date initialDate = new Date(0);
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT-08:00"));
+            return sdf.format(initialDate);
         }
         return sdf.format(new Date());
     }
