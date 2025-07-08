@@ -1,7 +1,6 @@
 package gitlet;
 
 import java.io.*;
-import java.security.KeyStore;
 import java.util.*;
 
 import static gitlet.Repository.*;
@@ -51,14 +50,14 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("Please enter a commit message.");
             return;
         }
-        // Read the staging area
-        TreeMap<String, String> addMap = readAddMap();
-        TreeMap<String, String> removeMap = readRemoveMap();
         // Check if the staging area is empty
-        if (addMap.isEmpty() && removeMap.isEmpty()) {
+        if (checkStagingAreaIsEmpty()) {
             System.out.println("No changes added to the commit.");
             return;
         }
+        // Read the staging area
+        TreeMap<String, String> addMap = readAddMap();
+        TreeMap<String, String> removeMap = readRemoveMap();
         // Get parent commit and copy its blob
         Commit parentCommit = readHeadCommit();
         TreeMap<String, String> newCommitFilesMap = parentCommit.getBlob();
@@ -109,6 +108,14 @@ public class Commands implements CommandsInterface, Serializable {
             return new TreeMap<>();
         }
         return (TreeMap<String, String>) Utils.readObject(removeMapFile, TreeMap.class);
+    }
+
+    /**
+     * Check if the staging area is empty
+     * @return True if the addMap and the removeMap is empty else false
+     */
+    private boolean checkStagingAreaIsEmpty() {
+        return (readAddMap().isEmpty() && readRemoveMap().isEmpty());
     }
 
     /**
@@ -186,6 +193,19 @@ public class Commands implements CommandsInterface, Serializable {
         return Utils.readObject(commitFile, Commit.class); //反序列化为java对象
     }
 
+    /**
+     * Return the Commit object in the commitUID
+     * @param commitUID
+     * @return
+     */
+    private Commit readCommit(String commitUID) {
+        File commitFile = Utils.join(COMMITS_DIR, commitUID);
+        if (!commitFile.exists()) {
+            return null;
+        }
+        return Utils.readObject(commitFile, Commit.class);
+    }
+
     @Override
     public void rm() {
 
@@ -252,11 +272,10 @@ public class Commands implements CommandsInterface, Serializable {
      * print the error message
      * A branch with that name already exists.
      *
-     * java gitlet.Main branch [branch name]
+     * @Usage java gitlet.Main branch [branch name]
      */
     @Override
     public void branch(String branchName) {
-        File branchFile = Utils.join(HEADS_DIR, branchName);
         if (checkBranchExist(branchName)) {
             System.out.println("A branch with that name already exists.");
             return;
@@ -267,19 +286,76 @@ public class Commands implements CommandsInterface, Serializable {
         Utils.writeContents(newBranchFile, commitUID);
     }
 
+    /**
+     * Check if the branch with the BranchName exists
+     * @param branchName
+     * @return True if the branch with the branchName exists else false
+     */
     private boolean checkBranchExist(String branchName) {
         File branchFile = Utils.join(HEADS_DIR, branchName);
         return branchFile.exists();
     }
 
-    @Override
-    public void rmBranch() {
+    /**
+     * Check if the given branchName is the current branch
+     * @param branchName
+     * @return True if the given branchName is the current branch else false
+     */
+    private boolean checkIsCurrentBranch(String branchName) {
+        File branchFile = Utils.join(HEADS_DIR, branchName);
+        String branchPath = branchFile.getAbsolutePath();
+        String currentBranch = Utils.readContentsAsString(HEAD_FILE);
+        return branchPath.equals(currentBranch);
+    }
 
+    /**
+     *  Deletes the branch with the given name.
+     *  This only means to delete the pointer associated with the branch;
+     *  it does not mean to delete all commits that were created under the branch,
+     *  or anything like that.
+     *  Failure cases: If a branch with the given name does not exist, aborts.
+     *  Print the error message A branch with that name does not exist.
+     *  If you try to remove the branch you’re currently on, aborts,
+     *  printing the error message Cannot remove the current branch.
+     *
+     *  @Usage java gitlet.Main rm-branch [branch name]
+     */
+    @Override
+    public void rmBranch(String branchName) {
+        if (!checkBranchExist(branchName)) {
+            System.out.println("A branch with that name dose not exists.");
+            return;
+        }
+        if (checkIsCurrentBranch(branchName)) {
+            System.out.println("Cannot remove the current branch.");
+            return;
+        }
+        File branchFile = Utils.join(HEADS_DIR, branchName);
+        branchFile.delete();
     }
 
     @Override
     public void status() {
 
+    }
+
+    /**
+     * Check if the file of the given fileName exists in the commit of the commitUID
+     * @param fileName
+     * @param commitUID
+     */
+    private boolean checkFileExistsInCommit(String fileName, String commitUID) {
+        Commit commit = readCommit(commitUID);
+        if (commit == null) {
+            return false;
+        }
+        File Infile = Utils.join(CWD, fileName);
+        if (!Infile.exists()) {
+            return false;
+        }
+        String filePath = Infile.getAbsolutePath();
+        TreeMap<String, String> commitBlobMap = commit.getBlob();
+        return (commitBlobMap.containsKey(filePath));
     }
 
     /**
@@ -292,31 +368,22 @@ public class Commands implements CommandsInterface, Serializable {
      * File does not exist in that commit.
      * Do not change the CWD.
      *
-     * java gitlet.Main checkout -- [file name]
+     * @Usage java gitlet.Main checkout -- [file name]
      * @param filename
      */
     @Override
     public void checkoutFile(String filename) {
-        File inFile = Utils.join(CWD, filename);
-        String filePath = inFile.getAbsolutePath();
         Commit headCommit = readHeadCommit();
         if (headCommit == null) {
             return;
         }
-        TreeMap<String, String> headBlobMap = headCommit.getBlob();
+        String commitUID = headCommit.getUID();
         // Check if the file is in the Commit dir
-        if (!headBlobMap.containsKey(filePath)) {
+        if (!checkFileExistsInCommit(filename, commitUID)) {
             System.out.println("File does not exist in that commit.");
             return;
         }
-        // The pointer points to the content of the file in the Commit dir
-        String blobUID = headBlobMap.get(filePath);
-        // Get the content of the file
-        File blobFile = Utils.join(BLOBS_DIR, blobUID);
-        // Deserialize the blobFile
-        Blob blob = Utils.readObject(blobFile, Blob.class);
-        // Overwrite the file's content if the file exists, create it if it isn't
-        Utils.writeContents(inFile, blob.getContent());
+        overWriteFile(filename, commitUID);
     }
 
     /**
@@ -330,18 +397,43 @@ public class Commands implements CommandsInterface, Serializable {
      * print the same message as for failure case 1.
      * Do not change the CWD.
      *
-     * java gitlet.Main checkout [commit id] -- [file name]
-     * @param commitID
+     * @Usage java gitlet.Main checkout [commit id] -- [file name]
+     * @param commitUID
      * @param filename
      */
     @Override
-    public void checkoutCommitFile(String commitID, String filename) {
-        File commitFile = Utils.join(COMMITS_DIR, commitID);
-        if (!commitFile.exists()) {
-            System.out.println("No commit with that id exists.");
+    public void checkoutCommitFile(String commitUID, String filename) {
+        Commit commit = readCommit(commitUID);
+        if (commit == null) {
+            System.out.println("No commit with that ID exists.");
             return;
         }
-        checkoutFile(filename);
+        if (!checkFileExistsInCommit(filename, commitUID)) {
+            System.out.println("File does not exist in that commit.");
+            return;
+        }
+        overWriteFile(filename, commitUID);
+    }
+
+    /**
+     * Overwrite the file if it exists in the given commitUID,
+     * and if it doesn't, create one
+     * @param fileName
+     * @param commitUID
+     */
+    private void overWriteFile(String fileName, String commitUID) {
+        File inFile = Utils.join(CWD, fileName);
+        String filePath = inFile.getAbsolutePath();
+        Commit commit = readCommit(commitUID);
+        TreeMap<String, String> commitBlobMap = commit.getBlob();
+        // The pointer points to the content of the file in the Commit dir
+        String blobUID = commitBlobMap.get(filePath);
+        // Get the content of the file
+        File blobFile = Utils.join(BLOBS_DIR, blobUID);
+        // Deserialize the blobFile
+        Blob blob = Utils.readObject(blobFile, Blob.class);
+        // Overwrite the file's content if the file exists, create it if it isn't
+        Utils.writeContents(inFile, blob.getContent());
     }
 
     /**
@@ -358,16 +450,31 @@ public class Commands implements CommandsInterface, Serializable {
      * If that branch is the current branch,
      * print No need to checkout the current branch.
      * If a working file is untracked in the current branch
-     * and would be overwritten by the checkout,
-     * print There is an untracked file in the way;
-     * delete it, or add and commit it first. and exit;
+     * and would be overwritten by the checkout, print
+     * There is an untracked file in the way, delete it, or add and commit it first. and exit;
      * perform this check before doing anything else. Do not change the CWD.
      *
-     * java gitlet.Main checkout [branch name]
+     * @Usage java gitlet.Main checkout [branch name]
      * @param branchName
      */
     @Override
     public void checkoutBranch(String branchName) {
+        // Check if the branch with the branchName exist
+        if (!checkBranchExist(branchName)) {
+            System.out.println("No such branch exists.");
+            return;
+        }
+        // Check if the branch with the branchName is the current branch
+        if (checkIsCurrentBranch(branchName)) {
+            System.out.println("No need to checkout the current branch.");
+            return;
+        }
+        // Check if a file is untracked and would be overwritten by checkout
+        if (checkStagingAreaIsEmpty()) {
+            System.out.println("There is an untracked file in this way, " +
+                               "delete it, or add and commit it first");
+
+        }
     }
 
     @Override

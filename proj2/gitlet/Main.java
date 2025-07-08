@@ -35,7 +35,7 @@ public class Main {
             case "globalLog" -> commands.globalLog();
             case "find" -> commands.find();
             case "branch" -> commands.branch(args[1]);
-            case "rmBranch" -> commands.rmBranch();
+            case "rmBranch" -> commands.rmBranch(args[1]);
             case "status" -> commands.status();
             case "checkout" -> {
                 // 形式 2: checkout [commit id] -- [file name]

@@ -18,7 +18,7 @@ public interface CommandsInterface {
 
     public void branch(String branchName);
 
-    public void rmBranch();
+    public void rmBranch(String branchName);
 
     public void status();
 
