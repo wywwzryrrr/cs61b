@@ -3,6 +3,7 @@ package gitlet;
 import jdk.jshell.execution.Util;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
@@ -137,12 +138,12 @@ public class HelperMethods {
     }
 
     /**
-     * Overwrite the file if it exists in the given commitUID,
+     * Overwrite the file if it exists in the given commit,
      * create one if it doesn't
      * @param fileName
-     * @param commitUID
+     * @param commit
      */
-    public static void overWriteFile(String fileName, Commit commit) {
+    public static void overwriteFile(String fileName, Commit commit) {
         File inFile = Utils.join(CWD, fileName);
         String filePath = inFile.getAbsolutePath();
         TreeMap<String, String> commitBlobMap = commit.getBlob();
@@ -156,8 +157,33 @@ public class HelperMethods {
         Utils.writeContents(inFile, blob.getContent());
     }
 
-    public void overWriteAllFiles(Commit commit) {
+    /**
+     * Overwrite all the files in the CWD to the files in the given commit
+     * @param commit
+     */
+    public static void overwriteAllFiles(Commit commit) {
+        TreeMap<String, String> commitBlobMap = commit.getBlob();
+        for (String filePath : commitBlobMap.keySet()) {
+            File file = new File(filePath);
+            String fileName = file.getName();
+            overwriteFile(fileName, commit);
+        }
+    }
 
+    /**
+     * Clear the redundant files which are tracked in the current commit
+     * but are not in the given target commit when switch to another branch
+     */
+    public static void clearRedundantFiles(Commit currentCommit, Commit targetCommit) {
+        Set<String> trackedAbsolutePaths = currentCommit.getBlob().keySet();
+        Set<String> targetAbsolutePaths = targetCommit.getBlob().keySet();
+        for (String filePath : trackedAbsolutePaths) {
+            File file = new File(filePath);
+            String fileName = file.getName();
+            if (!targetAbsolutePaths.contains(filePath)) {
+                Utils.restrictedDelete(fileName);
+            }
+        }
     }
 
     /**
@@ -178,9 +204,7 @@ public class HelperMethods {
             String absolutePath = currentFile.getAbsolutePath();
             // Files that are tracked in the target branch but are not in the current branch
             if (!trackedAbsolutePaths.contains(absolutePath) &&
-                    targetBranchFilesPaths.contains(absolutePath)) {
-                System.out.println("There is an untracked file in the way, delete it, " +
-                        "or add and commit it first. and exit");
+                 targetBranchFilesPaths.contains(absolutePath)) {
                 return true;
             }
         }

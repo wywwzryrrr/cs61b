@@ -279,7 +279,7 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("File does not exist in that commit.");
             return;
         }
-        overWriteFile(filename, headCommit);
+        overwriteFile(filename, headCommit);
     }
 
     /**
@@ -308,7 +308,7 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("File does not exist in that commit.");
             return;
         }
-        overWriteFile(filename, commit);
+        overwriteFile(filename, commit);
     }
 
     /**
@@ -351,8 +351,11 @@ public class Commands implements CommandsInterface, Serializable {
             return;
         }
         Commit branchCommit = readBranchCommit(branchName);
-        String branchCommitUID = branchCommit.getUID();
-
+        Commit currentCommit = readHeadCommit();
+        overwriteAllFiles(branchCommit);
+        clearRedundantFiles(currentCommit, branchCommit);
+        clearStagingArea();
+        Utils.writeContents(HEAD_FILE, "refs/heads/" + branchName);
     }
 
     @Override
