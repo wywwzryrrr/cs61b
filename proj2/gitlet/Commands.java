@@ -223,7 +223,7 @@ public class Commands implements CommandsInterface, Serializable {
         }
         Commit headCommit = readHeadCommit();
         String commitUID = headCommit.getUID();
-        File newBranchFile = Utils.join(HEADS_DIR, commitUID);
+        File newBranchFile = Utils.join(HEADS_DIR, branchName);
         Utils.writeContents(newBranchFile, commitUID);
     }
 

@@ -198,7 +198,7 @@ public class HelperMethods {
         // The absolute path tracked in the current branch
         Set<String> trackedAbsolutePaths = readHeadCommit().getBlob().keySet();
         // The absolute path tracked in the target branch
-        Set<String> targetBranchFilesPaths = readCommit(branchName).getBlob().keySet();
+        Set<String> targetBranchFilesPaths = readBranchCommit(branchName).getBlob().keySet();
         for (String fileName : fileNames) {
             File currentFile = Utils.join(CWD, fileName);
             String absolutePath = currentFile.getAbsolutePath();
