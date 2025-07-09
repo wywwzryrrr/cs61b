@@ -1,5 +1,7 @@
 package gitlet;
 
+import jdk.jshell.execution.Util;
+
 import java.io.File;
 import java.util.List;
 import java.util.Set;
@@ -55,18 +57,23 @@ public class HelperMethods {
      * @return
      */
     public static Commit readHeadCommit() {
-        String headPath = Utils.readContentsAsString(HEAD_FILE); // "refs/heads/master"
-        File branchFile = Utils.join(GITLET_DIR, headPath); // .gitlet/refs/heads/master 拼接路径找到commitUID
-        String commitUID = Utils.readContentsAsString(branchFile); // 读取commitUID
-        File commitFile = Utils.join(COMMITS_DIR, commitUID); // 找到commit对象
+        // "refs/heads/master"
+        String headPath = Utils.readContentsAsString(HEAD_FILE);
+        // .gitlet/refs/heads/master 拼接路径找到commitUID
+        File branchFile = Utils.join(GITLET_DIR, headPath);
+        // 读取commitUID
+        String commitUID = Utils.readContentsAsString(branchFile);
+        // 找到commit对象
+        File commitFile = Utils.join(COMMITS_DIR, commitUID);
         if (!commitFile.exists()) {
             return null;
         }
-        return Utils.readObject(commitFile, Commit.class); //反序列化为java对象
+        //反序列化为Commit对象
+        return Utils.readObject(commitFile, Commit.class);
     }
 
     /**
-     * Return the Commit object in the commitUID
+     * Return the Commit object through the commitUID
      * @param commitUID
      * @return
      */
@@ -75,6 +82,18 @@ public class HelperMethods {
         if (!commitFile.exists()) {
             return null;
         }
+        return Utils.readObject(commitFile, Commit.class);
+    }
+
+    /**
+     * Return the Commit object through the given branchName
+     * @param branchName
+     * @return
+     */
+    public static Commit readBranchCommit(String branchName) {
+        File branchFile = Utils.join(HEADS_DIR, branchName);
+        String commitUID = Utils.readContentsAsString(branchFile);
+        File commitFile = Utils.join(COMMITS_DIR, commitUID);
         return Utils.readObject(commitFile, Commit.class);
     }
 
@@ -102,10 +121,9 @@ public class HelperMethods {
     /**
      * Check if the file of the given fileName exists in the commit of the commitUID
      * @param fileName
-     * @param commitUID
+     * @param commit
      */
-    public static boolean checkFileExistsInCommit(String fileName, String commitUID) {
-        Commit commit = readCommit(commitUID);
+    public static boolean checkFileExistsInCommit(String fileName, Commit commit) {
         if (commit == null) {
             return false;
         }
@@ -124,10 +142,9 @@ public class HelperMethods {
      * @param fileName
      * @param commitUID
      */
-    public static void overWriteFile(String fileName, String commitUID) {
+    public static void overWriteFile(String fileName, Commit commit) {
         File inFile = Utils.join(CWD, fileName);
         String filePath = inFile.getAbsolutePath();
-        Commit commit = readCommit(commitUID);
         TreeMap<String, String> commitBlobMap = commit.getBlob();
         // The pointer points to the content of the file in the Commit dir
         String blobUID = commitBlobMap.get(filePath);
@@ -137,6 +154,10 @@ public class HelperMethods {
         Blob blob = Utils.readObject(blobFile, Blob.class);
         // Overwrite the file's content if the file exists, create it if it isn't
         Utils.writeContents(inFile, blob.getContent());
+    }
+
+    public void overWriteAllFiles(Commit commit) {
+
     }
 
     /**

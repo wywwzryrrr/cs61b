@@ -274,13 +274,12 @@ public class Commands implements CommandsInterface, Serializable {
     @Override
     public void checkoutFile(String filename) {
         Commit headCommit = readHeadCommit();
-        String commitUID = headCommit.getUID();
         // Check if the file is in the Commit dir
-        if (!checkFileExistsInCommit(filename, commitUID)) {
+        if (!checkFileExistsInCommit(filename, headCommit)) {
             System.out.println("File does not exist in that commit.");
             return;
         }
-        overWriteFile(filename, commitUID);
+        overWriteFile(filename, headCommit);
     }
 
     /**
@@ -305,11 +304,11 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("No commit with that ID exists.");
             return;
         }
-        if (!checkFileExistsInCommit(filename, commitUID)) {
+        if (!checkFileExistsInCommit(filename, commit)) {
             System.out.println("File does not exist in that commit.");
             return;
         }
-        overWriteFile(filename, commitUID);
+        overWriteFile(filename, commit);
     }
 
     /**
@@ -335,15 +334,15 @@ public class Commands implements CommandsInterface, Serializable {
      */
     @Override
     public void checkoutBranch(String branchName) {
-        // Check if files are untracked in the current branch and would be overwritten by checkout
-        if (checkUntrackedFileToCheckout(branchName)) {
-            System.out.println("There is an untracked file in the way, delete it, " +
-                               "or add and commit it first. and exit");
-            return;
-        }
         // Check if the branch with the branchName exist
         if (!checkBranchExist(branchName)) {
             System.out.println("No such branch exists.");
+            return;
+        }
+        // Check if files are untracked in the current branch and would be overwritten by checkout
+        if (checkUntrackedFileToCheckout(branchName)) {
+            System.out.println("There is an untracked file in the way, delete it, " +
+                               "or add and commit it first.");
             return;
         }
         // Check if the branch with the branchName is the current branch
@@ -351,6 +350,9 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("No need to checkout the current branch.");
             return;
         }
+        Commit branchCommit = readBranchCommit(branchName);
+        String branchCommitUID = branchCommit.getUID();
+
     }
 
     @Override
