@@ -1,9 +1,13 @@
 package gitlet;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static gitlet.Repository.*;
+import static gitlet.HelperMethods.*;
 
 public class Commands implements CommandsInterface, Serializable {
 
@@ -80,42 +84,7 @@ public class Commands implements CommandsInterface, Serializable {
         File branchFile = Utils.join(GITLET_DIR, headPath);
         Utils.writeContents(branchFile, newCommitUID);
         // Clear the staging area by adding new empty TreeMap
-        Utils.writeObject(Utils.join(ADD_DIR, "addMap"), new TreeMap<String, String>());
-        Utils.writeObject(Utils.join(REMOVE_DIR, "removeMap"), new TreeMap<String, String>());
-    }
-
-    /**
-     * Return the TreeMap in the add staging area
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    private TreeMap<String, String> readAddMap() {
-        File addMapFile = Utils.join(ADD_DIR, "addMap");
-        if (!addMapFile.exists()) {
-            return new TreeMap<>();
-        }
-        return (TreeMap<String, String>) Utils.readObject(addMapFile, TreeMap.class);
-    }
-
-    /**
-     * Return the TreeMap in the remove staging area
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    private TreeMap<String, String> readRemoveMap() {
-        File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
-        if (!removeMapFile.exists()) {
-            return new TreeMap<>();
-        }
-        return (TreeMap<String, String>) Utils.readObject(removeMapFile, TreeMap.class);
-    }
-
-    /**
-     * Check if the staging area is empty
-     * @return True if the addMap and the removeMap is empty else false
-     */
-    private boolean checkStagingAreaIsEmpty() {
-        return (readAddMap().isEmpty() && readRemoveMap().isEmpty());
+        clearStagingArea();
     }
 
     /**
@@ -176,34 +145,6 @@ public class Commands implements CommandsInterface, Serializable {
         // 将更新过后的TreeMap写入
         Utils.writeObject(addMapFile, updatedAddMap);
         Utils.writeObject(removeMapFile, updatedRemoveMap);
-    }
-
-    /**
-     * Return the latest commit as a Commit object
-     * @return
-     */
-    private Commit readHeadCommit() {
-        String headPath = Utils.readContentsAsString(HEAD_FILE); // "refs/heads/master"
-        File branchFile = Utils.join(GITLET_DIR, headPath); // .gitlet/refs/heads/master 拼接路径找到commitUID
-        String commitUID = Utils.readContentsAsString(branchFile); // 读取commitUID
-        File commitFile = Utils.join(COMMITS_DIR, commitUID); // 找到commit对象
-        if (!commitFile.exists()) {
-            return null;
-        }
-        return Utils.readObject(commitFile, Commit.class); //反序列化为java对象
-    }
-
-    /**
-     * Return the Commit object in the commitUID
-     * @param commitUID
-     * @return
-     */
-    private Commit readCommit(String commitUID) {
-        File commitFile = Utils.join(COMMITS_DIR, commitUID);
-        if (!commitFile.exists()) {
-            return null;
-        }
-        return Utils.readObject(commitFile, Commit.class);
     }
 
     @Override
@@ -287,28 +228,6 @@ public class Commands implements CommandsInterface, Serializable {
     }
 
     /**
-     * Check if the branch with the BranchName exists
-     * @param branchName
-     * @return True if the branch with the branchName exists else false
-     */
-    private boolean checkBranchExist(String branchName) {
-        File branchFile = Utils.join(HEADS_DIR, branchName);
-        return branchFile.exists();
-    }
-
-    /**
-     * Check if the given branchName is the current branch
-     * @param branchName
-     * @return True if the given branchName is the current branch else false
-     */
-    private boolean checkIsCurrentBranch(String branchName) {
-        File branchFile = Utils.join(HEADS_DIR, branchName);
-        String branchPath = branchFile.getAbsolutePath();
-        String currentBranch = Utils.readContentsAsString(HEAD_FILE);
-        return branchPath.equals(currentBranch);
-    }
-
-    /**
      *  Deletes the branch with the given name.
      *  This only means to delete the pointer associated with the branch;
      *  it does not mean to delete all commits that were created under the branch,
@@ -340,25 +259,6 @@ public class Commands implements CommandsInterface, Serializable {
     }
 
     /**
-     * Check if the file of the given fileName exists in the commit of the commitUID
-     * @param fileName
-     * @param commitUID
-     */
-    private boolean checkFileExistsInCommit(String fileName, String commitUID) {
-        Commit commit = readCommit(commitUID);
-        if (commit == null) {
-            return false;
-        }
-        File Infile = Utils.join(CWD, fileName);
-        if (!Infile.exists()) {
-            return false;
-        }
-        String filePath = Infile.getAbsolutePath();
-        TreeMap<String, String> commitBlobMap = commit.getBlob();
-        return (commitBlobMap.containsKey(filePath));
-    }
-
-    /**
      * Takes the version of the file as it exists in the head commit
      * and puts it in the working directory,
      * overwriting the version of the file that’s already there if there is one.
@@ -374,9 +274,6 @@ public class Commands implements CommandsInterface, Serializable {
     @Override
     public void checkoutFile(String filename) {
         Commit headCommit = readHeadCommit();
-        if (headCommit == null) {
-            return;
-        }
         String commitUID = headCommit.getUID();
         // Check if the file is in the Commit dir
         if (!checkFileExistsInCommit(filename, commitUID)) {
@@ -416,27 +313,6 @@ public class Commands implements CommandsInterface, Serializable {
     }
 
     /**
-     * Overwrite the file if it exists in the given commitUID,
-     * and if it doesn't, create one
-     * @param fileName
-     * @param commitUID
-     */
-    private void overWriteFile(String fileName, String commitUID) {
-        File inFile = Utils.join(CWD, fileName);
-        String filePath = inFile.getAbsolutePath();
-        Commit commit = readCommit(commitUID);
-        TreeMap<String, String> commitBlobMap = commit.getBlob();
-        // The pointer points to the content of the file in the Commit dir
-        String blobUID = commitBlobMap.get(filePath);
-        // Get the content of the file
-        File blobFile = Utils.join(BLOBS_DIR, blobUID);
-        // Deserialize the blobFile
-        Blob blob = Utils.readObject(blobFile, Blob.class);
-        // Overwrite the file's content if the file exists, create it if it isn't
-        Utils.writeContents(inFile, blob.getContent());
-    }
-
-    /**
      * Takes all files in the commit at the head of the given branch,
      * and puts them in the working directory,
      * overwriting the versions of the files that are already there if they exist.
@@ -459,6 +335,12 @@ public class Commands implements CommandsInterface, Serializable {
      */
     @Override
     public void checkoutBranch(String branchName) {
+        // Check if files are untracked in the current branch and would be overwritten by checkout
+        if (checkUntrackedFileToCheckout(branchName)) {
+            System.out.println("There is an untracked file in the way, delete it, " +
+                               "or add and commit it first. and exit");
+            return;
+        }
         // Check if the branch with the branchName exist
         if (!checkBranchExist(branchName)) {
             System.out.println("No such branch exists.");
@@ -468,12 +350,6 @@ public class Commands implements CommandsInterface, Serializable {
         if (checkIsCurrentBranch(branchName)) {
             System.out.println("No need to checkout the current branch.");
             return;
-        }
-        // Check if a file is untracked and would be overwritten by checkout
-        if (checkStagingAreaIsEmpty()) {
-            System.out.println("There is an untracked file in this way, " +
-                               "delete it, or add and commit it first");
-
         }
     }
 
