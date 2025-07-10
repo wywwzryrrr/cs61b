@@ -219,10 +219,66 @@ public class HelperMethods {
     public static String findFullCommitUID(String shortUID) {
         List<String> commitUIDs = Utils.plainFilenamesIn(COMMITS_DIR);
         for (String commitUID : commitUIDs) {
-             if (commitUID.startsWith(shortUID)) {
+            if (commitUID.startsWith(shortUID)) {
                  return commitUID;
-             }
+            }
         }
         return null;
+    }
+
+    /**
+     * Display what branches currently exist,
+     * and marks the current branch with a *.
+     */
+    public static void printBranches() {
+        System.out.println("=== Branches ===");
+        List<String> branches = Utils.plainFilenamesIn(HEADS_DIR);
+        String headContent = Utils.readContentsAsString(HEAD_FILE);
+        // Extract branch name from HEAD_FILE (e.g., "refs/heads/master" -> "master")
+        String currentBranch = headContent.replace("refs/heads/", "");
+        for (String branch : branches) {
+            if (branch.equals(currentBranch)) {
+                System.out.println("*" + branch);
+            } else {
+                System.out.println(branch);
+            }
+        }
+        System.out.println();
+    }
+
+    /**
+     * Display the files that have been staged for addition
+     */
+    public static void printStagedFiles() {
+        System.out.println("=== Staged Files ===");
+        TreeMap<String, String> addMap = readAddMap();
+        for (String filePath : addMap.keySet()) {
+            File addFile = new File(filePath);
+            System.out.println(addFile.getName());
+        }
+        System.out.println();
+    }
+
+    /**
+     * Display the files that have been staged for removal
+     */
+    public static void printRemovedFiles() {
+        System.out.println("=== Removed Files ===");
+        TreeMap<String, String> removeMap = readRemoveMap();
+        for (String filePath : removeMap.keySet()) {
+            File removeFile = new File(filePath);
+            System.out.println(removeFile.getName());
+        }
+        System.out.println();
+    }
+
+    public static void printModifiedNotStagedFiles() {
+        System.out.println("=== Modifications Not Staged For Commit ===");
+        System.out.println();
+    }
+
+    public static void printUntrackedFiles() {
+        System.out.println("=== Untracked Files ===");
+        System.out.println();
     }
 }

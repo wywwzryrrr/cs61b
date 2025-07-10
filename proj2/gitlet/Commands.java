@@ -25,9 +25,7 @@ public class Commands implements CommandsInterface, Serializable {
         // Create all dirs
         List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR,
                                   COMMITS_DIR, STAGE_DIR, ADD_DIR, REMOVE_DIR);
-        for (File dir : dirs) {
-            dir.mkdirs();
-        }
+        for (File dir : dirs) {dir.mkdirs();}
         // Initiate commit
         Commit initCommit = new Commit("initial commit", null);
         String UID = initCommit.generateUID();
@@ -253,9 +251,44 @@ public class Commands implements CommandsInterface, Serializable {
         branchFile.delete();
     }
 
+    /**
+     *  Displays what branches currently exist,
+     *  and marks the current branch with a *.
+     *  Also displays what files have been staged for addition or removal.
+     *  An example of the exact format it should follow is as follows.
+     *
+     * === Branches ===
+     * *master
+     * other-branch
+     *
+     * === Staged Files ===
+     * wug.txt
+     * wug2.txt
+     *
+     * === Removed Files ===
+     * goodbye.txt
+     *
+     * === Modifications Not Staged For Commit ===
+     * junk.txt (deleted)
+     * wug3.txt (modified)
+     *
+     * === Untracked Files ===
+     * random.stuff
+     *
+     * There is an empty line between sections,
+     * and the entire status ends in an empty line as well.
+     * Entries should be listed in lexicographic order,
+     * using the Java string-comparison order (the asterisk doesn’t count)
+     *
+     * @Usage java gitlet.Main status
+     */
     @Override
     public void status() {
-
+        printBranches();
+        printStagedFiles();
+        printRemovedFiles();
+        printModifiedNotStagedFiles();
+        printUntrackedFiles();
     }
 
     /**
