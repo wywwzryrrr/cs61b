@@ -210,4 +210,19 @@ public class HelperMethods {
         }
         return false;
     }
+
+    /**
+     * Return the full sha-1 UID of a commit with a given shortUID
+     * @param shortUID
+     * @return
+     */
+    public static String findFullCommitUID(String shortUID) {
+        List<String> commitUIDs = Utils.plainFilenamesIn(COMMITS_DIR);
+        for (String commitUID : commitUIDs) {
+             if (commitUID.startsWith(shortUID)) {
+                 return commitUID;
+             }
+        }
+        return null;
+    }
 }

@@ -299,11 +299,12 @@ public class Commands implements CommandsInterface, Serializable {
      */
     @Override
     public void checkoutCommitFile(String commitUID, String filename) {
-        Commit commit = readCommit(commitUID);
-        if (commit == null) {
-            System.out.println("No commit with that ID exists.");
+        String fullCommitUID = findFullCommitUID(commitUID);
+        if (fullCommitUID == null) {
+            System.out.println("No commit with that id exists.");
             return;
         }
+        Commit commit = readCommit(fullCommitUID);
         if (!checkFileExistsInCommit(filename, commit)) {
             System.out.println("File does not exist in that commit.");
             return;
