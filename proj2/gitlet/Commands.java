@@ -145,9 +145,26 @@ public class Commands implements CommandsInterface, Serializable {
         Utils.writeObject(removeMapFile, updatedRemoveMap);
     }
 
+    /**
+     * Unstage the file if it is currently staged for addition.
+     * If the file is tracked in the current commit,
+     * stage it for removal and remove the file from the working directory
+     * if the user has not already done so
+     * (do not remove it unless it is tracked in the current commit).
+     * If the file is neither staged nor tracked by the head commit,
+     * print the error message No reason to remove the file.
+     *
+     * @Usage java gitlet.Main rm [file name]
+     */
     @Override
-    public void rm() {
-
+    public void rm(String filename) {
+        Commit headCommit = readHeadCommit();
+        if (!checkFileExistsInCommit(filename, headCommit) &&
+            !checkFileStaged(filename)) {
+            System.out.println("No reason to remove the file.");
+            return;
+        }
+        
     }
 
     /**

@@ -8,7 +8,7 @@ public interface CommandsInterface {
 
     public void add(String filename);
 
-    public void rm();
+    public void rm(String filename);
 
     public void log();
 

@@ -1,9 +1,6 @@
 package gitlet;
 
-import jdk.jshell.execution.Util;
-
 import java.io.File;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
@@ -43,6 +40,18 @@ public class HelperMethods {
      */
     public static boolean checkStagingAreaIsEmpty() {
         return (readAddMap().isEmpty() && readRemoveMap().isEmpty());
+    }
+
+    /**
+     * Check if the file with the given fileName in staged for addition
+     * @param fileName
+     * @return True if the file is in the addMap
+     */
+    public static boolean checkFileStaged(String fileName) {
+        TreeMap<String, String> addMap = readAddMap();
+        File inFile = Utils.join(CWD, fileName);
+        String filePath = inFile.getAbsolutePath();
+        return addMap.containsKey(filePath);
     }
 
     /**
@@ -212,7 +221,7 @@ public class HelperMethods {
     }
 
     /**
-     * Return the full sha-1 UID of a commit with a given shortUID
+     * Return the full sha-1 UID of a commit with the given shortUID
      * @param shortUID
      * @return
      */
