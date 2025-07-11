@@ -11,7 +11,11 @@ public class Main {
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Please enter a command");
-            System.exit(1);
+            return;
+        }
+        if (!args[0].equals("init") && !Repository.GITLET_DIR.exists()) {
+            System.out.println("Not in an initialized Gitlet directory.");
+            return;
         }
         String firstArg = args[0];
         Commands commands = new Commands();
