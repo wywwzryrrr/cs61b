@@ -198,11 +198,7 @@ public class Commands implements CommandsInterface, Serializable {
         Commit headCommit = readHeadCommit();
         while (headCommit != null) {
             // Print the messages
-            System.out.println("===");
-            System.out.println("commit " + headCommit.getUID());
-            System.out.println("Date: " + headCommit.getTimestamp());
-            System.out.println(headCommit.getMessage());
-            System.out.println();
+            logPrint(headCommit);
             // Get parentUID
             String parentUID = headCommit.getParent();
             // Trace back the parent of the parent commit
@@ -215,9 +211,19 @@ public class Commands implements CommandsInterface, Serializable {
         }
     }
 
+    /**
+     *  Like log, except displays information about all commits ever made.
+     *  The order of the commits does not matter.
+     *  Hint: there is a useful method in
+     *  gitlet.Utils that will help you iterate over files within a directory.
+     */
     @Override
     public void globalLog() {
-
+        List<String> commitList = Utils.plainFilenamesIn(COMMITS_DIR);
+        for (String commitUID : commitList) {
+            Commit commit = readCommit(commitUID);
+            logPrint(commit);
+        }
     }
 
     @Override

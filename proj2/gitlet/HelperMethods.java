@@ -350,4 +350,16 @@ public class HelperMethods {
         File inFile = Utils.join(CWD, fileName);
         return inFile.exists();
     }
+
+    /**
+     * Print the details of a commit
+     * @param commit
+     */
+    public static void logPrint(Commit commit) {
+        System.out.println("===");
+        System.out.println("commit " + commit.getUID());
+        System.out.println("Date: " + commit.getTimestamp());
+        System.out.println(commit.getMessage());
+        System.out.println();
+    }
 }

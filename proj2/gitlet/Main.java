@@ -36,7 +36,7 @@ public class Main {
             case "merge" -> commands.merge();
             case "rm" -> commands.rm(args[1]);
             case "log" -> commands.log();
-            case "globalLog" -> commands.globalLog();
+            case "global-log" -> commands.globalLog();
             case "find" -> commands.find();
             case "branch" -> commands.branch(args[1]);
             case "rm-branch" -> commands.rmBranch(args[1]);
