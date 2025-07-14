@@ -86,63 +86,65 @@ public class Commands implements CommandsInterface, Serializable {
     }
 
     /**
-     * Command 'add + fileName'.
-     * to add file to staging for addition
+     * Adds a copy of the file as it currently exists to the staging area
+     * Staging an already-staged file overwrites the previous entry
+     * in the staging area with the new contents.
+     * The staging area should be somewhere in .gitlet.
+     * If the current working version of the file
+     * is identical to the version in the current commit,
+     * do not stage it to be added, and remove it
+     * from the staging area if it is already there
+     * (as can happen when a file is changed, added,
+     * and then changed back to its original version).
+     * The file will no longer be staged for removal
      * @param filename
      */
     @Override
     @SuppressWarnings("unchecked")
     public void add(String filename) {
-        if (filename == null || filename.isEmpty()) {
-            System.out.println("File does not exist.");
-            return;
-        }
+        // 1. 检查文件是否存在于工作目录
         File inFile = Utils.join(CWD, filename);
-        if (!inFile.exists() || inFile.isDirectory()) {
+        if (!inFile.exists()) {
             System.out.println("File does not exist.");
             return;
         }
-        // Create Blob object
-        Blob blob = new Blob(inFile);
-        String blobUID = blob.getUID();
-        // Store the blob to BLOB_DIR
-        File blobFile = Utils.join(BLOBS_DIR, blobUID);
-        Utils.writeObject(blobFile, blob);
-        // Add the blobFile to the staging area
-        File addMapFile = Utils.join(ADD_DIR, "addMap");
-        File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
-        if (!addMapFile.exists() && !removeMapFile.exists()) {
-            return;
-        }
-        // 反序列化为TreeMap然后进行更新
+        // 2. 读取暂存区状态
         TreeMap<String, String> addMap = readAddMap();
         TreeMap<String, String> removeMap = readRemoveMap();
-        // 用绝对路径作为key
         String inFilePath = inFile.getAbsolutePath();
-        // 获取headCommit及其blob
+        // 3. 如果文件在待删除区，先把它移除，实现 "un-remove"
+        if (removeMap.containsKey(inFilePath)) {
+            removeMap.remove(inFilePath);
+        }
+        // 4. 计算当前文件内容的 Blob UID
+        Blob currentBlob = new Blob(inFile);
+        String currentBlobUID = currentBlob.getUID();
+        // 5. 与 HEAD Commit 的版本进行比较
         Commit headCommit = readHeadCommit();
-        if (headCommit == null) {
-            return;
-        }
-        TreeMap<String, String> headBlobMap = headCommit.getBlob();
-        // 检查文件是否在 HEAD Commit 中，且版本是否一致
-        if (blobUID.equals(headBlobMap.get(inFilePath)) &&
-            checkFileExistsInCommit(filename, headCommit)) {
-            // 文件内容和当前提交的版本完全一样，没必要暂存
-            // 如果它在暂存区，应该被移除
-            if (addMap.containsKey(inFilePath)) {
-                addMap.remove(inFilePath);
+        boolean isUnchanged = false;
+        // 处理 initial commit 的情况
+        if (headCommit != null) {
+            String trackedBlobUID = headCommit.getBlob().get(inFilePath);
+            if (currentBlobUID.equals(trackedBlobUID)) {
+                isUnchanged = true;
             }
+        }
+        // 6. 根据比较结果更新暂存区
+        if (isUnchanged) {
+            // 如果文件内容和 HEAD 一致，它不应该被暂存
+            // 如果它之前在 addMap 里，就移除它
+            addMap.remove(inFilePath);
         } else {
-            // 文件内容有变化，或者是一个新文件，加入暂存区
-            if (removeMap.containsKey(inFilePath)) {
-                removeMap.remove(inFilePath);
-            }
-            addMap.put(inFilePath, blobUID);
+            // 文件是新的，或者被修改了，暂存它
+            // a. 将 blob 对象写入 .gitlet/blobs
+            File blobFile = Utils.join(BLOBS_DIR, currentBlobUID);
+            Utils.writeObject(blobFile, currentBlob);
+            // b. 将 (路径, UID) 存入 addMap
+            addMap.put(inFilePath, currentBlobUID);
         }
-        // 将更新过后的TreeMap写入
-        Utils.writeObject(addMapFile, addMap);
-        Utils.writeObject(removeMapFile, removeMap);
+        // 7. 将更新后的两个 Map 写回磁盘
+        Utils.writeObject(Utils.join(ADD_DIR, "addMap"), addMap);
+        Utils.writeObject(Utils.join(REMOVE_DIR, "removeMap"), removeMap);
     }
 
     /**
