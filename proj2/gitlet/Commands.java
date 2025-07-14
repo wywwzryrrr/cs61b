@@ -115,10 +115,10 @@ public class Commands implements CommandsInterface, Serializable {
             return;
         }
         // 反序列化为TreeMap然后进行更新
-        TreeMap<String, String> updatedAddMap = readAddMap();
-        TreeMap<String, String> updatedRemoveMap = readRemoveMap();
+        TreeMap<String, String> addMap = readAddMap();
+        TreeMap<String, String> removeMap = readRemoveMap();
         // 用绝对路径作为key
-        String absolutePath = inFile.getAbsolutePath();
+        String inFilePath = inFile.getAbsolutePath();
         // 获取headCommit及其blob
         Commit headCommit = readHeadCommit();
         if (headCommit == null) {
@@ -126,23 +126,23 @@ public class Commands implements CommandsInterface, Serializable {
         }
         TreeMap<String, String> headBlobMap = headCommit.getBlob();
         // 检查文件是否在 HEAD Commit 中，且版本是否一致
-        if (blobUID.equals(headBlobMap.get(absolutePath))) {
+        if (blobUID.equals(headBlobMap.get(inFilePath)) &&
+            checkFileExistsInCommit(filename, headCommit)) {
             // 文件内容和当前提交的版本完全一样，没必要暂存
             // 如果它在暂存区，应该被移除
-            if (updatedAddMap.containsKey(absolutePath)) {
-                updatedAddMap.remove(absolutePath);
+            if (addMap.containsKey(inFilePath)) {
+                addMap.remove(inFilePath);
             }
-            // (这里也应该处理 removeMap，如果一个被标记为删除的文件被重新add，要从removeMap中移除)
         } else {
             // 文件内容有变化，或者是一个新文件，加入暂存区
-            updatedAddMap.put(absolutePath, blobUID);
-            if (updatedRemoveMap.containsKey(absolutePath)) {
-                updatedRemoveMap.remove(absolutePath);
+            if (removeMap.containsKey(inFilePath)) {
+                removeMap.remove(inFilePath);
             }
+            addMap.put(inFilePath, blobUID);
         }
         // 将更新过后的TreeMap写入
-        Utils.writeObject(addMapFile, updatedAddMap);
-        Utils.writeObject(removeMapFile, updatedRemoveMap);
+        Utils.writeObject(addMapFile, addMap);
+        Utils.writeObject(removeMapFile, removeMap);
     }
 
     /**
@@ -159,12 +159,20 @@ public class Commands implements CommandsInterface, Serializable {
     @Override
     public void rm(String filename) {
         Commit headCommit = readHeadCommit();
-        if (!checkFileExistsInCommit(filename, headCommit) &&
-            !checkFileStaged(filename)) {
+        boolean isTracked = checkFileExistsInCommit(filename, headCommit);
+        boolean isStaged = checkFileStaged(filename);
+        // If the file is neither in staging area nor tracked in headCommit
+        if (!isTracked && !isStaged) {
             System.out.println("No reason to remove the file.");
             return;
         }
-        
+        if (isStaged) {
+            unstageFile(filename);
+        }
+        if (isTracked) {
+            stageForRemoval(filename, headCommit);
+            deleteFileFromCWD(filename);
+        }
     }
 
     /**

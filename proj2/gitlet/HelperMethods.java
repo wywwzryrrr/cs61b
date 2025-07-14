@@ -138,9 +138,6 @@ public class HelperMethods {
             return false;
         }
         File Infile = Utils.join(CWD, fileName);
-        if (!Infile.exists()) {
-            return false;
-        }
         String filePath = Infile.getAbsolutePath();
         TreeMap<String, String> commitBlobMap = commit.getBlob();
         return (commitBlobMap.containsKey(filePath));
@@ -289,5 +286,68 @@ public class HelperMethods {
     public static void printUntrackedFiles() {
         System.out.println("=== Untracked Files ===");
         System.out.println();
+    }
+
+    /**
+     * Add the file in the headCommit to the removeMap
+     * @param fileName
+     */
+    public static void stageForRemoval(String fileName, Commit headCommit) {
+        TreeMap<String, String> removeMap = readRemoveMap();
+        for (String filePath : headCommit.getBlob().keySet()) {
+            File file = new File(filePath);
+            if (file.getName().equals(fileName)) {
+                removeMap.put(filePath, headCommit.getBlob().get(filePath));
+            }
+        }
+        File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
+        Utils.writeObject(removeMapFile, removeMap);
+    }
+
+    /**
+     * Add the file in the headCommit to the addMap
+     * @param fileName
+     */
+    public static void stageForAddition(String fileName, Commit headCommit) {
+        TreeMap<String, String> addMap = readAddMap();
+        for (String filePath : headCommit.getBlob().keySet()) {
+            File file = new File(filePath);
+            if (file.getName().equals(fileName)) {
+                addMap.put(filePath, headCommit.getBlob().get(filePath));
+            }
+        }
+        File addMapFile = Utils.join(ADD_DIR, "addMap");
+        Utils.writeObject(addMapFile, addMap);
+    }
+
+    /**
+     * Delete the file of the given fileName from CWD
+     * @param fileName
+     */
+    public static void deleteFileFromCWD(String fileName) {
+        File inFile = Utils.join(CWD, fileName);
+        inFile.delete();
+    }
+
+    /**
+     * Delete the file of the given fileName from the addMap
+     * @param fileName
+     */
+    public static void unstageFile(String fileName) {
+        File inFile = Utils.join(CWD, fileName);
+        String inFilePath = inFile.getAbsolutePath();
+        TreeMap<String, String> addMap = readAddMap();
+        addMap.remove(inFilePath);
+        Utils.writeObject(Utils.join(ADD_DIR, "addMap"), addMap);
+    }
+
+    /**
+     * Check if the file exists in the CWD
+     * @param fileName
+     * @return
+     */
+    public static boolean checkFileExistsInCWD(String fileName) {
+        File inFile = Utils.join(CWD, fileName);
+        return inFile.exists();
     }
 }
