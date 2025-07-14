@@ -242,13 +242,18 @@ public class Commands implements CommandsInterface, Serializable {
     @Override
     public void find(String message) {
         List<String> commitList = Utils.plainFilenamesIn(COMMITS_DIR);
+        StringBuffer sb = new StringBuffer();
         for (String commitUID : commitList) {
             Commit commit = readCommit(commitUID);
             if (commit.getMessage().equals(message)) {
-                System.out.println(commitUID);
+                sb.append(commit.getUID() + "\n");
             }
         }
-        System.out.println("Found no commit with that message.");
+        if (sb.length() == 0) {
+            System.out.println("Found no commit with that message.");
+            return;
+        }
+        System.out.println(sb);
     }
 
     /**
