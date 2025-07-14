@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="WQU">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj2/gitlet/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj2/gitlet/CommandsInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/CommandsInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj2/gitlet/HelperMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/HelperMethods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj2/gitlet/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +24,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="48a86bea145a4780675055974cad2a908df466c0" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -160,7 +169,7 @@
       <workItem from="1742461370993" duration="10044000" />
       <workItem from="1743584325260" duration="35982000" />
       <workItem from="1746580655958" duration="19399000" />
-      <workItem from="1748668134706" duration="10398000" />
+      <workItem from="1748668134706" duration="14173000" />
     </task>
     <task id="LOCAL-00001" summary="draft">
       <option name="closed" value="true" />

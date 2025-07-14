@@ -59,7 +59,7 @@ public class Main {
                     System.out.println("Incorrect operands.");
                 }
             }
-            case "reset" -> commands.reset();
+            case "reset" -> commands.reset(args[1]);
             default -> System.out.println("No command with that name exists.");
         }
     }

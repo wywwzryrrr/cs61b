@@ -1,34 +1,34 @@
 package gitlet;
 
-public interface CommandsInterface {
+interface CommandsInterface {
 
-    public void init();
+    void init();
 
-    public void commit(String message);
+    void commit(String message);
 
-    public void add(String filename);
+    void add(String filename);
 
-    public void rm(String filename);
+    void rm(String filename);
 
-    public void log();
+    void log();
 
-    public void globalLog();
+    void globalLog();
 
-    public void find(String message);
+    void find(String message);
 
-    public void branch(String branchName);
+    void branch(String branchName);
 
-    public void rmBranch(String branchName);
+    void rmBranch(String branchName);
 
-    public void status();
+    void status();
 
-    public void checkoutFile(String filename);
+    void checkoutFile(String filename);
 
-    public void checkoutCommitFile(String commitID, String filename);
+    void checkoutCommitFile(String commitID, String filename);
 
-    public void checkoutBranch(String branchName);
+    void checkoutBranch(String branchName);
 
-    public void reset();
+    void reset(String commitUID);
 
-    public void merge();
+    void merge();
 }

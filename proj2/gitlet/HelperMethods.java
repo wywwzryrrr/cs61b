@@ -198,13 +198,13 @@ public class HelperMethods {
      * @param branchName
      * @return
      */
-    public static boolean checkUntrackedFileToCheckout(String branchName) {
+    public static boolean checkUntrackedFileToCheckout(Commit commit) {
         // All file names in the CWD
         List<String> fileNames = Utils.plainFilenamesIn(CWD);
         // The absolute path tracked in the current branch
         Set<String> trackedAbsolutePaths = readHeadCommit().getBlob().keySet();
         // The absolute path tracked in the target branch
-        Set<String> targetBranchFilesPaths = readBranchCommit(branchName).getBlob().keySet();
+        Set<String> targetBranchFilesPaths = commit.getBlob().keySet();
         for (String fileName : fileNames) {
             File currentFile = Utils.join(CWD, fileName);
             String absolutePath = currentFile.getAbsolutePath();
@@ -361,5 +361,10 @@ public class HelperMethods {
         System.out.println("Date: " + commit.getTimestamp());
         System.out.println(commit.getMessage());
         System.out.println();
+    }
+
+    public static boolean checkCommitExists(String commitUID) {
+        List<String> commitUIDs = Utils.plainFilenamesIn(COMMITS_DIR);
+        return commitUIDs.contains(commitUID);
     }
 }

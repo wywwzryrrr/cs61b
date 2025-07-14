@@ -431,8 +431,10 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("No such branch exists.");
             return;
         }
+        Commit branchCommit = readBranchCommit(branchName);
+        Commit currentCommit = readHeadCommit();
         // Check if files are untracked in the current branch and would be overwritten by checkout
-        if (checkUntrackedFileToCheckout(branchName)) {
+        if (checkUntrackedFileToCheckout(branchCommit)) {
             System.out.println("There is an untracked file in the way, delete it, " +
                                "or add and commit it first.");
             return;
@@ -442,17 +444,44 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("No need to checkout the current branch.");
             return;
         }
-        Commit branchCommit = readBranchCommit(branchName);
-        Commit currentCommit = readHeadCommit();
         overwriteAllFiles(branchCommit);
         clearRedundantFiles(currentCommit, branchCommit);
         clearStagingArea();
         Utils.writeContents(HEAD_FILE, "refs/heads/" + branchName);
     }
 
+    /**
+     * Checks out all the files tracked by the given commit.
+     * Removes tracked files that are not present in that commit.
+     * Also moves the current branch’s head to that commit node.
+     * See the intro for an example of what happens to the head pointer after using reset.
+     * The [commit id] may be abbreviated as for checkout.
+     * The staging area is cleared.
+     * The command is essentially checkout of an arbitrary commit
+     * that also changes the current branch head.
+     * If no commit with the given id exists, print
+     * 'No commit with that id exists. '
+     * If a working file is untracked in the current branch
+     * and would be overwritten by the reset, print
+     * 'There is an untracked file in the way; delete it, or add and commit it first.'
+     * @param commitUID
+     */
     @Override
-    public void reset() {
-
+    public void reset(String commitUID) {
+        if (!checkCommitExists(commitUID)) {
+            System.out.println("No commit with that id exists.");
+            return;
+        }
+        Commit commit = readCommit(commitUID);
+        Commit headCommit = readHeadCommit();
+        if (!checkUntrackedFileToCheckout(commit)) {
+            System.out.println("There is an untracked file in the way; " +
+                               "delete it, or add and commit it first.");
+        }
+        overwriteAllFiles(commit);
+        clearRedundantFiles(headCommit, commit);
+        clearStagingArea();
+        Utils.writeContents(HEAD_FILE, "refs/heads/" + commitUID);
     }
 
     @Override
