@@ -14,7 +14,7 @@ public interface CommandsInterface {
 
     public void globalLog();
 
-    public void find();
+    public void find(String message);
 
     public void branch(String branchName);
 

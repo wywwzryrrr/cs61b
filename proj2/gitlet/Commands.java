@@ -216,6 +216,8 @@ public class Commands implements CommandsInterface, Serializable {
      *  The order of the commits does not matter.
      *  Hint: there is a useful method in
      *  gitlet.Utils that will help you iterate over files within a directory.
+     *
+     * @Usage java gitlet.Main global-log
      */
     @Override
     public void globalLog() {
@@ -226,9 +228,27 @@ public class Commands implements CommandsInterface, Serializable {
         }
     }
 
+    /**
+     * Prints out the ids of all commits that have the given commit message, one per line.
+     * If there are multiple such commits, it prints the ids out on separate lines.
+     * The commit message is a single operand;
+     * to indicate a multiword message, put the operand in quotation marks,
+     * as for the commit command below.
+     * Hint: the hint for this command is the same as the one for global-log
+     * If no such commit exists, prints the error message Found no commit with that message.
+     *
+     * @Usage java gitlet.Main find [commit message]
+     */
     @Override
-    public void find() {
-
+    public void find(String message) {
+        List<String> commitList = Utils.plainFilenamesIn(COMMITS_DIR);
+        for (String commitUID : commitList) {
+            Commit commit = readCommit(commitUID);
+            if (commit.getMessage().equals(message)) {
+                System.out.println(commitUID);
+            }
+        }
+        System.out.println("Found no commit with that message.");
     }
 
     /**

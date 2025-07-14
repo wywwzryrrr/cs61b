@@ -37,7 +37,7 @@ public class Main {
             case "rm" -> commands.rm(args[1]);
             case "log" -> commands.log();
             case "global-log" -> commands.globalLog();
-            case "find" -> commands.find();
+            case "find" -> commands.find(args[1]);
             case "branch" -> commands.branch(args[1]);
             case "rm-branch" -> commands.rmBranch(args[1]);
             case "status" -> commands.status();
