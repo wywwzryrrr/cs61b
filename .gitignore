@@ -52,7 +52,7 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 *.lnk
-
+draft/.idea/*
 
 *.pyc
 .DS_Store
