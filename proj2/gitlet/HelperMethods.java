@@ -193,24 +193,24 @@ public class HelperMethods {
     }
 
     /**
-     * Check if a working file is untracked in the current branch,
-     * and would be overwritten by the checkout
-     * @param branchName
+     * Check if a working file is untracked in the given commit,
+     * and would be overwritten by checkout
+     * @param commit
      * @return
      */
     public static boolean checkUntrackedFileToCheckout(Commit commit) {
         // All file names in the CWD
         List<String> fileNames = Utils.plainFilenamesIn(CWD);
-        // The absolute path tracked in the current branch
+        // The absolute path tracked in the current commit
         Set<String> trackedAbsolutePaths = readHeadCommit().getBlob().keySet();
-        // The absolute path tracked in the target branch
-        Set<String> targetBranchFilesPaths = commit.getBlob().keySet();
+        // The absolute path tracked in the target commit
+        Set<String> targetFilesPaths = commit.getBlob().keySet();
         for (String fileName : fileNames) {
             File currentFile = Utils.join(CWD, fileName);
             String absolutePath = currentFile.getAbsolutePath();
-            // Files that are tracked in the target branch but are not in the current branch
+            // Files that are tracked in the target commit but are not in the current commit
             if (!trackedAbsolutePaths.contains(absolutePath) &&
-                 targetBranchFilesPaths.contains(absolutePath)) {
+                 targetFilesPaths.contains(absolutePath)) {
                 return true;
             }
         }

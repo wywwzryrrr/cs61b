@@ -7,9 +7,7 @@
     <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="WQU">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../proj2/gitlet/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../proj2/gitlet/CommandsInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/CommandsInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../proj2/gitlet/HelperMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/HelperMethods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../proj2/gitlet/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -468,20 +468,22 @@ public class Commands implements CommandsInterface, Serializable {
      */
     @Override
     public void reset(String commitUID) {
-        if (!checkCommitExists(commitUID)) {
+        String fullCommitUID = findFullCommitUID(commitUID);
+        if (fullCommitUID == null) {
             System.out.println("No commit with that id exists.");
             return;
         }
-        Commit commit = readCommit(commitUID);
+        Commit commit = readCommit(fullCommitUID);
         Commit headCommit = readHeadCommit();
-        if (!checkUntrackedFileToCheckout(commit)) {
+        if (checkUntrackedFileToCheckout(commit)) {
             System.out.println("There is an untracked file in the way; " +
                                "delete it, or add and commit it first.");
+            return;
         }
         overwriteAllFiles(commit);
         clearRedundantFiles(headCommit, commit);
         clearStagingArea();
-        Utils.writeContents(HEAD_FILE, "refs/heads/" + commitUID);
+        Utils.writeContents(MASTER_FILE, fullCommitUID);
     }
 
     @Override
