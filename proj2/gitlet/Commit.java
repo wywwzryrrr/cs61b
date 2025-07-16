@@ -21,6 +21,11 @@ public class Commit implements Serializable {
      * Pointer that tracks the commit
      */
     private String parent;
+
+    /**
+     * The second parent which is not null when creates a merge commit.
+     */
+    private String secondParent;
     /**
      * The snapshots of files of this commit.
      * <p>
@@ -66,6 +71,10 @@ public class Commit implements Serializable {
 
     public String getParent() {
         return parent;
+    }
+
+    public String getSecondParent() {
+        return this.secondParent;
     }
 
     public TreeMap<String, String> getBlob() {

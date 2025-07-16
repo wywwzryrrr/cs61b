@@ -33,7 +33,7 @@ public class Main {
                 }
                 commands.commit(args[1]);
             }
-            case "merge" -> commands.merge();
+            case "merge" -> commands.merge(args[1]);
             case "rm" -> commands.rm(args[1]);
             case "log" -> commands.log();
             case "global-log" -> commands.globalLog();

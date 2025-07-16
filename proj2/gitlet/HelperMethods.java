@@ -1,9 +1,7 @@
 package gitlet;
 
 import java.io.File;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 import static gitlet.Repository.*;
 
@@ -363,8 +361,70 @@ public class HelperMethods {
         System.out.println();
     }
 
+    /**
+     * Check if the commit of the given commitUID exists
+     * @param commitUID
+     * @return
+     */
     public static boolean checkCommitExists(String commitUID) {
         List<String> commitUIDs = Utils.plainFilenamesIn(COMMITS_DIR);
         return commitUIDs.contains(commitUID);
+    }
+
+    /**
+     * Find the split point commit from the branch of the given branchName
+     * @return
+     */
+    public static Commit findSplitPoint(Commit headCommit, Commit branchCommit) {
+        Queue<Commit> commitQueue = new LinkedList<>();
+        // The parentUIDs of the headCommit
+        HashSet<String> parentUIDs = new HashSet<>();
+        // Prevent iterate repetitively
+        HashSet<String> visitedUIDs = new HashSet<>();
+        visitedUIDs.add(headCommit.getUID());
+        commitQueue.add(headCommit);
+        // First: Iterate all the parents of the headCommit
+        while (!commitQueue.isEmpty()) {
+            Commit currentCommit = commitQueue.poll();
+            parentUIDs.add(currentCommit.getUID());
+            String parent1UID = currentCommit.getParent();
+            String parent2UID = currentCommit.getSecondParent();
+            addParent(parent1UID, parent2UID, commitQueue, visitedUIDs);
+        }
+        commitQueue.clear();
+        visitedUIDs.clear();
+        commitQueue.add(branchCommit);
+        visitedUIDs.add(branchCommit.getUID());
+        // Second: Iterate the branchCommit and return the first parent found in the parentUIDs
+        while (!commitQueue.isEmpty()) {
+            Commit branchCurrentCommit = commitQueue.poll();
+            if (parentUIDs.contains(branchCurrentCommit.getUID())) {
+                return branchCurrentCommit;
+            }
+            String branchParent1UID = branchCurrentCommit.getParent();
+            String branchParent2UID = branchCurrentCommit.getSecondParent();
+            addParent(branchParent1UID, branchParent2UID, commitQueue, visitedUIDs);
+        }
+        return null;
+    }
+
+    /**
+     * Add the parent and the second parent Commit to the commitQueue,
+     * and mark its id visited
+     * @param parent1UID
+     * @param parent2UID
+     * @param commitQueue
+     * @param visitedUIDs
+     */
+    private static void addParent(String parent1UID, String parent2UID,
+                            Queue<Commit> commitQueue, HashSet<String> visitedUIDs) {
+        if (parent1UID != null && !visitedUIDs.contains(parent1UID)) {
+            commitQueue.add(readCommit(parent1UID));
+            visitedUIDs.add(parent1UID);
+        }
+        if (parent2UID != null && !visitedUIDs.contains(parent2UID)) {
+            commitQueue.add(readCommit(parent2UID));
+            visitedUIDs.add(parent2UID);
+        }
     }
 }

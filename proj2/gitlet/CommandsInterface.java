@@ -30,5 +30,5 @@ interface CommandsInterface {
 
     void reset(String commitUID);
 
-    void merge();
+    void merge(String branchName);
 }

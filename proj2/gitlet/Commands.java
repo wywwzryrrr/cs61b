@@ -473,21 +473,52 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("No commit with that id exists.");
             return;
         }
-        Commit commit = readCommit(fullCommitUID);
+        Commit branchCommit = readCommit(fullCommitUID);
         Commit headCommit = readHeadCommit();
-        if (checkUntrackedFileToCheckout(commit)) {
+        if (checkUntrackedFileToCheckout(branchCommit)) {
             System.out.println("There is an untracked file in the way; " +
                                "delete it, or add and commit it first.");
             return;
         }
-        overwriteAllFiles(commit);
-        clearRedundantFiles(headCommit, commit);
+        overwriteAllFiles(branchCommit);
+        clearRedundantFiles(headCommit, branchCommit);
         clearStagingArea();
         Utils.writeContents(MASTER_FILE, fullCommitUID);
     }
 
     @Override
-    public void merge() {
-
+    public void merge(String branchName) {
+        if (!checkStagingAreaIsEmpty()) {
+            System.out.println("You have uncommitted changes.");
+            return;
+        }
+        if (!checkBranchExist(branchName)) {
+            System.out.println("A branch with that name does not exist.");
+            return;
+        }
+        Commit branchCommit = readBranchCommit(branchName);
+        Commit headCommit = readHeadCommit();
+        Commit splitPoint = findSplitPoint(headCommit, branchCommit);
+        if (checkIsCurrentBranch(branchName)) {
+            System.out.println("Cannot merge a branch with itself.");
+            return;
+        }
+        if (checkUntrackedFileToCheckout(branchCommit)) {
+            System.out.println("There is an untracked file in the way; " +
+                               "delete it, or add and commit it first.");
+            return;
+        }
+        // if the split point is the same commit as the given branch
+        if (splitPoint == branchCommit) {
+            System.out.println("Given branch is an ancestor of the current branch.");
+            return;
+        }
+        // If the split point is the current branch,
+        // then the effect is to checkout the given branch
+        if (splitPoint == headCommit) {
+            checkoutBranch(branchName);
+            System.out.println("Current branch fast-forwarded.");
+            return;
+        }
     }
 }
