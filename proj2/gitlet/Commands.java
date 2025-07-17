@@ -509,13 +509,13 @@ public class Commands implements CommandsInterface, Serializable {
             return;
         }
         // if the split point is the same commit as the given branch
-        if (splitPoint == branchCommit) {
+        if (splitPoint.getUID().equals(branchCommit.getUID())) {
             System.out.println("Given branch is an ancestor of the current branch.");
             return;
         }
         // If the split point is the current branch,
         // then the effect is to checkout the given branch
-        if (splitPoint == headCommit) {
+        if (splitPoint.getUID().equals(headCommit.getUID())) {
             checkoutBranch(branchName);
             System.out.println("Current branch fast-forwarded.");
             return;
