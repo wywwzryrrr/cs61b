@@ -2,9 +2,7 @@ package gitlet;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import static gitlet.Repository.*;
 import static gitlet.HelperMethods.*;
@@ -519,6 +517,27 @@ public class Commands implements CommandsInterface, Serializable {
             checkoutBranch(branchName);
             System.out.println("Current branch fast-forwarded.");
             return;
+        }
+        // All the filePaths shown in three commits
+        HashSet<String> allFilePaths = filePathsInCommits(branchCommit, splitPoint, headCommit);
+        // Compare the blobUIDs of all the files in each commit
+        for (String filePath : allFilePaths) {
+            boolean mergeConflict = false;
+            String headCommitBlobUID = getBlobUID(headCommit, filePath);
+            String branchCommitBlobUID = getBlobUID(branchCommit, filePath);
+            String splitPointBlobUID = getBlobUID(splitPoint, filePath);
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+            if (case1(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                mergeCase1(branchCommit.getUID(), fileName);
+            } else if (case2(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                continue;
+            } else if (case3Part1(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                continue;
+            } else if (case3Part2(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                mergeConflict = true;
+                recordMergeConflict(fileName, headCommitBlobUID, branchCommitBlobUID);
+                add(fileName);
+            }
         }
     }
 }

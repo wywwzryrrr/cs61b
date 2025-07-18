@@ -427,4 +427,162 @@ public class HelperMethods {
             visitedUIDs.add(parent2UID);
         }
     }
+
+    /**
+     * Put all the filePaths in the specific target commits into a HashSet
+     * @param branchCommit
+     * @param splitPoint
+     * @param headCommit
+     * @return
+     */
+    public static HashSet<String> filePathsInCommits(Commit branchCommit,
+                                                     Commit splitPoint,
+                                                     Commit headCommit) {
+        HashSet<String> filePaths = new HashSet<>();
+        addFilePaths(filePaths, branchCommit);
+        addFilePaths(filePaths, splitPoint);
+        addFilePaths(filePaths, headCommit);
+        return filePaths;
+    }
+
+    /**
+     * Helper method that iterate all the filePaths in the given commit
+     * and add them to the HashSet if any of them wasn't added before
+     * @param filePaths
+     * @param commit
+     * @return
+     */
+    private static HashSet<String> addFilePaths(HashSet<String> filePaths, Commit commit) {
+        for (String filePath : commit.getBlob().keySet()) {
+            if (!filePaths.contains(filePath)) {
+                filePaths.add(filePath);
+            }
+        }
+        return filePaths;
+    }
+
+    /**
+     * Get the blobUID in a commit through its filePath
+     * If it doesn't exist, return null
+     * @param commit
+     * @param filePath
+     * @return
+     */
+    public static String getBlobUID(Commit commit, String filePath) {
+        TreeMap<String, String> commitBlobMap = commit.getBlob();
+        if (commitBlobMap.containsKey(filePath)) {
+            return commitBlobMap.get(filePath);
+        }
+        return null;
+    }
+
+    /**
+     * Record the content as follows:
+     * <<<<<<< HEAD
+     * contents of file in current branch
+     * =======
+     * contents of file in given branch
+     * >>>>>>>
+     * write the content to the file in the CWD
+     * @param headCommitBlobUID
+     * @param branchCommitBlobUID
+     */
+    public static void recordMergeConflict(String fileName, String headCommitBlobUID, String branchCommitBlobUID) {
+        String headFileContent = ""; // 默认为空字符串
+        // 只有当 head 分支中存在这个文件时，才去读取它的内容
+        if (headCommitBlobUID != null) {
+            File fileInHead = Utils.join(BLOBS_DIR, headCommitBlobUID);
+            headFileContent = Utils.readObject(fileInHead, Blob.class).getContent();
+        }
+        String branchFileContent = ""; // 默认为空字符串
+        // 只有当 branch 分支中存在这个文件时，才去读取它的内容
+        if (branchCommitBlobUID != null) {
+            File fileInBranch = Utils.join(BLOBS_DIR, branchCommitBlobUID);
+            branchFileContent = Utils.readObject(fileInBranch, Blob.class).getContent();
+        }
+        String conflictContent = "<<<<<<< HEAD\n" +
+                headFileContent + "\n" +
+                "=======\n" +
+                branchFileContent + "\n" +
+                ">>>>>>>\n";
+        Utils.writeContents(Utils.join(CWD, fileName), conflictContent);
+    }
+
+    /**
+     * Any files that have been modified in the given branch since the split point,
+     * but not modified in the current branch since the split point
+     * @param headCommitBlobUID
+     * @param branchCommitBlobUID
+     * @param splitPointBlobUID
+     * @return
+     */
+    public static boolean case1(String headCommitBlobUID,
+                                String branchCommitBlobUID,
+                                String splitPointBlobUID) {
+        return (Objects.equals(headCommitBlobUID, splitPointBlobUID) &&
+                !Objects.equals(branchCommitBlobUID, headCommitBlobUID));
+    }
+
+    /**
+     * Any files that have been modified in the given branch since the split point,
+     * but not modified in the current branch since the split point
+     * should be changed to their versions in the given branch
+     * (checked out from the commit at the front of the given branch).
+     * These files should then all be automatically staged.
+     * To clarify, if a file is “modified in the given branch since the split point”
+     * this means the version of the file as it exists in the commit
+     * at the front of the given branch has different content
+     * from the version of the file at the split point.
+     * @return
+     */
+    public static void mergeCase1(String commitUID, String fileName) {
+        Commands commands = new Commands();
+        commands.checkoutCommitFile(commitUID, fileName);
+        commands.add(fileName);
+    }
+
+    /**
+     * Any files that have been modified in the current branch
+     * but not in the given branch since the split point should stay as they are.
+     * @param headCommitBlobUID
+     * @param branchCommitBlobUID
+     * @param splitPointBlobUID
+     * @return
+     */
+    public static boolean case2(String headCommitBlobUID,
+                                String branchCommitBlobUID,
+                                String splitPointBlobUID) {
+        return (!Objects.equals(headCommitBlobUID, splitPointBlobUID) &&
+                Objects.equals(branchCommitBlobUID, splitPointBlobUID));
+    }
+
+    /**
+     * Any files that have been modified in both the current
+     * and given branch in the same way are left unchanged by the merge.
+     * @param headCommitBlobUID
+     * @param branchCommitBlobUID
+     * @param splitPointBlobUID
+     * @return
+     */
+    public static boolean case3Part1(String headCommitBlobUID,
+                                     String branchCommitBlobUID,
+                                     String splitPointBlobUID) {
+        return (Objects.equals(headCommitBlobUID, branchCommitBlobUID) &&
+                Objects.equals(branchCommitBlobUID, splitPointBlobUID));
+    }
+
+    /**
+     * Files in both branch are been modified and have different contents
+     * @param headCommitBlobUID
+     * @param branchCommitBlobUID
+     * @param splitPointBlobUID
+     * @return
+     */
+    public static boolean case3Part2(String headCommitBlobUID,
+                                     String branchCommitBlobUID,
+                                     String splitPointBlobUID) {
+        return (!Objects.equals(headCommitBlobUID, branchCommitBlobUID) &&
+                !Objects.equals(branchCommitBlobUID, splitPointBlobUID) &&
+                !Objects.equals(headCommitBlobUID, splitPointBlobUID));
+    }
 }
