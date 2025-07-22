@@ -554,7 +554,8 @@ public class HelperMethods {
                                 String branchCommitBlobUID,
                                 String splitPointBlobUID) {
         return (Objects.equals(headCommitBlobUID, splitPointBlobUID) &&
-                !Objects.equals(branchCommitBlobUID, headCommitBlobUID));
+                branchCommitBlobUID != null &&
+                !Objects.equals(branchCommitBlobUID, splitPointBlobUID));
     }
 
     /**
@@ -665,13 +666,12 @@ public class HelperMethods {
                                 String splitPointBlobUID) {
         return (splitPointBlobUID != null &&
                 branchCommitBlobUID  == null &&
-                !Objects.equals(headCommitBlobUID, splitPointBlobUID));
+                Objects.equals(headCommitBlobUID, splitPointBlobUID));
     }
 
-    public static void mergeRemoveUntrack(String fileName, String commitUID) {
+    public static void mergeRemoveUntrack(String fileName) {
         Commands commands = new Commands();
         commands.rm(fileName);
-        Utils.join(COMMITS_DIR, commitUID).delete();
     }
 
     /**
@@ -686,7 +686,7 @@ public class HelperMethods {
                                 String branchCommitBlobUID,
                                 String splitPointBlobUID) {
         return (splitPointBlobUID != null &&
-                !Objects.equals(splitPointBlobUID, branchCommitBlobUID) &&
+                Objects.equals(splitPointBlobUID, branchCommitBlobUID) &&
                 headCommitBlobUID == null);
     }
 

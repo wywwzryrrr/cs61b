@@ -542,9 +542,9 @@ public class Commands implements CommandsInterface, Serializable {
             } else if (case5(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
                 mergeCheckoutStage(branchCommit.getUID(), fileName);
             } else if (case6(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                mergeRemoveUntrack(headCommit.getUID(), fileName);
+                mergeRemoveUntrack(fileName);
             } else if (case7(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                mergeRemoveUntrack(branchCommit.getUID(), fileName);
+                mergeRemoveUntrack(fileName);
             }
         }
         if (mergeConflict) {
