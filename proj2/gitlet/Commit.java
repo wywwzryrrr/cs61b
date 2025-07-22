@@ -39,9 +39,10 @@ public class Commit implements Serializable {
      */
     private String UID;
 
-    public Commit(String message, String parent) {
+    public Commit(String message, String parent, String secondParent) {
         this.message = message;
         this.parent = parent;
+        this.secondParent = secondParent;
         this.timestamp = generateTimestamp();
         this.blob = new TreeMap<>();
         this.UID = generateUID();

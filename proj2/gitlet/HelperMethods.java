@@ -127,6 +127,35 @@ public class HelperMethods {
     }
 
     /**
+     * Check if the given commit is the current branch
+     * @param commit
+     * @return
+     */
+    public static boolean checkIsCurrentBranch(Commit commit) {
+        String branPath = Utils.readContentsAsString(HEAD_FILE);
+        File branchFile = new File(branPath);
+        Commit branchCommit = Utils.readObject(branchFile, Commit.class);
+        return Objects.equals(branchCommit.getUID(), commit.getUID());
+    }
+
+    /**
+     * Get the current branchName through headCommit
+     * @return
+     */
+    public static String getCurrentBranchName() {
+        Commit headCommit = readHeadCommit();
+        List<String> fileNames = Utils.plainFilenamesIn(HEADS_DIR);
+        for (String fileName : fileNames) {
+            File branchFile = Utils.join(HEADS_DIR, fileName);
+            String commitUID = headCommit.getUID();
+            if (commitUID.equals(Utils.readContentsAsString(branchFile))) {
+                return fileName;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Check if the file of the given fileName exists in the commit of the commitUID
      * @param fileName
      * @param commit
@@ -356,6 +385,11 @@ public class HelperMethods {
     public static void logPrint(Commit commit) {
         System.out.println("===");
         System.out.println("commit " + commit.getUID());
+        if (commit.getSecondParent() != null) {
+            String parent1Short = commit.getParent().substring(0, 7);
+            String parent2Short = commit.getSecondParent().substring(0, 7);
+            System.out.println("Merge: " + parent1Short + " " + parent2Short);
+        }
         System.out.println("Date: " + commit.getTimestamp());
         System.out.println(commit.getMessage());
         System.out.println();
@@ -535,7 +569,7 @@ public class HelperMethods {
      * from the version of the file at the split point.
      * @return
      */
-    public static void mergeCase1(String commitUID, String fileName) {
+    public static void mergeCheckoutStage(String commitUID, String fileName) {
         Commands commands = new Commands();
         commands.checkoutCommitFile(commitUID, fileName);
         commands.add(fileName);
@@ -584,5 +618,109 @@ public class HelperMethods {
         return (!Objects.equals(headCommitBlobUID, branchCommitBlobUID) &&
                 !Objects.equals(branchCommitBlobUID, splitPointBlobUID) &&
                 !Objects.equals(headCommitBlobUID, splitPointBlobUID));
+    }
+
+    /**
+     * Any files that were not present at the split point
+     * and are present only in the current branch should remain as they are.
+     * @param headCommitBlobUID
+     * @param branchCommitBlobUID
+     * @param splitPointBlobUID
+     * @return
+     */
+    public static boolean case4(String headCommitBlobUID,
+                                String branchCommitBlobUID,
+                                String splitPointBlobUID) {
+        return (splitPointBlobUID == null &&
+                branchCommitBlobUID == null &&
+                headCommitBlobUID != null);
+    }
+
+    /**
+     * Any files that were not present at the split point and
+     * are present only in the given branch should be checked out and staged.
+     * @param headCommitBlobUID
+     * @param branchCommitBlobUID
+     * @param splitPointBlobUID
+     * @return
+     */
+    public static boolean case5(String headCommitBlobUID,
+                                String branchCommitBlobUID,
+                                String splitPointBlobUID) {
+        return (splitPointBlobUID == null &&
+                headCommitBlobUID == null &&
+                branchCommitBlobUID != null);
+    }
+
+    /**
+     * Any files present at the split point, unmodified in the current branch,
+     * and absent in the given branch should be removed (and untracked).
+     * @param headCommitBlobUID
+     * @param branchCommitBlobUID
+     * @param splitPointBlobUID
+     * @return
+     */
+    public static boolean case6(String headCommitBlobUID,
+                                String branchCommitBlobUID,
+                                String splitPointBlobUID) {
+        return (splitPointBlobUID != null &&
+                branchCommitBlobUID  == null &&
+                !Objects.equals(headCommitBlobUID, splitPointBlobUID));
+    }
+
+    public static void mergeRemoveUntrack(String fileName, String commitUID) {
+        Commands commands = new Commands();
+        commands.rm(fileName);
+        Utils.join(COMMITS_DIR, commitUID).delete();
+    }
+
+    /**
+     * Any files present at the split point, unmodified in the given branch,
+     * and absent in the current branch should remain absent.
+     * @param headCommitBlobUID
+     * @param branchCommitBlobUID
+     * @param splitPointBlobUID
+     * @return
+     */
+    public static boolean case7(String headCommitBlobUID,
+                                String branchCommitBlobUID,
+                                String splitPointBlobUID) {
+        return (splitPointBlobUID != null &&
+                !Objects.equals(splitPointBlobUID, branchCommitBlobUID) &&
+                headCommitBlobUID == null);
+    }
+
+    /**
+     * Update the blob of the merge commit from staging area
+     * @param commit
+     */
+    public static TreeMap<String, String> buildMergeMapFromHead(Commit commit) {
+        TreeMap<String, String> commitBlobMap = commit.getBlob();
+        TreeMap<String, String> addMap = readAddMap();
+        TreeMap<String, String> removeMap = readRemoveMap();
+        for (String filePath : addMap.keySet()) {
+            String blobUID = addMap.get(filePath);
+            commitBlobMap.put(filePath, blobUID);
+        }
+        for (String filePath : removeMap.keySet()) {
+            commitBlobMap.remove(filePath);
+        }
+        return commitBlobMap;
+    }
+
+    /**
+     * update the current branch content with the commitUID
+     * @param branchName
+     * @param commitUID
+     */
+    public static void updateCurrentBranch(String branchName, String commitUID) {
+        File branchFile = Utils.join(HEADS_DIR, branchName);
+        Utils.writeContents(branchFile, commitUID);
+    }
+
+    public static void saveCommit(Commit commit) {
+        String commitUID = commit.generateUID();
+        File commitFile = Utils.join(COMMITS_DIR, commitUID);
+        Utils.writeObject(commitFile, commit);
     }
 }

@@ -25,7 +25,7 @@ public class Commands implements CommandsInterface, Serializable {
                                   COMMITS_DIR, STAGE_DIR, ADD_DIR, REMOVE_DIR);
         for (File dir : dirs) {dir.mkdirs();}
         // Initiate commit
-        Commit initCommit = new Commit("initial commit", null);
+        Commit initCommit = new Commit("initial commit", null, null);
         String UID = initCommit.generateUID();
         Utils.writeContents(MASTER_FILE, UID);
         Utils.writeContents(HEAD_FILE, "refs/heads/master");
@@ -69,7 +69,7 @@ public class Commands implements CommandsInterface, Serializable {
             newCommitFilesMap.remove(entry.getKey());
         }
         // Create new commit object and set its blob
-        Commit newCommit = new Commit(message, parentCommit.getUID());
+        Commit newCommit = new Commit(message, parentCommit.getUID(), null);
         newCommit.setBlob(newCommitFilesMap);
         // Recalculate the UID and put it in the COMMITS_DIR
         String newCommitUID = newCommit.generateUID();
@@ -521,14 +521,14 @@ public class Commands implements CommandsInterface, Serializable {
         // All the filePaths shown in three commits
         HashSet<String> allFilePaths = filePathsInCommits(branchCommit, splitPoint, headCommit);
         // Compare the blobUIDs of all the files in each commit
+        boolean mergeConflict = false;
         for (String filePath : allFilePaths) {
-            boolean mergeConflict = false;
             String headCommitBlobUID = getBlobUID(headCommit, filePath);
             String branchCommitBlobUID = getBlobUID(branchCommit, filePath);
             String splitPointBlobUID = getBlobUID(splitPoint, filePath);
             String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
             if (case1(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                mergeCase1(branchCommit.getUID(), fileName);
+                mergeCheckoutStage(branchCommit.getUID(), fileName);
             } else if (case2(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
                 continue;
             } else if (case3Part1(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
@@ -537,7 +537,27 @@ public class Commands implements CommandsInterface, Serializable {
                 mergeConflict = true;
                 recordMergeConflict(fileName, headCommitBlobUID, branchCommitBlobUID);
                 add(fileName);
+            } else if (case4(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                continue;
+            } else if (case5(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                mergeCheckoutStage(branchCommit.getUID(), fileName);
+            } else if (case6(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                mergeRemoveUntrack(headCommit.getUID(), fileName);
+            } else if (case7(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                mergeRemoveUntrack(branchCommit.getUID(), fileName);
             }
         }
+        if (mergeConflict) {
+            System.out.println("Encountered a merge conflict.");
+            return;
+        }
+        String mergeCommitMessage = "Merged " + branchName + " into " + getCurrentBranchName() + ".";
+        Commit mergeCommit = new Commit(mergeCommitMessage, headCommit.getUID(), branchCommit.getUID());
+        // update the mergeCommit blob
+        TreeMap<String, String> finalBlobMap = buildMergeMapFromHead(headCommit);
+        mergeCommit.setBlob(finalBlobMap);
+        saveCommit(mergeCommit);
+        updateCurrentBranch(getCurrentBranchName(), mergeCommit.getUID());
+        clearStagingArea();
     }
 }
