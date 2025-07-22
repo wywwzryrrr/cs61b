@@ -535,9 +535,9 @@ public class HelperMethods {
             branchFileContent = Utils.readObject(fileInBranch, Blob.class).getContent();
         }
         String conflictContent = "<<<<<<< HEAD\n" +
-                headFileContent + "\n" +
+                headFileContent +
                 "=======\n" +
-                branchFileContent + "\n" +
+                branchFileContent +
                 ">>>>>>>\n";
         Utils.writeContents(Utils.join(CWD, fileName), conflictContent);
     }
