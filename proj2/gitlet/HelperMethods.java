@@ -718,6 +718,10 @@ public class HelperMethods {
         Utils.writeContents(branchFile, commitUID);
     }
 
+    /**
+     * save the commit by adding its commitUID to COMMITS_DIR
+     * @param commit
+     */
     public static void saveCommit(Commit commit) {
         String commitUID = commit.generateUID();
         File commitFile = Utils.join(COMMITS_DIR, commitUID);

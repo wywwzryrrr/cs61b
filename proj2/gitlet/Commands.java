@@ -551,6 +551,7 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("Encountered a merge conflict.");
             return;
         }
+        // create a new commit that has two parents and a specific message
         String mergeCommitMessage = "Merged " + branchName + " into " + getCurrentBranchName() + ".";
         Commit mergeCommit = new Commit(mergeCommitMessage, headCommit.getUID(), branchCommit.getUID());
         // update the mergeCommit blob
