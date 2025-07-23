@@ -86,10 +86,11 @@ public class Commit implements Serializable {
         this.blob = blob;
     }
 
-    public String generateUID() {
+    private String generateUID() {
         TreeMap<String, String> sortedBlob = new TreeMap<>(blob);
         String blobString = sortedBlob.toString();
-        this.UID = Utils.sha1(message, timestamp, parent != null ? parent : "", blobString);
+        this.UID = Utils.sha1(message, timestamp, parent != null ? parent : "",
+                              secondParent != null ? secondParent : "", blobString);
         return this.UID;
     }
     /** The message of this Commit. */

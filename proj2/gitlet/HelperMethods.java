@@ -66,9 +66,9 @@ public class HelperMethods {
      */
     public static Commit readHeadCommit() {
         // "refs/heads/master"
-        String headPath = Utils.readContentsAsString(HEAD_FILE);
+        String headPath = Utils.readContentsAsString(HEAD_FILE).replace("refs/heads/", "");
         // .gitlet/refs/heads/master 拼接路径找到commitUID
-        File branchFile = Utils.join(GITLET_DIR, headPath);
+        File branchFile = Utils.join(HEADS_DIR, headPath);
         // 读取commitUID
         String commitUID = Utils.readContentsAsString(branchFile);
         // 找到commit对象
@@ -164,8 +164,8 @@ public class HelperMethods {
         if (commit == null) {
             return false;
         }
-        File Infile = Utils.join(CWD, fileName);
-        String filePath = Infile.getAbsolutePath();
+        File inFile = Utils.join(CWD, fileName);
+        String filePath = inFile.getAbsolutePath();
         TreeMap<String, String> commitBlobMap = commit.getBlob();
         return (commitBlobMap.containsKey(filePath));
     }
@@ -179,7 +179,7 @@ public class HelperMethods {
     public static void overwriteFile(String fileName, Commit commit) {
         File inFile = Utils.join(CWD, fileName);
         String filePath = inFile.getAbsolutePath();
-        TreeMap<String, String> commitBlobMap = commit.getBlob();
+        TreeMap<String, String> commitBlobMap = new TreeMap<>(commit.getBlob());
         // The pointer points to the content of the file in the Commit dir
         String blobUID = commitBlobMap.get(filePath);
         // Get the content of the file
@@ -212,9 +212,8 @@ public class HelperMethods {
         Set<String> targetAbsolutePaths = targetCommit.getBlob().keySet();
         for (String filePath : trackedAbsolutePaths) {
             File file = new File(filePath);
-            String fileName = file.getName();
             if (!targetAbsolutePaths.contains(filePath)) {
-                Utils.restrictedDelete(fileName);
+                file.delete();
             }
         }
     }
@@ -236,8 +235,8 @@ public class HelperMethods {
             File currentFile = Utils.join(CWD, fileName);
             String absolutePath = currentFile.getAbsolutePath();
             // Files that are tracked in the target commit but are not in the current commit
-            if (!trackedAbsolutePaths.contains(absolutePath) &&
-                 targetFilesPaths.contains(absolutePath)) {
+            if (!trackedAbsolutePaths.contains(absolutePath)
+                    && targetFilesPaths.contains(absolutePath)) {
                 return true;
             }
         }
@@ -253,7 +252,7 @@ public class HelperMethods {
         List<String> commitUIDs = Utils.plainFilenamesIn(COMMITS_DIR);
         for (String commitUID : commitUIDs) {
             if (commitUID.startsWith(shortUID)) {
-                 return commitUID;
+                return commitUID;
             }
         }
         return null;
@@ -521,7 +520,9 @@ public class HelperMethods {
      * @param headCommitBlobUID
      * @param branchCommitBlobUID
      */
-    public static void recordMergeConflict(String fileName, String headCommitBlobUID, String branchCommitBlobUID) {
+    public static void recordMergeConflict(String fileName,
+                                           String headCommitBlobUID,
+                                           String branchCommitBlobUID) {
         String headFileContent = ""; // 默认为空字符串
         // 只有当 head 分支中存在这个文件时，才去读取它的内容
         if (headCommitBlobUID != null) {
@@ -534,11 +535,11 @@ public class HelperMethods {
             File fileInBranch = Utils.join(BLOBS_DIR, branchCommitBlobUID);
             branchFileContent = Utils.readObject(fileInBranch, Blob.class).getContent();
         }
-        String conflictContent = "<<<<<<< HEAD\n" +
-                headFileContent +
-                "=======\n" +
-                branchFileContent +
-                ">>>>>>>\n";
+        String conflictContent = "<<<<<<< HEAD\n"
+                + headFileContent
+                + "=======\n"
+                + branchFileContent
+                + ">>>>>>>\n";
         Utils.writeContents(Utils.join(CWD, fileName), conflictContent);
     }
 
@@ -553,9 +554,9 @@ public class HelperMethods {
     public static boolean case1(String headCommitBlobUID,
                                 String branchCommitBlobUID,
                                 String splitPointBlobUID) {
-        return (Objects.equals(headCommitBlobUID, splitPointBlobUID) &&
-                branchCommitBlobUID != null &&
-                !Objects.equals(branchCommitBlobUID, splitPointBlobUID));
+        return (Objects.equals(headCommitBlobUID, splitPointBlobUID)
+                && branchCommitBlobUID != null
+                && !Objects.equals(branchCommitBlobUID, splitPointBlobUID));
     }
 
     /**
@@ -587,9 +588,9 @@ public class HelperMethods {
     public static boolean case2(String headCommitBlobUID,
                                 String branchCommitBlobUID,
                                 String splitPointBlobUID) {
-        return (!Objects.equals(headCommitBlobUID, splitPointBlobUID) &&
-                headCommitBlobUID != null &&
-                Objects.equals(branchCommitBlobUID, splitPointBlobUID));
+        return (!Objects.equals(headCommitBlobUID, splitPointBlobUID)
+                && headCommitBlobUID != null
+                && Objects.equals(branchCommitBlobUID, splitPointBlobUID));
     }
 
     /**
@@ -603,11 +604,11 @@ public class HelperMethods {
     public static boolean case3Part1(String headCommitBlobUID,
                                      String branchCommitBlobUID,
                                      String splitPointBlobUID) {
-        return (Objects.equals(headCommitBlobUID, branchCommitBlobUID) &&
-                headCommitBlobUID != null &&
-                branchCommitBlobUID != null &&
-                Objects.equals(branchCommitBlobUID, splitPointBlobUID) &&
-                Objects.equals(splitPointBlobUID, headCommitBlobUID));
+        return (Objects.equals(headCommitBlobUID, branchCommitBlobUID)
+                && headCommitBlobUID != null
+                && branchCommitBlobUID != null
+                && Objects.equals(branchCommitBlobUID, splitPointBlobUID)
+                && Objects.equals(splitPointBlobUID, headCommitBlobUID));
     }
 
     /**
@@ -620,11 +621,9 @@ public class HelperMethods {
     public static boolean case3Part2(String headCommitBlobUID,
                                      String branchCommitBlobUID,
                                      String splitPointBlobUID) {
-        return (!Objects.equals(headCommitBlobUID, branchCommitBlobUID) &&
-                !Objects.equals(branchCommitBlobUID, splitPointBlobUID) &&
-                headCommitBlobUID != null &&
-                branchCommitBlobUID != null &&
-                !Objects.equals(headCommitBlobUID, splitPointBlobUID));
+        return (!Objects.equals(headCommitBlobUID, branchCommitBlobUID)
+                && !Objects.equals(branchCommitBlobUID, splitPointBlobUID)
+                && !Objects.equals(headCommitBlobUID, splitPointBlobUID));
     }
 
     /**
@@ -638,9 +637,9 @@ public class HelperMethods {
     public static boolean case4(String headCommitBlobUID,
                                 String branchCommitBlobUID,
                                 String splitPointBlobUID) {
-        return (splitPointBlobUID == null &&
-                branchCommitBlobUID == null &&
-                headCommitBlobUID != null);
+        return (splitPointBlobUID == null
+                && branchCommitBlobUID == null
+                && headCommitBlobUID != null);
     }
 
     /**
@@ -654,9 +653,9 @@ public class HelperMethods {
     public static boolean case5(String headCommitBlobUID,
                                 String branchCommitBlobUID,
                                 String splitPointBlobUID) {
-        return (splitPointBlobUID == null &&
-                headCommitBlobUID == null &&
-                branchCommitBlobUID != null);
+        return (splitPointBlobUID == null
+                && headCommitBlobUID == null
+                && branchCommitBlobUID != null);
     }
 
     /**
@@ -670,9 +669,9 @@ public class HelperMethods {
     public static boolean case6(String headCommitBlobUID,
                                 String branchCommitBlobUID,
                                 String splitPointBlobUID) {
-        return (splitPointBlobUID != null &&
-                branchCommitBlobUID  == null &&
-                Objects.equals(headCommitBlobUID, splitPointBlobUID));
+        return (splitPointBlobUID != null
+                && branchCommitBlobUID  == null
+                && Objects.equals(headCommitBlobUID, splitPointBlobUID));
     }
 
     public static void mergeRemoveUntrack(String fileName) {
@@ -691,9 +690,9 @@ public class HelperMethods {
     public static boolean case7(String headCommitBlobUID,
                                 String branchCommitBlobUID,
                                 String splitPointBlobUID) {
-        return (splitPointBlobUID != null &&
-                Objects.equals(splitPointBlobUID, branchCommitBlobUID) &&
-                headCommitBlobUID == null);
+        return (splitPointBlobUID != null
+                && Objects.equals(splitPointBlobUID, branchCommitBlobUID)
+                && headCommitBlobUID == null);
     }
 
     /**
@@ -701,7 +700,7 @@ public class HelperMethods {
      * @param commit
      */
     public static TreeMap<String, String> buildMergeMapFromHead(Commit commit) {
-        TreeMap<String, String> commitBlobMap = commit.getBlob();
+        TreeMap<String, String> commitBlobMap = new TreeMap<>(commit.getBlob());
         TreeMap<String, String> addMap = readAddMap();
         TreeMap<String, String> removeMap = readRemoveMap();
         for (String filePath : addMap.keySet()) {
@@ -729,7 +728,7 @@ public class HelperMethods {
      * @param commit
      */
     public static void saveCommit(Commit commit) {
-        String commitUID = commit.generateUID();
+        String commitUID = commit.getUID();
         File commitFile = Utils.join(COMMITS_DIR, commitUID);
         Utils.writeObject(commitFile, commit);
     }

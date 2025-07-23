@@ -16,21 +16,23 @@ public class Commands implements CommandsInterface, Serializable {
     @Override
     public void init() {
         if (GITLET_DIR.exists()) {
-            System.out.println("A Gitlet version-control system " +
-                               "already exists in the current directory.");
+            System.out.println("A Gitlet version-control system "
+                    + "already exists in the current directory.");
             return;
         }
         // Create all dirs
         List<File> dirs = List.of(GITLET_DIR, BLOBS_DIR, HEADS_DIR,
                                   COMMITS_DIR, STAGE_DIR, ADD_DIR, REMOVE_DIR);
-        for (File dir : dirs) {dir.mkdirs();}
+        for (File dir : dirs) {
+            dir.mkdirs();
+        }
         // Initiate commit
         Commit initCommit = new Commit("initial commit", null, null);
-        String UID = initCommit.generateUID();
-        Utils.writeContents(MASTER_FILE, UID);
+        String commitUID = initCommit.getUID();
+        Utils.writeContents(MASTER_FILE, commitUID);
         Utils.writeContents(HEAD_FILE, "refs/heads/master");
         // Store the init commit
-        File commitsFile = Utils.join(COMMITS_DIR, UID);
+        File commitsFile = Utils.join(COMMITS_DIR, commitUID);
         Utils.writeObject(commitsFile, initCommit);
         // Create metadata of add and remove dirs
         File addMapFile = Utils.join(ADD_DIR, "addMap");
@@ -72,7 +74,7 @@ public class Commands implements CommandsInterface, Serializable {
         Commit newCommit = new Commit(message, parentCommit.getUID(), null);
         newCommit.setBlob(newCommitFilesMap);
         // Recalculate the UID and put it in the COMMITS_DIR
-        String newCommitUID = newCommit.generateUID();
+        String newCommitUID = newCommit.getUID();
         File newCommitFile = Utils.join(COMMITS_DIR, newCommitUID);
         Utils.writeObject(newCommitFile, newCommit);
         // Update the HEAD pointer, get it point to the new commit
@@ -433,8 +435,8 @@ public class Commands implements CommandsInterface, Serializable {
         Commit currentCommit = readHeadCommit();
         // Check if files are untracked in the current branch and would be overwritten by checkout
         if (checkUntrackedFileToCheckout(branchCommit)) {
-            System.out.println("There is an untracked file in the way, delete it, " +
-                               "or add and commit it first.");
+            System.out.println("There is an untracked file in the way, delete it, "
+                    + "or add and commit it first.");
             return;
         }
         // Check if the branch with the branchName is the current branch
@@ -474,8 +476,8 @@ public class Commands implements CommandsInterface, Serializable {
         Commit branchCommit = readCommit(fullCommitUID);
         Commit headCommit = readHeadCommit();
         if (checkUntrackedFileToCheckout(branchCommit)) {
-            System.out.println("There is an untracked file in the way; " +
-                               "delete it, or add and commit it first.");
+            System.out.println("There is an untracked file in the way; "
+                    + "delete it, or add and commit it first.");
             return;
         }
         overwriteAllFiles(branchCommit);
@@ -502,8 +504,8 @@ public class Commands implements CommandsInterface, Serializable {
             return;
         }
         if (checkUntrackedFileToCheckout(branchCommit)) {
-            System.out.println("There is an untracked file in the way; " +
-                               "delete it, or add and commit it first.");
+            System.out.println("There is an untracked file in the way; "
+                    + "delete it, or add and commit it first.");
             return;
         }
         // if the split point is the same commit as the given branch
@@ -549,11 +551,13 @@ public class Commands implements CommandsInterface, Serializable {
         }
         if (mergeConflict) {
             System.out.println("Encountered a merge conflict.");
-            return;
         }
         // create a new commit that has two parents and a specific message
-        String mergeCommitMessage = "Merged " + branchName + " into " + getCurrentBranchName() + ".";
-        Commit mergeCommit = new Commit(mergeCommitMessage, headCommit.getUID(), branchCommit.getUID());
+        String mergeCommitMessage = "Merged " + branchName + " into "
+                                    + getCurrentBranchName() + ".";
+        Commit mergeCommit = new Commit(mergeCommitMessage,
+                                        headCommit.getUID(),
+                                        branchCommit.getUID());
         // update the mergeCommit blob
         TreeMap<String, String> finalBlobMap = buildMergeMapFromHead(headCommit);
         mergeCommit.setBlob(finalBlobMap);
