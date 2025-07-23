@@ -544,7 +544,7 @@ public class Commands implements CommandsInterface, Serializable {
             } else if (case6(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
                 mergeRemoveUntrack(fileName);
             } else if (case7(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                mergeRemoveUntrack(fileName);
+                continue;
             }
         }
         if (mergeConflict) {

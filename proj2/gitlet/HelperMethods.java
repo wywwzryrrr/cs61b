@@ -588,6 +588,7 @@ public class HelperMethods {
                                 String branchCommitBlobUID,
                                 String splitPointBlobUID) {
         return (!Objects.equals(headCommitBlobUID, splitPointBlobUID) &&
+                headCommitBlobUID != null &&
                 Objects.equals(branchCommitBlobUID, splitPointBlobUID));
     }
 
@@ -603,7 +604,10 @@ public class HelperMethods {
                                      String branchCommitBlobUID,
                                      String splitPointBlobUID) {
         return (Objects.equals(headCommitBlobUID, branchCommitBlobUID) &&
-                Objects.equals(branchCommitBlobUID, splitPointBlobUID));
+                headCommitBlobUID != null &&
+                branchCommitBlobUID != null &&
+                Objects.equals(branchCommitBlobUID, splitPointBlobUID) &&
+                Objects.equals(splitPointBlobUID, headCommitBlobUID));
     }
 
     /**
@@ -618,6 +622,8 @@ public class HelperMethods {
                                      String splitPointBlobUID) {
         return (!Objects.equals(headCommitBlobUID, branchCommitBlobUID) &&
                 !Objects.equals(branchCommitBlobUID, splitPointBlobUID) &&
+                headCommitBlobUID != null &&
+                branchCommitBlobUID != null &&
                 !Objects.equals(headCommitBlobUID, splitPointBlobUID));
     }
 
