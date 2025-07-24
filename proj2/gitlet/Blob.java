@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Blob implements Serializable {
     /**
-     * The content of the blob
+     * The content of the file
      */
     private String content;
 
