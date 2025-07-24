@@ -93,5 +93,4 @@ public class Commit implements Serializable {
                               secondParent != null ? secondParent : "", blobString);
         return this.UID;
     }
-    /** The message of this Commit. */
 }
