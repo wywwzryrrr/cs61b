@@ -65,18 +65,18 @@ public class HelperMethods {
      * @return
      */
     public static Commit readHeadCommit() {
-        // "refs/heads/master"
-        String headPath = Utils.readContentsAsString(HEAD_FILE).replace("refs/heads/", "");
-        // .gitlet/refs/heads/master 拼接路径找到commitUID
-        File branchFile = Utils.join(HEADS_DIR, headPath);
-        // 读取commitUID
+        // get the current branchName
+        String branchName = getCurrentBranchName();
+        // join the HEADS_DIR to get commitUID
+        File branchFile = Utils.join(HEADS_DIR, branchName);
+        // get the commitUID
         String commitUID = Utils.readContentsAsString(branchFile);
-        // 找到commit对象
+        // get the commitFile
         File commitFile = Utils.join(COMMITS_DIR, commitUID);
         if (!commitFile.exists()) {
             return null;
         }
-        //反序列化为Commit对象
+        // deserialize the commit file
         return Utils.readObject(commitFile, Commit.class);
     }
 
@@ -139,20 +139,28 @@ public class HelperMethods {
     }
 
     /**
+     * update the blob of the parentCommit with the staging area
+     * @param parentCommit
+     */
+    public static TreeMap<String, String> updateBlob(Commit parentCommit) {
+        TreeMap<String, String> addMap = readAddMap();
+        TreeMap<String, String> removeMap = readRemoveMap();
+        TreeMap<String, String> parentCommitBlob = parentCommit.getBlob();
+        for (String filePath : addMap.keySet()) {
+            parentCommitBlob.put(filePath, addMap.get(filePath));
+        }
+        for (String filePath : removeMap.keySet()) {
+            parentCommitBlob.remove(filePath);
+        }
+        return parentCommitBlob;
+    }
+
+    /**
      * Get the current branchName through headCommit
      * @return
      */
     public static String getCurrentBranchName() {
-        Commit headCommit = readHeadCommit();
-        List<String> fileNames = Utils.plainFilenamesIn(HEADS_DIR);
-        for (String fileName : fileNames) {
-            File branchFile = Utils.join(HEADS_DIR, fileName);
-            String commitUID = headCommit.getUID();
-            if (commitUID.equals(Utils.readContentsAsString(branchFile))) {
-                return fileName;
-            }
-        }
-        return null;
+        return Utils.readContentsAsString(HEAD_FILE).replace("refs/heads/", "");
     }
 
     /**
@@ -731,5 +739,16 @@ public class HelperMethods {
         String commitUID = commit.getUID();
         File commitFile = Utils.join(COMMITS_DIR, commitUID);
         Utils.writeObject(commitFile, commit);
+    }
+
+    /**
+     * initialize commit by writing the initCommitUID into MASTER_FILE and create the path
+     * of MASTER_FILE in HEAD_FILE
+     * @param commit
+     */
+    public static void initializeCommit(Commit commit) {
+        String commitUID = commit.getUID();
+        Utils.writeContents(MASTER_FILE, commitUID);
+        Utils.writeContents(HEAD_FILE, "refs/heads/master");
     }
 }

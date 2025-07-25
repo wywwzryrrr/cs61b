@@ -28,17 +28,11 @@ public class Commands implements CommandsInterface, Serializable {
         }
         // Initiate commit
         Commit initCommit = new Commit("initial commit", null, null);
-        String commitUID = initCommit.getUID();
-        Utils.writeContents(MASTER_FILE, commitUID);
-        Utils.writeContents(HEAD_FILE, "refs/heads/master");
+        initializeCommit(initCommit);
         // Store the init commit
-        File commitsFile = Utils.join(COMMITS_DIR, commitUID);
-        Utils.writeObject(commitsFile, initCommit);
-        // Create metadata of add and remove dirs
-        File addMapFile = Utils.join(ADD_DIR, "addMap");
-        File removeMapFile = Utils.join(REMOVE_DIR, "removeMap");
-        Utils.writeObject(addMapFile, new TreeMap<String, String>());
-        Utils.writeObject(removeMapFile, new TreeMap<String, String>());
+        saveCommit(initCommit);
+        // Initialize staging area
+        clearStagingArea();
     }
 
     /**
@@ -57,30 +51,17 @@ public class Commands implements CommandsInterface, Serializable {
             System.out.println("No changes added to the commit.");
             return;
         }
-        // Read the staging area
-        TreeMap<String, String> addMap = readAddMap();
-        TreeMap<String, String> removeMap = readRemoveMap();
-        // Get parent commit and copy its blob
+        // Update the parentCommit
         Commit parentCommit = readHeadCommit();
-        TreeMap<String, String> newCommitFilesMap = parentCommit.getBlob();
-        // Update the blob in the staging area
-        for (Map.Entry<String, String> entry : addMap.entrySet()) {
-            newCommitFilesMap.put(entry.getKey(), entry.getValue());
-        }
-        for (Map.Entry<String, String> entry : removeMap.entrySet()) {
-            newCommitFilesMap.remove(entry.getKey());
-        }
+        TreeMap<String, String> updateCommitBlob = updateBlob(parentCommit);
         // Create new commit object and set its blob
         Commit newCommit = new Commit(message, parentCommit.getUID(), null);
-        newCommit.setBlob(newCommitFilesMap);
+        newCommit.setBlob(updateCommitBlob);
         // Recalculate the UID and put it in the COMMITS_DIR
-        String newCommitUID = newCommit.getUID();
-        File newCommitFile = Utils.join(COMMITS_DIR, newCommitUID);
-        Utils.writeObject(newCommitFile, newCommit);
+        saveCommit(newCommit);
         // Update the HEAD pointer, get it point to the new commit
-        String headPath = Utils.readContentsAsString(HEAD_FILE);
-        File branchFile = Utils.join(GITLET_DIR, headPath);
-        Utils.writeContents(branchFile, newCommitUID);
+        String branchName = getCurrentBranchName();
+        updateCurrentBranch(branchName, newCommit.getUID());
         // Clear the staging area by adding new empty TreeMap
         clearStagingArea();
     }
