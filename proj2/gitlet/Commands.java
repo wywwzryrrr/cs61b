@@ -83,47 +83,43 @@ public class Commands implements CommandsInterface, Serializable {
     @Override
     @SuppressWarnings("unchecked")
     public void add(String filename) {
-        // 1. 检查文件是否存在于工作目录
-        File inFile = Utils.join(CWD, filename);
-        if (!inFile.exists()) {
+        // check if the file exists
+        if (!checkFileExistsInCWD(filename)) {
             System.out.println("File does not exist.");
             return;
         }
-        // 2. 读取暂存区状态
+        File inFile = Utils.join(CWD, filename);
+        // get the status of staging area
         TreeMap<String, String> addMap = readAddMap();
         TreeMap<String, String> removeMap = readRemoveMap();
         String inFilePath = inFile.getAbsolutePath();
-        // 3. 如果文件在待删除区，先把它移除，实现 "un-remove"
+        // clear stage for removal
         if (removeMap.containsKey(inFilePath)) {
             removeMap.remove(inFilePath);
         }
-        // 4. 计算当前文件内容的 Blob UID
+        // calculate blobUID through file's content
         Blob currentBlob = new Blob(inFile);
         String currentBlobUID = currentBlob.getUID();
-        // 5. 与 HEAD Commit 的版本进行比较
+        // compare the blobUID to headCommit
         Commit headCommit = readHeadCommit();
         boolean isUnchanged = false;
-        // 处理 initial commit 的情况
+        // check if the content of the files is the same
         if (headCommit != null) {
             String trackedBlobUID = headCommit.getBlob().get(inFilePath);
             if (currentBlobUID.equals(trackedBlobUID)) {
                 isUnchanged = true;
             }
         }
-        // 6. 根据比较结果更新暂存区
+        // update staging area according to result of comparison
         if (isUnchanged) {
-            // 如果文件内容和 HEAD 一致，它不应该被暂存
-            // 如果它之前在 addMap 里，就移除它
+            // if the file is unchanged, remove it from addMap
             addMap.remove(inFilePath);
         } else {
-            // 文件是新的，或者被修改了，暂存它
-            // a. 将 blob 对象写入 .gitlet/blobs
+           // if the file is new-added or modified, add it to addMap
             File blobFile = Utils.join(BLOBS_DIR, currentBlobUID);
             Utils.writeObject(blobFile, currentBlob);
-            // b. 将 (路径, UID) 存入 addMap
             addMap.put(inFilePath, currentBlobUID);
         }
-        // 7. 将更新后的两个 Map 写回磁盘
         Utils.writeObject(Utils.join(ADD_DIR, "addMap"), addMap);
         Utils.writeObject(Utils.join(REMOVE_DIR, "removeMap"), removeMap);
     }
@@ -467,6 +463,10 @@ public class Commands implements CommandsInterface, Serializable {
         Utils.writeContents(MASTER_FILE, fullCommitUID);
     }
 
+    /**
+     * Merges files from the given branch into the current branch.
+     * @param branchName
+     */
     @Override
     public void merge(String branchName) {
         if (!checkStagingAreaIsEmpty()) {
@@ -504,32 +504,8 @@ public class Commands implements CommandsInterface, Serializable {
         // All the filePaths shown in three commits
         HashSet<String> allFilePaths = filePathsInCommits(branchCommit, splitPoint, headCommit);
         // Compare the blobUIDs of all the files in each commit
-        boolean mergeConflict = false;
-        for (String filePath : allFilePaths) {
-            String headCommitBlobUID = getBlobUID(headCommit, filePath);
-            String branchCommitBlobUID = getBlobUID(branchCommit, filePath);
-            String splitPointBlobUID = getBlobUID(splitPoint, filePath);
-            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-            if (case1(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                mergeCheckoutStage(branchCommit.getUID(), fileName);
-            } else if (case2(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                continue;
-            } else if (case3Part1(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                continue;
-            } else if (case3Part2(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                mergeConflict = true;
-                recordMergeConflict(fileName, headCommitBlobUID, branchCommitBlobUID);
-                add(fileName);
-            } else if (case4(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                continue;
-            } else if (case5(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                mergeCheckoutStage(branchCommit.getUID(), fileName);
-            } else if (case6(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                mergeRemoveUntrack(fileName);
-            } else if (case7(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
-                continue;
-            }
-        }
+        boolean mergeConflict = handleMerge(false, allFilePaths,
+                                             headCommit, branchCommit, splitPoint);
         if (mergeConflict) {
             System.out.println("Encountered a merge conflict.");
         }
@@ -540,8 +516,9 @@ public class Commands implements CommandsInterface, Serializable {
                                         headCommit.getUID(),
                                         branchCommit.getUID());
         // update the mergeCommit blob
-        TreeMap<String, String> finalBlobMap = buildMergeMapFromHead(headCommit);
+        TreeMap<String, String> finalBlobMap = updateBlob(headCommit);
         mergeCommit.setBlob(finalBlobMap);
+        // save the mergeCommit and update current branch
         saveCommit(mergeCommit);
         updateCurrentBranch(getCurrentBranchName(), mergeCommit.getUID());
         clearStagingArea();

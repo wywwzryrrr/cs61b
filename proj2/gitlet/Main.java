@@ -42,19 +42,15 @@ public class Main {
             case "rm-branch" -> commands.rmBranch(args[1]);
             case "status" -> commands.status();
             case "checkout" -> {
-                // 形式 2: checkout [commit id] -- [file name]
-                // 这是最具体的，有4个参数，且第3个是 "--"
+                // checkout [commit id] -- [file name]
                 if (args.length == 4 && args[2].equals("--")) {
                     commands.checkoutCommitFile(args[1], args[3]);
-                    // 形式 1: checkout -- [file name]
-                    // 有3个参数，且第2个是 "--"
+                    // checkout -- [file name]
                 } else if (args.length == 3 && args[1].equals("--")) {
                     commands.checkoutFile(args[2]);
-                    // 形式 3: checkout [branch name]
-                    // 只有2个参数
+                    // checkout [branch name]
                 } else if (args.length == 2) {
                     commands.checkoutBranch(args[1]);
-                    // 其他所有情况都是格式错误
                 } else {
                     System.out.println("Incorrect operands.");
                 }

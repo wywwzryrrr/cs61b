@@ -531,14 +531,15 @@ public class HelperMethods {
     public static void recordMergeConflict(String fileName,
                                            String headCommitBlobUID,
                                            String branchCommitBlobUID) {
-        String headFileContent = ""; // 默认为空字符串
-        // 只有当 head 分支中存在这个文件时，才去读取它的内容
+        Commands commands = new Commands();
+        // acquiesce to be empty
+        String headFileContent = "";
+        // get its content only when existing in headCommit
         if (headCommitBlobUID != null) {
             File fileInHead = Utils.join(BLOBS_DIR, headCommitBlobUID);
             headFileContent = Utils.readObject(fileInHead, Blob.class).getContent();
         }
-        String branchFileContent = ""; // 默认为空字符串
-        // 只有当 branch 分支中存在这个文件时，才去读取它的内容
+        String branchFileContent = "";
         if (branchCommitBlobUID != null) {
             File fileInBranch = Utils.join(BLOBS_DIR, branchCommitBlobUID);
             branchFileContent = Utils.readObject(fileInBranch, Blob.class).getContent();
@@ -548,7 +549,9 @@ public class HelperMethods {
                 + "=======\n"
                 + branchFileContent
                 + ">>>>>>>\n";
-        Utils.writeContents(Utils.join(CWD, fileName), conflictContent);
+        File conflictFile = Utils.join(CWD, fileName);
+        Utils.writeContents(conflictFile, conflictContent);
+        commands.add(fileName);
     }
 
     /**
@@ -704,21 +707,42 @@ public class HelperMethods {
     }
 
     /**
-     * Update the blob of the merge commit from staging area
-     * @param commit
+     * Handle various cases of merging.
+     * If there is merge conflicts, return true
+     * @param mergeConflict
+     * @param allFilePaths
+     * @param headCommit
+     * @param branchCommit
+     * @param splitPoint
+     * @return
      */
-    public static TreeMap<String, String> buildMergeMapFromHead(Commit commit) {
-        TreeMap<String, String> commitBlobMap = new TreeMap<>(commit.getBlob());
-        TreeMap<String, String> addMap = readAddMap();
-        TreeMap<String, String> removeMap = readRemoveMap();
-        for (String filePath : addMap.keySet()) {
-            String blobUID = addMap.get(filePath);
-            commitBlobMap.put(filePath, blobUID);
+    public static boolean handleMerge(boolean mergeConflict, HashSet<String> allFilePaths,
+                                      Commit headCommit, Commit branchCommit, Commit splitPoint) {
+        for (String filePath : allFilePaths) {
+            String headCommitBlobUID = getBlobUID(headCommit, filePath);
+            String branchCommitBlobUID = getBlobUID(branchCommit, filePath);
+            String splitPointBlobUID = getBlobUID(splitPoint, filePath);
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+            if (case1(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                mergeCheckoutStage(branchCommit.getUID(), fileName);
+            } else if (case2(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                // do nothing
+            } else if (case3Part1(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                // do nothing
+            } else if (case3Part2(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                mergeConflict = true;
+                recordMergeConflict(fileName, headCommitBlobUID, branchCommitBlobUID);
+            } else if (case4(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                // do nothing
+            } else if (case5(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                mergeCheckoutStage(branchCommit.getUID(), fileName);
+            } else if (case6(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                mergeRemoveUntrack(fileName);
+            } else if (case7(headCommitBlobUID, branchCommitBlobUID, splitPointBlobUID)) {
+                // do nothing
+            }
         }
-        for (String filePath : removeMap.keySet()) {
-            commitBlobMap.remove(filePath);
-        }
-        return commitBlobMap;
+        return mergeConflict;
     }
 
     /**
