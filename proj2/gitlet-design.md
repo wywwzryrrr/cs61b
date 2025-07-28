@@ -46,7 +46,7 @@ All the helper methods used in Commands
 8. `branch [branchname]`: create a new branch with the given name.
 9. `rmbranch [branchname]`: remove the branch with the given name.
 10. `status`: displays what branches currently exist, and marks the current branch with a *. Also displays what files have been staged for addition or removal.
-11. `checkout`:  varies depending on user's input.
+11. `checkout`:  varies depending on input.
 + `checkoutFile [filename]`: change the file with the given filename to the version in head commit.
 + `checkoutCommitFile [commitUID, filename]`: change the file with the given filename to the version in the commit of given commitUID.
 + `checkoutBranch [branchname]`: change the CWD to the given branch's version.
@@ -79,9 +79,9 @@ CWD (dir)
 
 ## Design and implementation Detail
 + A common commit should only have one parent, the `secondParent` parameter should be null. 
-The `secondParent` parameter is specially designed for `merge` method.
+The `secondParent` parameter is specially designed for `mergeCommit` in `merge`.
 + The commitUID is stored in a directory called `COMMITS_DIR`. To track witch commit is the headCommit, just check the `HEAD_FILE`, which stores
-the path of `MASTER_FILE`. The `MASTER_FILE` stores the latest commitUID -> headCommit.
+the path of `MASTER_FILE`. The `MASTER_FILE` stores the latest commitUID.
 + A commit object has a TreeMap called `blob`, which takes files in `CWD` with absolute path as keys, and the values are files in `BLOBS_DIR`.
 The files in `BLOBS_DIR` use their content after `SHA-1` method as their name. To get the blobFile in `BLOBS_DIR`, use`commit.getblob()`. This will return the
 TreeMap of the Commit object. Then use `get(filePath)` to get the value, which is the `blobUID`. Then use `Utils.join(BLOBS_DIR, blobUID)` to get the blobFile.
@@ -90,5 +90,25 @@ blobFile to `Blob` object, then use `Utils.writeContents(File object, Blob objec
 in a helper method called `overwriteFiles`.
 + For `checkout [commitUID] [filename]` just based on the `overwriteFiles` then iterate the TreeMap using `keySet()`,
 which is implemented as a helper method named `overwriteAllFiles`.
-+ For `checkout [branchname]` case would be simple using `overwriteAllFiles`.
-+ 
+  + For `checkout [branchname]` case would be simple using `overwriteAllFiles`.
++ For `merge`, my approach is to find the `splitPoint`, and then compare all the files in `splitPoint`, `headCommit`
+and `branchCommit`. According to the comparison, it would react variously. To find the `splitPoint`, I wrote a method named
+`findSplitPoint`, which takes `headCommit` and `branchCommit` as its parameter, using BFS to reach its goal. 
+It uses a Queue named `commitQueue` to iterate commits, and two Hashsets `parentUIDs`, `visitedUIDs` would record the polled commits' UIDs simultaneously.
+It would first iterate through `headCommit`, adding all the commits in it. When `commitQueue` is empty, both `commitQueue` and `visitedUIDs`
+would be cleared. Like the first iteration, the second one would go through `branchCommit`, but this time it would stop once
+it encounters the first commits that `parentsUIDs` has, which is the `splitPoint`.
++ My approach handles merge conflict through the comparison in all the files in `headCommit`, `branchCommit`, and `splitPoint`.
+In the beginning, a helper method named `filePathsInCommit` gathers all the file paths in all three commits, then a boolean
+`mergeConlict` is acquiesced to be false and is put in a helper method called `handleMerge`. 
+Through iterating all the file paths, `handleMerge` get the blobUID of files in different commits through a helper method
+named `getBlobUID`. If a file does not exist in the commit, it would return null. All the case methods use `Object.equals`
+to compare, witch should be a robust way to handle null value.
+  + In `case1`, `headCommitUID` is identical to `splitPointUID`, and `branchCommitUID` is not null nor is the same as `splitPointUID`
+  In such case, a helper method `mergeCheckoutStage` use `checkoutCommitFile` then stage the files for addition.
+  The rest of the cases are typically much the same following the image besides.
+  ![img.png](img.png)
+  + Specifically, a merge conflict would be encountered in `case3Part2`. My solution to merge conflict is to set the boolean `mergeConflict`
+  into true, then call a helper method named `recordMergeConflict`. The method acquiesces to have blank content in `headFileContent`
+  and `branchFileContent`. Only when the `headCommitBlobUID` or the `branchCommitUID` is not null should these two have contents.
+  + For `log` in merged cases, my solution is judging if the given commit has two parents.
