@@ -98,17 +98,27 @@ It uses a Queue named `commitQueue` to iterate commits, and two Hashsets `parent
 It would first iterate through `headCommit`, adding all the commits in it. When `commitQueue` is empty, both `commitQueue` and `visitedUIDs`
 would be cleared. Like the first iteration, the second one would go through `branchCommit`, but this time it would stop once
 it encounters the first commits that `parentsUIDs` has, which is the `splitPoint`.
-+ My approach handles merge conflict through the comparison in all the files in `headCommit`, `branchCommit`, and `splitPoint`.
-In the beginning, a helper method named `filePathsInCommit` gathers all the file paths in all three commits, then a boolean
-`mergeConlict` is acquiesced to be false and is put in a helper method called `handleMerge`. 
-Through iterating all the file paths, `handleMerge` get the blobUID of files in different commits through a helper method
-named `getBlobUID`. If a file does not exist in the commit, it would return null. All the case methods use `Object.equals`
-to compare, witch should be a robust way to handle null value.
-  + In `case1`, `headCommitUID` is identical to `splitPointUID`, and `branchCommitUID` is not null nor is the same as `splitPointUID`
-  In such case, a helper method `mergeCheckoutStage` use `checkoutCommitFile` then stage the files for addition.
-  The rest of the cases are typically much the same following the image besides.
-  ![img.png](img.png)
-  + Specifically, a merge conflict would be encountered in `case3Part2`. My solution to merge conflict is to set the boolean `mergeConflict`
-  into true, then call a helper method named `recordMergeConflict`. The method acquiesces to have blank content in `headFileContent`
-  and `branchFileContent`. Only when the `headCommitBlobUID` or the `branchCommitUID` is not null should these two have contents.
-  + For `log` in merged cases, my solution is judging if the given commit has two parents.
+  + My approach handling merge conflict is through the comparison in all the files in `headCommit`, `branchCommit`, and `splitPoint`.
+  In the beginning, a helper method named `filePathsInCommit` gathers all the file paths in all three commits, then a boolean
+  `mergeConlict` is acquiesced to be false and is put in a helper method called `handleMerge`. 
+  Through iterating all the file paths, `handleMerge` get the blobUID of files in different commits through a helper method
+  named `getBlobUID`. If a file does not exist in the commit, it would return null. All the case methods use `Object.equals`
+  to compare, witch should be a robust way to handle null value.
+    + The merge cases are charted below.
+    + `B` -> `branchCommitUID`
+    <br/>`H` -> `headCommitUID`
+    <br/>`S` -> `splitPointUID`
+    + | Cases | Condition<br/>Expresion                   | Logical<br/>Condition                                  | Actions               | Rationale                                                                                                             | 
+      |-------|-------------------------------------------|--------------------------------------------------------|-----------------------|-----------------------------------------------------------------------------------------------------------------------|
+      | 1     | modified in `B`, not modified in `H`      | `H == S`<br/>&&<br/>`B != S`                           | `mergeCheckoutStage`  | The file is not modified in current branch, should merge the other branch modification directly.                      |
+      | 2     | modified in `H`, not modified in `B`      | `H != S`&&`B == S`                                     | do nothing            | The file is not modified in other branch, should keep the modification in current branch.                             |
+      | 3.1   | both not modified or modified identically | `H == B`                                               | do nothing            | The contents of two files are identical, should take no action.                                                       |
+      | 3.2   | modified differently                      | `H != S`<br/>&&<br/>`B != S`<br/>&&<br/>`H != B`       | `recordMergeConflict` | The contents of two files are modified differently, should handle the conflict manually.                              |
+      | 4     | only present in `H`                       | `S`== null<br/>&&<br/>`B`== null<br/>&&<br/>`H`!= null | do nothing            | The file is particular in current branch, should keep the file.                                                       |
+      | 5     | only present in `B`                       | `S`== null<br/>&&<br/>`H`== null<br/>&&<br/>`B`!= null | `mergeCheckoutStage`  | The file is new in given branch, should should be merged to current branch.                                           |
+      | 6     | deleted in `B`, not modified in `H`       | `H == S`<br/>&&<br/>`B`== null                         | `mergeRemoveUntrack`  | The file has been deleted in the given branch, while not been modified in the current branch, should add for removal. |
+      | 7     | deleted in `H`, not modified in `B`       | `H`== null<br/>&&<br/>`B == S`                         | do nothing            | The file has been deleted in the current branch, should keep the deletion.                                            |
+    + Specifically, a merge conflict would be encountered in `case3Part2`. My solution to merge conflict is to set the boolean `mergeConflict`
+    into true, then call a helper method named `recordMergeConflict`. The method acquiesces to have blank content in `headFileContent`
+    and `branchFileContent`. Only when the `headCommitBlobUID` or the `branchCommitUID` is not null should these two have contents.
+    + For `log` in merged cases, my solution is judging if the given commit has two parents.
