@@ -108,7 +108,7 @@ it encounters the first commits that `parentsUIDs` has, which is the `splitPoint
     + `B` -> `branchCommitUID`
     <br/>`H` -> `headCommitUID`
     <br/>`S` -> `splitPointUID`
-    + | Cases | Condition<br/>Expresion                   | Logical<br/>Condition                                  | Actions               | Rationale                                                                                                             | 
+    + | Cases | Condition<br/>Expression                  | Logical<br/>Condition                                  | Actions               | Rationale                                                                                                             | 
       |-------|-------------------------------------------|--------------------------------------------------------|-----------------------|-----------------------------------------------------------------------------------------------------------------------|
       | 1     | modified in `B`, not modified in `H`      | `H == S`<br/>&&<br/>`B != S`                           | `mergeCheckoutStage`  | The file is not modified in current branch, should merge the other branch modification directly.                      |
       | 2     | modified in `H`, not modified in `B`      | `H != S`&&`B == S`                                     | do nothing            | The file is not modified in other branch, should keep the modification in current branch.                             |
