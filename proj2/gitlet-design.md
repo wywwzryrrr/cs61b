@@ -1,6 +1,7 @@
 # Gitlet Design Document
 
-## Gitlet: A Git-like Version Control System built from scratch in Java
+## Project Overview:
+Gitlet is a version control system inspired by Git, implemented from the ground up in Java. It supports a core set of Git's functionalities, including repository initialization, file tracking (staging, committing), branching, and merging. The system is built upon fundamental data structures like Directed Acyclic Graphs (DAG) for commit history and hash-based addressing for content storage (blobs). A key feature is its robust 3-way merge algorithm, which identifies a split point (LCA) to automatically handle complex merge scenarios and detect conflicts. This project demonstrates a deep understanding of data persistence, object serialization, and complex algorithmic design.
 
 **Name**: zng.xee
 
@@ -80,8 +81,9 @@ CWD (dir)
 ## Design and implementation Detail
 + A common commit should only have one parent, the `secondParent` parameter should be null. 
 The `secondParent` parameter is specially designed for `mergeCommit` in `merge`.
-+ The commitUID is stored in a directory called `COMMITS_DIR`. To track witch commit is the headCommit, just check the `HEAD_FILE`, which stores
-the path of `MASTER_FILE`. The `MASTER_FILE` stores the latest commitUID.
++ Commit history is tracked via pointers. The HEAD file contains a reference to the current active branch 
+(e.g., ref: refs/heads/master). This branch file, located in the refs/heads/ directory, in turn stores the SHA-1 UID of the commit at the tip of that branch. 
+This two-level indirection allows for flexible branch switching.
 + A commit object has a TreeMap called `blob`, which takes files in `CWD` with absolute path as keys, and the values are files in `BLOBS_DIR`.
 The files in `BLOBS_DIR` use their content after `SHA-1` method as their name. To get the blobFile in `BLOBS_DIR`, use`commit.getblob()`. This will return the
 TreeMap of the Commit object. Then use `get(filePath)` to get the value, which is the `blobUID`. Then use `Utils.join(BLOBS_DIR, blobUID)` to get the blobFile.
@@ -91,13 +93,11 @@ in a helper method called `overwriteFiles`.
 + For `checkout [commitUID] [filename]` just based on the `overwriteFiles` then iterate the TreeMap using `keySet()`,
 which is implemented as a helper method named `overwriteAllFiles`.
   + For `checkout [branchname]` case would be simple using `overwriteAllFiles`.
-+ For `merge`, my approach is to find the `splitPoint`, and then compare all the files in `splitPoint`, `headCommit`
-and `branchCommit`. According to the comparison, it would react variously. To find the `splitPoint`, I wrote a method named
-`findSplitPoint`, which takes `headCommit` and `branchCommit` as its parameter, using BFS to reach its goal. 
-It uses a Queue named `commitQueue` to iterate commits, and two Hashsets `parentUIDs`, `visitedUIDs` would record the polled commits' UIDs simultaneously.
-It would first iterate through `headCommit`, adding all the commits in it. When `commitQueue` is empty, both `commitQueue` and `visitedUIDs`
-would be cleared. Like the first iteration, the second one would go through `branchCommit`, but this time it would stop once
-it encounters the first commits that `parentsUIDs` has, which is the `splitPoint`.
++ The merging process is based on a 3-way merge strategy that requires identifying the Nearest Common Ancestor (NCA), or "split point," between the current branch and the given branch.
+The split point is found using a Breadth-First Search (BFS) algorithm:
+  + First, a BFS traversal is performed starting from the HEAD commit, collecting all its ancestor commit UIDs into a HashSet for O(1) lookup.
+  + Next, a second BFS is initiated from the commit of the given branch. During this traversal, the first encountered commit UID that already exists in the HashSet of HEAD's ancestors is the split point.
+  Once the split point is identified, the system compares the state of each file across three commits (HEAD, the other branch, and the split point) to determine the merge action, as detailed in the table below.
   + My approach handling merge conflict is through the comparison in all the files in `headCommit`, `branchCommit`, and `splitPoint`.
   In the beginning, a helper method named `filePathsInCommit` gathers all the file paths in all three commits, then a boolean
   `mergeConlict` is acquiesced to be false and is put in a helper method called `handleMerge`. 
@@ -119,6 +119,5 @@ it encounters the first commits that `parentsUIDs` has, which is the `splitPoint
       | 6     | deleted in `B`, not modified in `H`       | `H == S`<br/>&&<br/>`B`== null                         | `mergeRemoveUntrack`  | The file has been deleted in the given branch, while not been modified in the current branch, should add for removal. |
       | 7     | deleted in `H`, not modified in `B`       | `H`== null<br/>&&<br/>`B == S`                         | do nothing            | The file has been deleted in the current branch, should keep the deletion.                                            |
     + Specifically, a merge conflict would be encountered in `case3Part2`. My solution to merge conflict is to set the boolean `mergeConflict`
-    into true, then call a helper method named `recordMergeConflict`. The method acquiesces to have blank content in `headFileContent`
-    and `branchFileContent`. Only when the `headCommitBlobUID` or the `branchCommitUID` is not null should these two have contents.
+    into true, then call a helper method named `recordMergeConflict`. Initially, the content strings for both HEAD and the branch are empty. Only when the `headCommitBlobUID` or the `branchCommitUID` is not null should these two have contents.
     + For `log` in merged cases, my solution is judging if the given commit has two parents.
