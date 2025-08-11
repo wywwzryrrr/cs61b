@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="WQU">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../proj2/gitlet/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../proj2/gitlet/CommandsInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/CommandsInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../proj2/gitlet/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj2/gitlet/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Draft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Draft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graph.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,49 +50,49 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.AListTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.DisjointSets.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Dogs$DogsLauncher.executor&quot;: &quot;Run&quot;,
-    &quot;Application.DogsLauncher.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Draft$Intlist.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Draft$SLList.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Draft.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.second.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AListTest.testAddAndGetLast.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AListTest.testAddAndSize.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AListTest.testEmptySize.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AListTest.testGet.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AListTest.testMegaInsert.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AListTest.testRemove.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestSort.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestSort.testfindsmallest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestSort.testfindsmallest1.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestSort.testfindsmallest2.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestSort.testsort1.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestSort.testsort2.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestSort.testswap.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.stylesheets.stylelint&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.AListTest.executor": "Run",
+    "Application.DisjointSets.executor": "Run",
+    "Application.Dogs$DogsLauncher.executor": "Run",
+    "Application.DogsLauncher.executor": "Run",
+    "Application.Draft$Intlist.executor": "Run",
+    "Application.Draft$SLList.executor": "Run",
+    "Application.Draft.executor": "Debug",
+    "Application.Main.executor": "Run",
+    "Application.second.executor": "Run",
+    "JUnit.AListTest.testAddAndGetLast.executor": "Run",
+    "JUnit.AListTest.testAddAndSize.executor": "Run",
+    "JUnit.AListTest.testEmptySize.executor": "Run",
+    "JUnit.AListTest.testGet.executor": "Run",
+    "JUnit.AListTest.testMegaInsert.executor": "Run",
+    "JUnit.AListTest.testRemove.executor": "Run",
+    "JUnit.TestSort.executor": "Run",
+    "JUnit.TestSort.testfindsmallest.executor": "Run",
+    "JUnit.TestSort.testfindsmallest1.executor": "Run",
+    "JUnit.TestSort.testfindsmallest2.executor": "Run",
+    "JUnit.TestSort.testsort1.executor": "Run",
+    "JUnit.TestSort.testsort2.executor": "Run",
+    "JUnit.TestSort.testswap.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "configurable.stylesheets.stylelint",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Application.DisjointSets">
+}]]></component>
+  <component name="RunManager" selected="Application.Draft">
     <configuration name="AListTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AListTest" />
       <module name="draft" />
@@ -137,8 +136,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DisjointSets" />
         <item itemvalue="Application.Draft" />
+        <item itemvalue="Application.DisjointSets" />
         <item itemvalue="JUnit.AListTest.testMegaInsert" />
         <item itemvalue="Application.AListTest" />
         <item itemvalue="JUnit.AListTest.testRemove" />
@@ -169,6 +168,7 @@
       <workItem from="1743584325260" duration="35982000" />
       <workItem from="1746580655958" duration="19399000" />
       <workItem from="1748668134706" duration="14173000" />
+      <workItem from="1754547380261" duration="18726000" />
     </task>
     <task id="LOCAL-00001" summary="draft">
       <option name="closed" value="true" />
@@ -221,12 +221,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Draft.java</url>
-          <line>366</line>
+          <line>408</line>
           <properties class="Draft" method="main">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="1" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
