@@ -7,7 +7,6 @@
     <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="WQU">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Draft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Draft.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graph.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +57,7 @@
     "Application.DogsLauncher.executor": "Run",
     "Application.Draft$Intlist.executor": "Run",
     "Application.Draft$SLList.executor": "Run",
-    "Application.Draft.executor": "Debug",
+    "Application.Draft.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.second.executor": "Run",
     "JUnit.AListTest.testAddAndGetLast.executor": "Run",
@@ -168,7 +167,7 @@
       <workItem from="1743584325260" duration="35982000" />
       <workItem from="1746580655958" duration="19399000" />
       <workItem from="1748668134706" duration="14173000" />
-      <workItem from="1754547380261" duration="18726000" />
+      <workItem from="1754547380261" duration="20699000" />
     </task>
     <task id="LOCAL-00001" summary="draft">
       <option name="closed" value="true" />
@@ -215,21 +214,6 @@
     <MESSAGE value="draft" />
     <MESSAGE value="WQU" />
     <option name="LAST_COMMIT_MESSAGE" value="WQU" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Draft.java</url>
-          <line>408</line>
-          <properties class="Draft" method="main">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

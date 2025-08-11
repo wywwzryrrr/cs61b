@@ -369,20 +369,20 @@ public class Draft {
     }*/
 
     public static void merge(int[] arr, int left, int mid, int right) {
-        int n1 = mid - left + 1;
-        int n2 = right - mid;
-        int[] L = new int[n1];
-        int[] R = new int[n2];
-        // copy data to temp arr
-        for (int i = 0; i < n1; i++) {
+        int n = mid - left + 1;
+        int m = right - mid;
+        int[] L = new int[n];
+        int[] R = new int[m];
+        // copy the arr
+        for (int i = 0; i < n; i++) {
             L[i] = arr[left + i];
         }
-        for (int j = 0; j < n2; j++) {
-            R[j] = arr[mid + 1 + j];
+        for (int i = 0; i < m; i++) {
+            R[i] = arr[mid + i + 1];
         }
-        // merge the arrs
+        // merge the arr
         int i = 0, j = 0, k = left;
-        while (i < n1 && j < n2) {
+        while (i < n && j < m) {
             if (L[i] <= R[j]) {
                 arr[k] = L[i];
                 i++;
@@ -393,13 +393,19 @@ public class Draft {
             k++;
         }
         // copy the remaining elements
-        while (i < n1) arr[k++] = L[i++];
-        while (j < n2) arr[k++] = R[j++];
+        while (i < n) {
+            arr[k++] = L[i++];
+        }
+        while (j < m) {
+            arr[k++] = R[j++];
+        }
     }
 
     // recursive function
     public static void mergeSort(int[] arr, int left, int right) {
-        if (left == right) return;
+        if (left == right) {
+            return;
+        }
         int mid = (left + right) / 2;
         mergeSort(arr, left, mid);
         mergeSort(arr, mid + 1, right);
