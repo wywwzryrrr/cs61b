@@ -3,6 +3,7 @@ import jh61b.junit.In;
 import java.sql.ClientInfoStatus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /** cs61b draft */
@@ -403,7 +404,7 @@ public class Draft {
 
     // recursive function
     public static void mergeSort(int[] arr, int left, int right) {
-        if (left == right) {
+        if (left >= right) {
             return;
         }
         int mid = (left + right) / 2;
@@ -412,10 +413,50 @@ public class Draft {
         merge(arr, left, mid, right);
     }
 
+    public static int partition(int[] arr, int left, int right) {
+       int pivot = arr[right];
+       // a wall that separate the elements, initiated to be in the position of pivot
+       int i = left - 1;
+       for (int j = left; j < right; j++) {
+           if (arr[j] <= pivot) {
+               // adding 1 to i first to avoid the error and move the wall
+               i++;
+               swap(arr, i, j);
+           }
+       }
+        // all the elements are smaller than the pivot, the location of the wall is now
+        // the last element smaller than the pivot, so i + 1 should be the location of the pivot
+       swap(arr, i + 1, right);
+       // the location of the pivot
+       return i + 1;
+    }
+
+    public static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    public static void quickSort(int[] arr, int left, int right) {
+        if (left >= right) {
+            return;
+        } else {
+            int index = partition(arr, left, right);
+            quickSort(arr, left, index - 1);
+            quickSort(arr, index + 1, right);
+        }
+    }
+
     public static void main(String[] args) {
-        int[] arr = {11, 223, 32, 30, 1, 300, 20, 9090, 49, 89, 26, 13};
-        mergeSort(arr, 0, arr.length - 1);
-        for (int num : arr) {
+        int[] arr1 = {11, 223, 32, 30, 1, 300, 20, 9090, 49, 89, 26, 13};
+        mergeSort(arr1, 0, arr1.length - 1);
+        for (int num : arr1) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+        int[] arr2 = {13, 231, 211, 30, 2, 1, 44, 90, 88, 3, 12, 9, 6};
+        quickSort(arr2, 0, arr2.length - 1);
+        for (int num : arr2) {
             System.out.print(num + " ");
         }
     }

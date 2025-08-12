@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="WQU">
+    <list default="true" id="88dd8913-378d-4064-8e32-1db6a5904c4f" name="Changes" comment="merge sort">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Draft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Draft.java" afterDir="false" />
     </list>
@@ -13,99 +13,17 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$/.." value="48a86bea145a4780675055974cad2a908df466c0" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;wywwzryrrr&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/wywwzryrrr/cs61b.git&quot;,
-    &quot;accountId&quot;: &quot;99c5d20a-a6ac-489a-8e55-8d23ff886e8a&quot;
-  }
-}</component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 2
-}</component>
-  <component name="ProjectId" id="2sX7wZLhvUGNsNpnSq5bvcCoRsI" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.AListTest.executor": "Run",
-    "Application.DisjointSets.executor": "Run",
-    "Application.Dogs$DogsLauncher.executor": "Run",
-    "Application.DogsLauncher.executor": "Run",
-    "Application.Draft$Intlist.executor": "Run",
-    "Application.Draft$SLList.executor": "Run",
-    "Application.Draft.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.second.executor": "Run",
-    "JUnit.AListTest.testAddAndGetLast.executor": "Run",
-    "JUnit.AListTest.testAddAndSize.executor": "Run",
-    "JUnit.AListTest.testEmptySize.executor": "Run",
-    "JUnit.AListTest.testGet.executor": "Run",
-    "JUnit.AListTest.testMegaInsert.executor": "Run",
-    "JUnit.AListTest.testRemove.executor": "Run",
-    "JUnit.TestSort.executor": "Run",
-    "JUnit.TestSort.testfindsmallest.executor": "Run",
-    "JUnit.TestSort.testfindsmallest1.executor": "Run",
-    "JUnit.TestSort.testfindsmallest2.executor": "Run",
-    "JUnit.TestSort.testsort1.executor": "Run",
-    "JUnit.TestSort.testsort2.executor": "Run",
-    "JUnit.TestSort.testswap.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
+    "Application.Draft.executor": "Debug",
     "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.stylelint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.stylelint": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "configurable.stylesheets.stylelint",
-    "vue.rearranger.settings.migration": "true"
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Draft">
-    <configuration name="AListTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="AListTest" />
-      <module name="draft" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DisjointSets" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DisjointSets" />
-      <module name="draft" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration name="Draft" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Draft" />
       <module name="draft" />
@@ -113,110 +31,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AListTest.testMegaInsert" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="draft" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="AListTest" />
-      <option name="METHOD_NAME" value="testMegaInsert" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AListTest.testRemove" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="draft" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="AListTest" />
-      <option name="METHOD_NAME" value="testRemove" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Draft" />
-        <item itemvalue="Application.DisjointSets" />
-        <item itemvalue="JUnit.AListTest.testMegaInsert" />
-        <item itemvalue="Application.AListTest" />
-        <item itemvalue="JUnit.AListTest.testRemove" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
-      </set>
-    </attachedChunks>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="e8d48de3-d46f-472c-9751-ba5a6867af3f" name="Changes" comment="" />
-      <created>1738590304544</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1738590304544</updated>
-      <workItem from="1738590305461" duration="31312000" />
-      <workItem from="1741072048329" duration="12794000" />
-      <workItem from="1741684674773" duration="22379000" />
-      <workItem from="1742460494635" duration="867000" />
-      <workItem from="1742461370993" duration="10044000" />
-      <workItem from="1743584325260" duration="35982000" />
-      <workItem from="1746580655958" duration="19399000" />
-      <workItem from="1748668134706" duration="14173000" />
-      <workItem from="1754547380261" duration="20699000" />
-    </task>
-    <task id="LOCAL-00001" summary="draft">
-      <option name="closed" value="true" />
-      <created>1738663485167</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1738663485167</updated>
-    </task>
-    <task id="LOCAL-00002" summary="draft">
-      <option name="closed" value="true" />
-      <created>1738666452958</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1738666452958</updated>
-    </task>
-    <task id="LOCAL-00003" summary="WQU">
-      <option name="closed" value="true" />
-      <created>1747104951858</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1747104951859</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="draft" />
-    <MESSAGE value="WQU" />
-    <option name="LAST_COMMIT_MESSAGE" value="WQU" />
+    <MESSAGE value="merge sort" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge sort" />
   </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Draft.java</url>
+          <line>457</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StackOverflowError" package="java.lang" />
+          <option name="timeStamp" value="7" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
