@@ -9,8 +9,8 @@ import byow.TileEngine.Tileset;
  */
 public class BoringWorldDemo {
 
-    private static final int WIDTH = 60;
-    private static final int HEIGHT = 30;
+    private static final int WIDTH = 100;
+    private static final int HEIGHT = 50;
 
     public static void main(String[] args) {
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
@@ -26,9 +26,17 @@ public class BoringWorldDemo {
         }
 
         // fills in a block 14 tiles wide by 4 tiles tall
-        for (int x = 20; x < 35; x += 1) {
+        // define the width
+        for (int x = 20; x < 40; x += 1) {
+            // define the height
             for (int y = 5; y < 10; y += 1) {
                 world[x][y] = Tileset.WALL;
+            }
+            for (int z = 10; z < 30; z += 1) {
+                world[x][z] = Tileset.FLOOR;
+            }
+            for (int z = 30; z < 50; z += 1) {
+                world[x][z] = Tileset.FLOWER;
             }
         }
 
