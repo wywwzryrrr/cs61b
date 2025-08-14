@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="88dd8913-378d-4064-8e32-1db6a5904c4f" name="Changes" comment="merge sort">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../proj3/byow/lab12/BoringWorldDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj3/byow/lab12/BoringWorldDemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../proj3/byow/lab12/HexWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj3/byow/lab12/HexWorld.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../proj3/byow/lab12/RandomWorldDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj3/byow/lab12/RandomWorldDemo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
