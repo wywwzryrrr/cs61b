@@ -447,6 +447,18 @@ public class Draft {
         }
     }
 
+    public static void insertionSort(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int j = i - 1;
+            int key = arr[i];
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = key;
+        }
+    }
+
     public static void main(String[] args) {
         int[] arr1 = {11, 223, 32, 30, 1, 300, 20, 9090, 49, 89, 26, 13};
         mergeSort(arr1, 0, arr1.length - 1);
@@ -457,6 +469,12 @@ public class Draft {
         int[] arr2 = {13, 231, 211, 30, 2, 1, 44, 90, 88, 3, 12, 9, 6};
         quickSort(arr2, 0, arr2.length - 1);
         for (int num : arr2) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+        int[] arr3 = {2, 3, 1, 9};
+        insertionSort(arr3);
+        for (int num : arr3) {
             System.out.print(num + " ");
         }
     }
