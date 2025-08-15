@@ -415,7 +415,7 @@ public class Draft {
 
     public static int partition(int[] arr, int left, int right) {
        int pivot = arr[right];
-       // a wall that separate the elements, initiated to be in the position of pivot
+       // a wall that separate the elements, initiated to be in the position of pivot conceptually
        int i = left - 1;
        for (int j = left; j < right; j++) {
            if (arr[j] <= pivot) {
