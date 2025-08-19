@@ -5,6 +5,8 @@ import byow.TileEngine.TETile;
 import byow.Core.World;
 import jdk.jshell.execution.Util;
 
+import java.util.Random;
+
 
 public class Engine {
     TERenderer ter = new TERenderer();
@@ -49,10 +51,18 @@ public class Engine {
         //
         // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
         // that works for many different input types.
+        World world = new World(WIDTH, HEIGHT);
         String s = Utilities.fixInputString(input);
         long seed = Utilities.extractSeed(s);
-        TETile[][] finalWorldFrame = null;
+        world.generateWorld(seed);
+        return world.tiles;
+    }
 
-        return finalWorldFrame;
+    public static void main(String[] args) {
+        Engine engine = new Engine();
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+        TETile[][] worldFrame = engine.interactWithInputString("N2233S");
+        ter.renderFrame(worldFrame);
     }
 }
